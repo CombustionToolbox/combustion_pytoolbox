@@ -1,5 +1,5 @@
 # Combustion Toolbox
-A MATLAB/GUI based thermochemical code
+A Python/GUI based thermochemical code
 
 Table of contents
 =================
