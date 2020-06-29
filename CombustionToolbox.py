@@ -21,11 +21,46 @@ Type of problems:
 Last update Wen Jun 24 20:04:00 2020
 """
 import os
-from Settings.Initialize import App
+from Settings.Initialize import Initialize
+from Settings.MinorsProducts import MinorsProducts
 
 def main():
-    app = App()
-    return app
+    app = Initialize()
+    """
+    REACTION: COMPLETE OR INCOMPLETE
+        Specify the type of the reaction: complete or incomplete (dissociation)
+    """
+    app.PD.CompleteOrIncomplete = 'incomplete' # incomplete (default)
+    app.TN.factor_c = 1.0 # 1.0 (default)
+    """
+    MINORS PRODUCTS
+        Specify the minority products to be considered in the product mixture (P) in
+        addition to the major species (CO2, CO, H2O, H2, O2, N2, C(gr)).
+        Moreover, He and Ar are always included in the database.
+        
+        Specify in Setting/MinorsProducts.py
+        Predefined:
+            No minors products: ''
+            * Hydrocarbons:               'HC/O2/N2 EXTENDED'
+            * Soot formation:             'SOOT FORMATION'
+            * Soot formation without CH4: 'SOOT FORMATION W/O CH4'
+            * A bunch of minors products 
+              in case your are not sure
+              which are possible minors
+              products:                   'NASA ALL'
+            * Air:                        'AIR'
+            * Hydrogen:                   'HYDROGEN'
+            
+        User definition:
+            e.g., 'CH4, CO, O'           
+    """
+    app = MinorsProducts(app, 'Soot formation')
+    """ 
+    PROBLEM CONDITIONS
     
+    """
+    return app
+ 
+     
 if __name__ == '__main__':
     app = main()

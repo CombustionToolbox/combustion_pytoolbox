@@ -9,11 +9,23 @@ Created on Mon Jun 22 12:15:00 2020
          Office 1.1.D17, Universidad Carlos III de Madrid
 """
 import numpy as np
+import re
 from NASA_database.set_elements import set_elements
 from NASA_database.ParseThermoInp import ParseThermoInp
 from NASA_database.GenerateDatabase import GenerateDatabase
 
-# Properties description
+def Initialize():
+    app = App()
+    app.S.NameSpecies = app.strThProp.keys()
+    app.S.NSpecies = len(app.S.NameSpecies)
+    # Contained elements
+    return app
+
+def ContainedElements(self):
+    for i, species in enumerate(self.S.NameSpecies):
+        species = re.sub('plus', '')
+        species = re.sub('minus', '')
+# Definition of class App, which stores all the data necessary to execute the thermochemical code
 class App:
     def __init__(self):
         self.E = self.Elements()
@@ -23,6 +35,7 @@ class App:
         self.Misc = self.Miscelaneous()
         self.PD = self.ProblemDescription()
         self.PS = self.ProblemSolution()
+        self.TN = self.TunningProperties()
         self.strMaster = ParseThermoInp(True) # False: complete DataBase; True: reduced DB
         self.strThProp = GenerateDatabase(self) # struct with tabulated data of selected species
     class Elements:
@@ -32,6 +45,8 @@ class App:
     class Species:
         def __init__(self):
             self.Description = "Data of the chemical species"
+            self.NameSpecies = []
+            self.NSpecies = 0
     class MinorsProducts:
         def __init__(self):
             self.Description = "Data of minors products"
@@ -52,7 +67,12 @@ class App:
     class ProblemDescription:
         def __init__(self):
             self.Description = "Problem description"
-            self.CompleteOrIncomplete = "incomplete" # default            
+            self.CompleteOrIncomplete = "incomplete"            
     class ProblemSolution:
         def __init__(self):
             self.Description = "Problem solution"
+    class TunningProperties:
+        def __init__(self):
+                self.Description = "Tunning properties"
+                self.factor_c = 1.0
+                
