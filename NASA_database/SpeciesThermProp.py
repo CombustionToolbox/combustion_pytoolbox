@@ -51,7 +51,7 @@ def SpeciesThermProp(self, species, T, MassorMolar, echo):
     n_open_parenthesis = detect_location_of_phase_specifier(FullName) # Detect the position of the phase specifier
     
     # Set Elements and reference form of elements with T intervals lists
-    Element_matrix = set_element_matrix(txFormula, self.E.Elements)
+    Element_matrix = set_element_matrix(txFormula, self.E.ElementsUpper)
     Reference_form_of_elements_with_T_intervals = set_reference_form_of_elements_with_T_intervals()
     
     """
@@ -128,7 +128,7 @@ def SpeciesThermProp(self, species, T, MassorMolar, echo):
             GR = np.zeros((1, len(Element_matrix[1,:])))
             for i in range(0, len(Element_matrix[1,:])):
                 nu_i = Element_matrix[1, i]
-                [iRe_i, REname_i] = isRefElm(Reference_form_of_elements_with_T_intervals, self.E.Elements[int(Element_matrix[0, i])], T)
+                [iRe_i, REname_i] = isRefElm(Reference_form_of_elements_with_T_intervals, self.E.ElementsUpper[int(Element_matrix[0, i])], T)
                 [txFormula_i, mm_i, Cp0_i, Cv0_i, Hf0_i, H0_i, Ef0_i, E0_i, S0_i, DfG0_i] = SpeciesThermProp(self, REname_i, T, 'molar', 0)
                 GR[0][i] = nu_i * (H0_i - T * S0_i)
                 if any(Element_matrix[0, i] == [0, 6, 7, 8, 16, 34]):
