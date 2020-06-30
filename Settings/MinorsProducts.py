@@ -12,24 +12,24 @@ Created on Mon Jun 22 12:15:00 2020
 """
 def MinorsProducts(self, type):
     if not type or type.upper() == 'NONE':
-        self.M.minor_products = []
+        self.M.minors_products = []
     elif type.upper() == 'HC/02/N2 EXTENDED':
-        self.M.minor_products = ['OH','H','O','HO2','NO','HCO','CH4','CH3','HO2',\
+        self.M.minors_products = ['OH','H','O','HO2','NO','HCO','CH4','CH3','HO2',\
             'NO2','NH3','NH2','N','HCN','CN','N2O','C2','CH']
     elif type.upper() == 'SOOT FORMATION':
-        self.M.minor_products = ['H2', 'H', 'O', 'O2', 'OH', 'H2O', 'HO2', 'H2O2',\
+        self.M.minors_products = ['H2', 'H', 'O', 'O2', 'OH', 'H2O', 'HO2', 'H2O2',\
         'CH', 'CH2', 'CH3', 'CH4', 'CO', 'CO2', 'HCO','CH2OH', 'CH3O', 'CH3OH',\
         'C2H', 'C2H4', 'C2H5', 'C2H6', 'HCCO', 'N', 'NH', 'NH2', 'NH3', 'NO',\
         'NO2', 'N2O', 'HNO', 'CN', 'HCN','NCO', 'N2', 'Ar', 'C3H8','C2',\
         'C2H2_acetylene','C6H6', 'C8H18_isooctane','C2H5OH','He','HNC','HNCO','NH2OH']
     elif type.upper() == 'SOOT FORMATION W/O CH4':
-        self.M.minor_products = ['H2', 'H', 'O', 'O2', 'OH', 'H2O', 'HO2', 'H2O2',\
+        self.M.minors_products = ['H2', 'H', 'O', 'O2', 'OH', 'H2O', 'HO2', 'H2O2',\
             'CH', 'CH2', 'CH3', 'CO', 'CO2', 'HCO','CH2OH', 'CH3O', 'CH3OH','C2H',\
             'C2H4', 'C2H5', 'C2H6', 'HCCO', 'N', 'NH', 'NH2', 'NH3', 'NO', 'NO2',\
             'N2O', 'HNO', 'CN', 'HCN','NCO', 'N2', 'Ar', 'C3H8', 'C2', 'C2H2_acetylene',\
             'C6H6', 'C8H18_isooctane','C2H5OH','He','HNC','HNCO','NH2OH']
     elif type.upper() == 'NASA ALL':
-        self.M.minor_products = ['CH3','CH4','CN','CO2','C2H','CH2CO_ketene',\
+        self.M.minors_products = ['CH3','CH4','CN','CO2','C2H','CH2CO_ketene',\
             'C2H3_vinyl','C2H4','CH3COOH','C2H6','CH3OCH3','CNC','C2O',\
             'C3H3_2_propynl','C3H4_cyclominus','C3H6_cyclominus','C3H6O_propanal',\
             'C3H8','CNCOCN','C4H2_butadiyne','C4H6_1butyne','C4H8_1_butene',\
@@ -58,13 +58,13 @@ def MinorsProducts(self, type):
             'C10H8_naphthale','C12H10_biphenyl','HCO','HNC','HNO2','H2','H2O',\
             'N','NH2','NO','N2','N2H2','N2O3','N3','OH','CH3OHbLb','C6H5NH2bLb','He','Ar','C']
     elif type.upper() == 'AIR':
-        self.M.minor_products = ['O2','N2','O','O3','N','NO','NO2','NO3','N2O3','N2O4','N3','C','CO','CO2',\
+        self.M.minors_products = ['O2','N2','O','O3','N','NO','NO2','NO3','N2O3','N2O4','N3','C','CO','CO2',\
             'Ar','CH4','CH3','CH','H2O','H2','H','He']
     elif type.upper() == 'HYDROGEN':
-        self.M.minor_products = ['H','HNO','HNO3','H2O','NH','NH2OH','NO3','N2H2','N2O3','N3','OH','HNO2',\
+        self.M.minors_products = ['H','HNO','HNO3','H2O','NH','NH2OH','NO3','N2H2','N2O3','N3','OH','HNO2',\
             'H2','N','NH3','NO2','N2O','N2H4','N2O5','O','O3','He','Ar','CO2','CO','O2','N2','HO2','NH2','H2O2',\
             'N3H','NH2NO2']
     else:
-        self.M.minor_products = type
+        self.M.minors_products = type
         
     return self

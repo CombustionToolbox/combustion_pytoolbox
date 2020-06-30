@@ -65,7 +65,7 @@ def Index_Evaluable_Species(self):
     self.ind_Cgr = self.NameSpecies.index('Cbgrb')
     
     self.List_fixed_Species = ['CO2','CO','H2O','H2','O2','N2','He','Ar','Cbgrb']
-    self.idx_fixed = [self.ind_CO2, self.ind_CO, self.ind_H2O, self.ind_H2,\
+    self.ind_fixed = [self.ind_CO2, self.ind_CO, self.ind_H2O, self.ind_H2,\
         self.ind_O2, self.ind_N2, self.ind_He, self.ind_Ar, self.ind_Cgr]
     
     return self   
@@ -109,7 +109,7 @@ class App:
         def __init__(self):
             self.Description = "Data of minors products"
             self.display_species = []
-            self.minor_products = []
+            self.minors_products = []
     class Constants:
         def __init__(self):
             self.Description = "Constants and tolerances"
@@ -121,7 +121,6 @@ class App:
             self.mintol_display = 1.e-8
             self.mintol = 1.e-5
             self.tolN = 1.e-14 # Tolerance for the segregated numerical method
-            self.FLAG_FIRST = True 
         class A0:
             def __init__(self):
                 self.Description = 'Molar Matrix: number of atoms of each element contained in each species'
@@ -134,6 +133,7 @@ class App:
         def __init__(self):
             self.Description = "Miscelaneous properties"
             self.Config = self.Config()
+            self.FLAG_FIRST = True
         class Config:
             def __init__(self):
                 self.linewidth = 1.8
@@ -141,7 +141,12 @@ class App:
     class ProblemDescription:
         def __init__(self):
             self.Description = "Problem description"
-            self.CompleteOrIncomplete = "incomplete"            
+            self.CompleteOrIncomplete = "incomplete"
+            self.ProblemType = "None"
+        class TR:
+            def __init__(self):
+                self.Description = 'Temperature of the reactants'
+                self.Value = []                   
     class ProblemSolution:
         def __init__(self):
             self.Description = "Problem solution"
