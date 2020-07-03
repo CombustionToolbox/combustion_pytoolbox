@@ -122,7 +122,7 @@ def SpeciesThermProp(self, species, T, MassorMolar, echo):
         [iRe, REname] = isRefElm(Reference_form_of_elements_with_T_intervals, FullName[0:n_open_parenthesis].upper(), T)
         if not iRe:
             if echo:
-                print('%s is not Ref-Elm' % (FullName))
+                print(f'{FullName} is not Ref-Elm')
             
             GP = H0 - T * S0
             GR = np.zeros((1, len(Element_matrix[1,:])))
@@ -138,7 +138,7 @@ def SpeciesThermProp(self, species, T, MassorMolar, echo):
             DfG0 = GP-GR
         else:
             if echo:
-                print('%s is Ref-Elm' % REname)
+                print(f'{REname} is Ref-Elm')
             DfG0 = 0.
         
         if MassorMolar == 'mass':

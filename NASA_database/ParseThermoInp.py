@@ -51,7 +51,7 @@ def ParseThermoInp(reducedDB):
     else: # Load StrMaster reduced
         with open(filepath, 'rb') as f:
             struct = pickle.load(f)
-        print('NASA reduced database loaded from %s' % filepath)
+        print(f'NASA reduced database loaded from {filepath}')
     
     return struct
 

@@ -117,7 +117,7 @@ def GenerateDatabase(self): # self is a dictionary with Master Database
                     
                 strThProp.update({aux.name: aux})    
             else:
-                print('Species %s does not exist as a field in strMaster structure' % FullSpecies)
+                print(f'Species {FullSpecies} does not exist as a field in strMaster structure')
         # Save StrThprop
         f = open("Databases/strThprop.pkl","wb")
         pickle.dump(strThProp,f)
@@ -127,7 +127,7 @@ def GenerateDatabase(self): # self is a dictionary with Master Database
     else: # Load StrMaster reduced
         with open(filepath, 'rb') as f:
             strThProp = pickle.load(f)
-        print('NASA tabulated database loaded from %s' % filepath)
+        print(f'NASA tabulated database loaded from {filepath}')
         
     return strThProp
              
