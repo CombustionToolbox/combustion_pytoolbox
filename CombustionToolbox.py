@@ -19,6 +19,7 @@ Type of problems:
          Office 1.1.D17, Universidad Carlos III de Madrid
          
 Last update Wen Jun 24 20:04:00 2020
+----------------------------------------------------------------------
 """
 import os
 from Settings.Initialize import Initialize
@@ -79,4 +80,5 @@ def main():
 
 
 if __name__ == '__main__':
+    print(__doc__)
     app = main()

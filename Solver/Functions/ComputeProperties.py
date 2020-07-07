@@ -32,10 +32,10 @@ class Struct:
         self.z = self.NatomE[ind_C]
         self.N = sum(SpeciesMatrix[:, 0])
         self.hf = sum(SpeciesMatrix[:, 1])  # [kJ]
-        self.DhT = sum(SpeciesMatrix[:, 2])  # [kJ]
+        self.DhT = sum(SpeciesMatrix[:, 2]) # [kJ]
         self.h = self.hf + self.DhT         # [kJ]
         self.ef = sum(SpeciesMatrix[:, 3])  # [kJ]
-        self.ehT = sum(SpeciesMatrix[:, 4])  # [kJ]
+        self.ehT = sum(SpeciesMatrix[:, 4]) # [kJ]
         self.e = self.ef + self.ehT         # [kJ]
         self.cP = sum(SpeciesMatrix[:, 5])  # [J/K]
         self.cV = sum(SpeciesMatrix[:, 6])  # [J/K]
@@ -58,4 +58,4 @@ class Struct:
         self.S = (self.S0 + self.DS * 1e-3) / self.mi         # [kJ/ kg-K]
         self.e = self.h - sum(Ni[posXi]) * R0 * T * 1e-3      # [kJ]
         self.gamma = self.cP / self.cV                        # [-]
-        self.sound = np.sqrt(self.gamma * p * 1e5 / self.rho)  # [m/s]
+        self.sound = np.sqrt(self.gamma * p * 1e5 / self.rho) # [m/s]
