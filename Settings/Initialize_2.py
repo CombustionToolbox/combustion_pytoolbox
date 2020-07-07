@@ -8,6 +8,8 @@ Created on Mon Jun 22 12:15:00 2020
          PhD Candidate - Group Fluid Mechanics
          Office 1.1.D17, Universidad Carlos III de Madrid
 """
+
+
 def Initialize_2(self):
     # Compute CHON equilibria for the minors products considered
     self = Compute_minors_species(self)
@@ -19,6 +21,7 @@ def Initialize_2(self):
     # self.PD.ProblemType = Ask_problem()
     return self
 
+
 def Compute_minors_species(self):
     # First we eliminate from the minor species list those considered major
     # species in case the user has included any
@@ -28,7 +31,7 @@ def Compute_minors_species(self):
             n_pass.append(i)
     self.M.minors_products = [self.M.minors_products[i] for i in n_pass]
     self.S.List_Compute_Species = self.S.List_fixed_Species + self.M.minors_products
-    
+
     if self.Misc.FLAG_FIRST:
         self.M.L_minor = len(self.M.minors_products)
         if self.M.L_minor > 0:
@@ -38,22 +41,27 @@ def Compute_minors_species(self):
                 # be written in the generic form C_alpha H_beta O_gamma N_omega
                 # Find index minor species
                 self.M.ind_minor.append(self.S.NameSpecies.index(minor))
-            self.C.alpha = [self.C.A0.Value[ind_minor, self.E.ind_C] for ind_minor in self.M.ind_minor]
-            self.C.beta = [self.C.A0.Value[ind_minor, self.E.ind_H] for ind_minor in self.M.ind_minor]
-            self.C.gamma = [self.C.A0.Value[ind_minor, self.E.ind_O] for ind_minor in self.M.ind_minor]
-            self.C.omega = [self.C.A0.Value[ind_minor, self.E.ind_N] for ind_minor in self.M.ind_minor]
-            
+            self.C.alpha = [self.C.A0.Value[ind_minor, self.E.ind_C]
+                            for ind_minor in self.M.ind_minor]
+            self.C.beta = [self.C.A0.Value[ind_minor, self.E.ind_H]
+                           for ind_minor in self.M.ind_minor]
+            self.C.gamma = [self.C.A0.Value[ind_minor, self.E.ind_O]
+                            for ind_minor in self.M.ind_minor]
+            self.C.omega = [self.C.A0.Value[ind_minor, self.E.ind_N]
+                            for ind_minor in self.M.ind_minor]
+
             self.S.ind_all = self.S.ind_fixed + self.M.ind_minor
         else:
             self.S.ind_all = self.S.ind_fixed
     return self
+
 
 def CH4_major(self):
     # Rich combustion of Hydrocarbons with oxygen produce CH4.
     # The nº of moles of the latter increase for richer mixtures
     # To estimate well the compounds of the final mixture we have to
     # recalculate the next species, which also play a pivotal role:
-    # CH3, H, and CH. 
+    # CH3, H, and CH.
     if 'CH4' in self.minors_products:
         self.major_CH4 = True
         self.ind_m_CH4 = self.minors_products.index('CH4')
@@ -64,6 +72,7 @@ def CH4_major(self):
         self.major_CH4 = False
     return self
 
+
 def OH_major(self):
     if 'OH' in self.minors_products:
         self.major_OH = True
@@ -71,6 +80,7 @@ def OH_major(self):
     else:
         self.major_OH = False
     return self
+
 
 def Ask_problem(self):
     ProblemType = 'TP'

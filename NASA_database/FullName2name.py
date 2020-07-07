@@ -10,6 +10,7 @@ Created on Mon Jun 23 16:08:00 2020
 """
 import re
 
+
 def FullName2name(specie):
     name = specie
     if name[-1] == '+':
@@ -20,5 +21,5 @@ def FullName2name(specie):
     name = re.sub('\W', '_', name)
     if re.match('[0-9]', name[0]):
         name = re.sub('[0-9]', 'num_', name[0]) + name
-        
+
     return name

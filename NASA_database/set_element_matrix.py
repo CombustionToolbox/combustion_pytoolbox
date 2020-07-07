@@ -24,14 +24,17 @@ Created on Wen Jun 24 20:04:00 2020
 """
 import numpy as np
 
+
 def set_element_matrix(txFormula, Elements):
-    Element_matrix = np.array([]).reshape((2,0))
+    Element_matrix = np.array([]).reshape((2, 0))
     for index in range(0, 5):
         Element = txFormula[index * 8: index * 8 + 2]
         if not '  ' in Element:
-            Element = Element.replace(' ', '') # in case the element contains only one letter
+            # in case the element contains only one letter
+            Element = Element.replace(' ', '')
             ind_Element = Elements.index(Element)
             num_Element = float(txFormula[index * 8 + 2: (index + 1) * 8])
-            Element_matrix = np.hstack([Element_matrix, [[ind_Element], [num_Element]]])
-    
+            Element_matrix = np.hstack(
+                [Element_matrix, [[ind_Element], [num_Element]]])
+
     return Element_matrix

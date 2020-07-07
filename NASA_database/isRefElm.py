@@ -8,7 +8,8 @@ Created on Wen Jun 24 20:04:00 2020
          PhD Candidate - Group Fluid Mechanics
          Office 1.1.D17, Universidad Carlos III de Madrid
 """
-from itertools import count 
+from itertools import count
+
 
 def isRefElm(reference, species, T):
     # Change lowercase 'l' to uppercase 'L' for Al, Cl, Tl, and Fl
@@ -16,8 +17,9 @@ def isRefElm(reference, species, T):
     for specieL in listL:
         ind = species.find(specieL)
         if ind >= 0:
-            species = species[:ind + 1] + species[ind + 1].replace('l','L') + species[ind + 2:]
-    
+            species = species[:ind + 1] + species[ind +
+                                                  1].replace('l', 'L') + species[ind + 2:]
+
     iRe = False
     REname = []
     """
@@ -61,5 +63,5 @@ def isRefElm(reference, species, T):
                     iRe = True
                     REname = TentativeRefElm[0:n1-1]
                     break
-                
+
     return [iRe, REname]
