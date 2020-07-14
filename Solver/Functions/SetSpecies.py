@@ -12,7 +12,7 @@ import numpy as np
 
 
 def SetSpecies(self, S, N, T):
-    M = self.C.M0.Value
+    M = self.C.M0.Value.copy()
     indexes = [self.S.NameSpecies.index(species) for species in S]
     R0 = self.C.R0
 
