@@ -46,3 +46,4 @@ def displayResults(self, *args):
     df.index.names = ['PROPERTIES', 'UNITS']
     print(df)
     df = pd.DataFrame(strR.Xi, index=NameSpecies, columns=['Xi'])
+    

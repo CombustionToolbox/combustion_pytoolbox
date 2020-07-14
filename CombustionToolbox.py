@@ -65,10 +65,10 @@ def main():
     # PROBLEM TYPE AND CONDITIONS
     app.PD.TR.Value = 300.  # [K]
     app.PD.pR.Value = 1.   # [bar]
-    app.PD.phi.Value = [0.7]  # [-]
+    app.PD.phi.Value = [0.7 , 0.8]  # [-]
     # COMPUTATIONS
     app.C.l_phi = len(app.PD.phi.Value)
-    for i in range(0, app.C.l_phi):
+    for i in range(app.C.l_phi):
         # DEFINE FUEL
         app = Define_F(app, {'CH4':1})
         # DEFINE OXIDIZER
@@ -78,7 +78,7 @@ def main():
         # COMPUTE PROPERTIES OF THE INITIAL MIXTURE
         app = Define_FOI(app, i)
         
-    displayResults(app, app.PS.strR[i])
+        displayResults(app, app.PS.strR[i])
     
     return app
 
