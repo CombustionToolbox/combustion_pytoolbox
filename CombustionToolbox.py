@@ -26,6 +26,7 @@ from Settings.Initialize import Initialize
 from Settings.Initialize_2 import Initialize_2
 from Settings.MinorsProducts import MinorsProducts
 from Settings.Define_FOI import *
+from Solver.Functions.Display.displayResults import displayResults
 
 
 def main():
@@ -64,21 +65,26 @@ def main():
     # PROBLEM TYPE AND CONDITIONS
     app.PD.TR.Value = 300.  # [K]
     app.PD.pR.Value = 1.   # [bar]
-    app.PD.phi.Value = [0.5, 0.1, 0.7]  # [-]
+    app.PD.phi.Value = [0.7]  # [-]
     # COMPUTATIONS
     app.C.l_phi = len(app.PD.phi.Value)
     for i in range(0, app.C.l_phi):
         # DEFINE FUEL
-        app = Define_F(app, ['CH4'])
+        app = Define_F(app, {'CH4':1})
         # DEFINE OXIDIZER
-        app = Define_O(app, 'O2', i)
+        app = Define_O(app, {'O2':app.PD.phi.t / app.PD.phi.Value[i]})
         # DEFINE DILUENT/INERT
-        app = Define_I(app, 'N2', i)
+        app = Define_I(app, {'N2':app.PD.phi.t / app.PD.phi.Value[i] * 79/21})
         # COMPUTE PROPERTIES OF THE INITIAL MIXTURE
-        app = Define_FOI(app)
+        app = Define_FOI(app, i)
+        
+    displayResults(app, app.PS.strR[i])
+    
     return app
 
 
 if __name__ == '__main__':
     print(__doc__)
     app = main()
+    
+    

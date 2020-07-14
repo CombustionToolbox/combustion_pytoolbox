@@ -18,7 +18,7 @@ def Initialize_2(self):
     # OH major species
     self.M = OH_major(self.M)
     # Ask problem type
-    # self.PD.ProblemType = Ask_problem()
+    self.PD.ProblemType = Ask_problem()
     return self
 
 
@@ -76,6 +76,6 @@ def OH_major(self):
     return self
 
 
-def Ask_problem(self):
+def Ask_problem():
     ProblemType = 'TP'
     return ProblemType
