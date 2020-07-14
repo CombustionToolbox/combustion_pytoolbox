@@ -24,12 +24,8 @@ def Initialize_2(self):
 
 def Compute_minors_species(self):
     # First we eliminate from the minor species list those considered major
-    # species in case the user has included any
-    n_pass = []
-    for i, minor in enumerate(self.M.minors_products):
-        if not minor in self.S.List_fixed_Species:
-            n_pass.append(i)
-    self.M.minors_products = [self.M.minors_products[i] for i in n_pass]
+    # species in case the user has included any of them
+    Minors_products = [minor for minor in self.M.minors_products if not minor in self.S.List_fixed_Species]
     self.S.List_Compute_Species = self.S.List_fixed_Species + self.M.minors_products
 
     if self.Misc.FLAG_FIRST:
