@@ -25,11 +25,12 @@ class Struct:
         ind_H = app.E.ind_H
         ind_O = app.E.ind_O
 
+        self.phi = None
         self.NatomE = sum(SpeciesMatrix[:, 0].reshape(
             SpeciesMatrix[:, 0].size, 1) * A0)
         self.x = self.NatomE[ind_C]
         self.y = self.NatomE[ind_H]
-        self.z = self.NatomE[ind_C]
+        self.z = self.NatomE[ind_O]
         self.N = sum(SpeciesMatrix[:, 0])
         self.hf = sum(SpeciesMatrix[:, 1])  # [kJ]
         self.DhT = sum(SpeciesMatrix[:, 2]) # [kJ]
@@ -46,7 +47,7 @@ class Struct:
         self.T = T                          # [K]
         self.swtCond = SpeciesMatrix[:, 9]  # [-]
         self.mi = sum(SpeciesMatrix[:, 10]) * 1e-3            # [kg]
-        self.rho = self.mi / self.v                           # [kg/m3]
+        self.rho = self.mi / self.v * 1e3                     # [kg/m3]
         self.Yi = SpeciesMatrix[:, 10] / self.mi * 1e-3       # [-]
         self.W = 1/np.nansum(self.Yi / SpeciesMatrix[:, 11])  # []
         Ni = SpeciesMatrix[:, 0]                              # [mol]
