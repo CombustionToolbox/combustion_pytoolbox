@@ -31,12 +31,10 @@ def Compute_minors_species(self):
     if self.Misc.FLAG_FIRST:
         self.M.L_minor = len(self.M.minors_products)
         if self.M.L_minor > 0:
-            self.M.ind_minor = []
-            for i, minor in enumerate(self.M.minors_products):
-                # Properties of other minor species under consideration, which can
-                # be written in the generic form C_alpha H_beta O_gamma N_omega
-                # Find index minor species
-                self.M.ind_minor.append(self.S.NameSpecies.index(minor))
+            # Find index minors species
+            self.M.ind_minor = [self.S.NameSpecies.index(minor) for minor in self.M.minors_products]
+            # Properties of other minor species under consideration, which can
+            # be written in the generic form C_alpha H_beta O_gamma N_omega
             self.C.alpha = [self.C.A0.Value[ind_minor, self.E.ind_C]
                             for ind_minor in self.M.ind_minor]
             self.C.beta = [self.C.A0.Value[ind_minor, self.E.ind_H]
