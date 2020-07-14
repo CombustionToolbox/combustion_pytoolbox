@@ -12,11 +12,10 @@ from Solver.Functions.SetSpecies import SetSpecies
 from Solver.Functions.ComputeProperties import ComputeProperties
 
 
-def Define_F(self, species, **moles):
-    self.PD.S_Fuel = species
-    if species:  # not empty, i.e., there is/are fuel/s in the mixture
-        self.PD.N_Fuel = [1.0]
-        self.PD.R_Fuel = SetSpecies(self)
+def Define_F(self, Species=None):
+    if Species:  # not empty, i.e., there is/are fuel/s in the mixture
+        self.PD.S_Fuel, self.PD.N_Fuel = unpack_dict(Species)
+        self.PD.R_Fuel = SetSpecies(self, self.PD.S_Fuel, self.PD.N_Fuel, self.PD.TR.Value)
         self.PS.strR_Fuel = ComputeProperties(
             self, self.PD.R_Fuel, self.PD.pR.Value, self.PD.TR.Value)
         self.PD.Fuel.x = self.PS.strR_Fuel.NatomE[self.E.ind_C]
@@ -26,33 +25,29 @@ def Define_F(self, species, **moles):
     return self
 
 
-def Define_O(self, species, i, **moles):
-    self.PD.S_Oxidizer = species
-    if species:  # not empty, i.e., there is/are oxidizer/s in the mixture
-        if moles:
-            self.PD.N_Oxidizer = moles
-        else:
-            self.PD.N_Oxidizer = self.PD.phi.t / self.PD.phi.Value[i]
-        self.PD.R_Oxidizer = SetSpecies(self)
+def Define_O(self, Species=None):
+    self.PD.S_Oxidizer, self.PD.N_Oxidizer = unpack_dict(Species)
+    if Species:  # not empty, i.e., there is/are oxidizer/s in the mixture
+        self.PD.R_Oxidizer = SetSpecies(self, self.PD.S_Oxidizer, self.PD.N_Oxidizer, self.PD.TR.Value)
     return self
 
 
-def Define_I(self, species, i, **moles):
-    self.PD.S_Inert = species
-    if species:  # not empty, i.e., there is/are oxidizer/s in the mixture
-        if moles:
-            self.PD.N_Inert = moles
-        else:
-            self.PD.N_Inert = self.PD.phi.t / self.PD.phi.Value[i] * 79/21
-        self.PD.R_Inert = SetSpecies(self)
+def Define_I(self, Species=None):
+    self.PD.S_Inert, self.PD.N_Inert = unpack_dict(Species)
+    if Species:  # not empty, i.e., there is/are oxidizer/s in the mixture
+        self.PD.R_Inert = SetSpecies(self, self.PD.S_Inert, self.PD.N_Inert, self.PD.TR.Value)
     if self.PD.S_Oxidizer or self.PD.S_Inert:
         self.PS.strR_Oxidizer_and_Inert.append(ComputeProperties(
             self, self.PD.R_Oxidizer + self.PD.R_Inert, self.PD.pR.Value, self.PD.TR.Value))
     return self
 
 
-def Define_FOI(self):
+def Define_FOI(self, i):
     R = self.PD.R_Fuel + self.PD.R_Oxidizer + self.PD.R_Inert
     self.PS.strR.append(ComputeProperties(
         self, R, self.PD.pR.Value, self.PD.TR.Value))
+    self.PS.strR[i].phi = self.PD.phi.Value[i]
     return self
+
+def unpack_dict(dictionary):
+    return (tuple(dictionary), list(dictionary.values()))
