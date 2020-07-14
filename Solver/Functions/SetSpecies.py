@@ -11,12 +11,9 @@ Created on Tue Jun 30 16:28:00 2020
 import numpy as np
 
 
-def SetSpecies(self):
+def SetSpecies(self, S, N, T):
     M = self.C.M0.Value
-    S = self.PD.S_Fuel
-    N = self.PD.N_Fuel
-    T = self.PD.TR.Value
-    indexes = [self.S.NameSpecies.index(species) for species in self.PD.S_Fuel]
+    indexes = [self.S.NameSpecies.index(species) for species in S]
     R0 = self.C.R0
 
     for i, species in enumerate(S):
