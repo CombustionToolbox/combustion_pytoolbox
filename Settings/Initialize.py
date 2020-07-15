@@ -168,7 +168,9 @@ class App:
             self.R_Oxidizer = None
             self.R_Inert = None
             self.phi = self.Phi()
+            self.Fuel = self.Fuel()
             self.TR = self.TR()
+            self.TP = self.TP()
             self.pR = self.pR()
 
         class Phi:
@@ -186,12 +188,17 @@ class App:
 
         class TR:
             def __init__(self):
-                self.Description = 'Temperature of the reactants'
+                self.Description = 'Temperature of reactants'
+                self.Value = None
+        
+        class TP:
+            def __init__(self):
+                self.Description = 'Temperature of products'
                 self.Value = None
 
         class pR:
             def __init__(self):
-                self.Description = 'Temperature of the reactants'
+                self.Description = 'Pressure of reactants'
                 self.Value = None
 
     class ProblemSolution:
