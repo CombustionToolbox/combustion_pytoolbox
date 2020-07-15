@@ -27,7 +27,7 @@ from Settings.Initialize_2 import Initialize_2
 from Settings.MinorsProducts import MinorsProducts
 from Settings.Define_FOI import *
 from Solver.Functions.Display.displayResults import displayResults
-
+from Solver.Chemical_Equilibrium.SolveProblemTP_TV import SolveProblemTP_TV
 
 def main():
     # LOAD DATABASES AND GLOBAL PARAMETERS
@@ -65,7 +65,9 @@ def main():
     # PROBLEM TYPE AND CONDITIONS
     app.PD.TR.Value = 300.  # [K]
     app.PD.pR.Value = 1.   # [bar]
-    app.PD.phi.Value = [0.7 , 0.8]  # [-]
+    app.PD.phi.Value = [0.7]  # [-]
+    
+    app.PD.TP.Value = 2000
     # COMPUTATIONS
     app.C.l_phi = len(app.PD.phi.Value)
     for i in range(app.C.l_phi):
@@ -77,8 +79,10 @@ def main():
         app = Define_I(app, {'N2':app.PD.phi.t / app.PD.phi.Value[i] * 79/21})
         # COMPUTE PROPERTIES OF THE INITIAL MIXTURE
         app = Define_FOI(app, i)
-        
-        displayResults(app, app.PS.strR[i])
+        # SOLVE PROBLEM
+        app.PS.strP.append(SolveProblemTP_TV(app, app.PS.strR[i], app.PD.phi.Value[i], app.PD.pR.Value, app.PD.TP.Value))
+        # DISPLAY RESULTS
+        displayResults(app, app.PS.strR[i], app.PS.strP[i])
     
     return app
 
