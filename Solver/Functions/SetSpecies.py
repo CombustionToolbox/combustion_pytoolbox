@@ -16,20 +16,20 @@ def SetSpecies(self, S, N, T):
     indexes = [self.S.NameSpecies.index(species) for species in S]
     R0 = self.C.R0
 
-    for i, species in enumerate(S):
-        hfi = self.strThProp[species].hf / 1000.
-        efi = self.strThProp[species].ef / 1000.
-        if len(self.strThProp[species].T > 1):
-            cPi = species_cP(species, T, self.strThProp)
-            cVi = species_cV(species, T, self.strThProp)
-            DeTi = species_DeT(species, T, self.strThProp)
-            DhTi = species_DhT(species, T, self.strThProp)
-            s0i = species_s0(species, T, self.strThProp)
-            swtCondensed = self.strThProp[species].swtCondensed
-            mi = N[i] * self.strThProp[species].mm
-            mmi = self.strThProp[species].mm
+    for i, n in enumerate(N):
+        hfi = self.strThProp[S[i]].hf / 1000.
+        efi = self.strThProp[S[i]].ef / 1000.
+        if len(self.strThProp[S[i]].T > 1):
+            cPi = species_cP(S[i], T, self.strThProp)
+            cVi = species_cV(S[i], T, self.strThProp)
+            DeTi = species_DeT(S[i], T, self.strThProp)
+            DhTi = species_DhT(S[i], T, self.strThProp)
+            s0i = species_s0(S[i], T, self.strThProp)
+            swtCondensed = self.strThProp[S[i]].swtCondensed
+            mi = n * self.strThProp[S[i]].mm
+            mmi = self.strThProp[S[i]].mm
             if not swtCondensed:
-                pVi = N[i] * R0 * T / 100.  # For ideal gases
+                pVi = n * R0 * T / 100.  # For ideal gases
             else:
                 pVi = 0.
         else:
@@ -38,9 +38,9 @@ def SetSpecies(self, S, N, T):
             DeTi = 0.
             DhTi = 0.
             s0i = 0.
-            swtCondensed = self.strThProp[species].swtCondensed
+            swtCondensed = self.strThProp[S[i]].swtCondensed
             mi = 0.
-            mmi = self.strThProp[species].mm
+            mmi = self.strThProp[S[i]].mm
             pVi = 0.
         for ind, n in zip(indexes, N):
             M[ind, :] = np.concatenate(
