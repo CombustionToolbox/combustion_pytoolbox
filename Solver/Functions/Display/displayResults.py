@@ -1,4 +1,3 @@
-
 # -*- coding: utf-8 -*-
 """
 DISPLAY RESULTS
@@ -19,12 +18,13 @@ def displayResults(self, *args):
     NameSpecies = self.S.NameSpecies
     
     strR = args[0]
-    # strP = args[1]
+    strP = args[1]
     if len(args) == 3:
         str2 = args[2]
     print('-----------------------------------------------------------')
     print('PROBLEM TYPE: %s  |  EQUIVALENCE RATIO = %4.3f\n' % (ProblemType, strR.phi))
     # Print properties
+    pd.options.display.float_format = '{:.3f}'.format
     props = ['T', 'p', 'r', 'h', 'e',
               's', 'cp', 'gamma']
     units = ['K', 'bar', 'kg/m3', 'kJ/kg', 'kJ/kg',
@@ -32,14 +32,14 @@ def displayResults(self, *args):
     hier_index = list(zip(props, units))
     hier_index = pd.MultiIndex.from_tuples(hier_index)
     data = np.array([
-        [strR.T, strR.T],
-        [strR.p, strR.p],
-        [strR.rho, strR.rho],
-        [strR.h/strR.mi, strR.h/strR.mi],
-        [strR.e/strR.mi, strR.e/strR.mi],
-        [strR.S, strR.S],
-        [strR.cP/strR.mi *1e-3, strR.cP/strR.mi *1e-3] ,
-        [strR.cP/strR.cV, strR.cP/strR.cV]
+        [strR.T, strP.T],
+        [strR.p, strP.p],
+        [strR.rho, strP.rho],
+        [strR.h/strR.mi, strP.h/strP.mi],
+        [strR.e/strR.mi, strP.e/strP.mi],
+        [strR.S, strP.S],
+        [strR.cP/strR.mi *1e-3, strP.cP/strP.mi *1e-3] ,
+        [strR.cP/strR.cV, strP.cP/strP.cV]
         ])
     df = pd.DataFrame(data, hier_index, ['REACTANTS', 'PRODUCTS'])
     df = df.round(3)
@@ -58,12 +58,12 @@ def displayResults(self, *args):
     df2 = pd.DataFrame([strR.Xi.sum()], index=['TOTAL    '], columns=[''])
     print(df2, '\n')
     # Print products
-    df = pd.DataFrame(strR.Xi, index=NameSpecies, columns=['Xi [-]'])
+    df = pd.DataFrame(strP.Xi, index=NameSpecies, columns=['Xi [-]'])
     df.sort_values('Xi [-]', ascending=False, inplace=True)
     df.index.names = ['PRODUCTS ']
     print(df[df['Xi [-]']>mintol_display])
     
-    df2 = pd.DataFrame([strR.Xi.sum()], index=['TOTAL    '], columns=[''])
+    df2 = pd.DataFrame([strP.Xi.sum()], index=['TOTAL    '], columns=[''])
     print(df2, '\n')
     
     
