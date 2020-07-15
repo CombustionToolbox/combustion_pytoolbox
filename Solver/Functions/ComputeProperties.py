@@ -26,6 +26,8 @@ class Struct:
         ind_O = app.E.ind_O
 
         self.phi = None
+        self.error_moles = None
+        
         self.NatomE = sum(SpeciesMatrix[:, 0].reshape(
             SpeciesMatrix[:, 0].size, 1) * A0)
         self.x = self.NatomE[ind_C]
