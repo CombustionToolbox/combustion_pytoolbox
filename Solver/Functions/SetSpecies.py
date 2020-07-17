@@ -10,7 +10,6 @@ Created on Tue Jun 30 16:28:00 2020
 """
 import numpy as np
 
-
 def SetSpecies(self, S, N, T):
     M = self.C.M0.Value.copy()
     indexes = [self.S.NameSpecies.index(species) for species in S]
@@ -42,10 +41,9 @@ def SetSpecies(self, S, N, T):
             mi = 0.
             mmi = self.strThProp[S[i]].mm
             pVi = 0.
-        for ind, n in zip(indexes, N):
-            M[ind, :] = np.concatenate(
-                (n, n * np.array([hfi, DhTi, efi, DeTi, cPi, cVi, s0i]), pVi, swtCondensed, mi, mmi), axis=None)
-
+        
+        M[indexes[i], :] = np.concatenate(
+            (n, n * np.array([hfi, DhTi, efi, DeTi, cPi, cVi, s0i]), pVi, swtCondensed, mi, mmi), axis=None)
     return M
 
 
