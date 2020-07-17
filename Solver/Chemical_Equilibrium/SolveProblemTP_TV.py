@@ -18,6 +18,7 @@ Last update Wen Jul 15 11:55:00 2020
 ----------------------------------------------------------------------
 """
 from .CalculateProductsCC import CalculateProductsCC
+from .CalculateProductsIC import CalculateProductsIC
 from Solver.Functions.SetSpecies import SetSpecies
 from Solver.Functions.ComputeProperties import ComputeProperties
 
@@ -25,7 +26,10 @@ def SolveProblemTP_TV(self, strR, phi, pP, TP):
     moles_CC, phi_c, FLAG_SOOT = CalculateProductsCC(self, strR.NatomE, phi, TP)
     P = SetSpecies(self, self.S.List_Compute_Species, moles_CC.transpose(), TP)
     if self.PD.CompleteOrIncomplete.upper() == 'Incomplete':
-        pass
+        # Compute number of moles 
+        P, DeltaN = CalculateProductsIC(self, P, phi, pP, TP, vP, phi_c, FLAG_SOOT)
+        # Compute properties of all species
+        P = SetSpecies(self, self.S.List_Compute_Species, P[self.S.ind_all, 0], TP)
     else:
         DeltaNP = 0.
     if self.PD.ProblemType[1] == 'P':
