@@ -128,7 +128,7 @@ def SpeciesThermProp(self, species, T, MassorMolar, echo):
         formation is identically zero.
         """
         [iRe, REname] = isRefElm(
-            Reference_form_of_elements_with_T_intervals, FullName[0:n_open_parenthesis].upper(), T)
+            Reference_form_of_elements_with_T_intervals, FullName[0:n_open_parenthesis], T)
         if not iRe:
             if echo:
                 print(f'{FullName} is not Ref-Elm')
@@ -141,12 +141,12 @@ def SpeciesThermProp(self, species, T, MassorMolar, echo):
                     Reference_form_of_elements_with_T_intervals, self.E.ElementsUpper[int(Element_matrix[0, i])], T)
                 [txFormula_i, mm_i, Cp0_i, Cv0_i, Hf0_i, H0_i, Ef0_i, E0_i,
                     S0_i, DfG0_i] = SpeciesThermProp(self, REname_i, T, 'molar', 0)
-                GR[0][i] = nu_i * (H0_i - T * S0_i)
+                GR[0, i] = nu_i * (H0_i - T * S0_i)
                 if any(Element_matrix[0, i] == [0, 6, 7, 8, 16, 34]):
-                    GR[0][i] = GR[0][i]/2.
+                    GR[0, i] = GR[0, i]/2.
 
             GR = GR.sum()
-            DfG0 = GP-GR
+            DfG0 = GP - GR
         else:
             if echo:
                 print(f'{REname} is Ref-Elm')
