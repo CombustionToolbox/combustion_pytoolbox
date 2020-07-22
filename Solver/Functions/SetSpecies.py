@@ -10,23 +10,22 @@ Created on Tue Jun 30 16:28:00 2020
 """
 import numpy as np
 
-def SetSpecies(self, S, N, T):
+def SetSpecies(self, Species, N, T):
     M = self.C.M0.Value.copy()
-    indexes = [self.S.NameSpecies.index(species) for species in S]
     R0 = self.C.R0
 
-    for i, n in enumerate(N):
-        hfi = self.strThProp[S[i]].hf / 1000.
-        efi = self.strThProp[S[i]].ef / 1000.
-        if len(self.strThProp[S[i]].T > 1):
-            cPi = species_cP(S[i], T, self.strThProp)
-            cVi = species_cV(S[i], T, self.strThProp)
-            DeTi = species_DeT(S[i], T, self.strThProp)
-            DhTi = species_DhT(S[i], T, self.strThProp)
-            s0i = species_s0(S[i], T, self.strThProp)
-            swtCondensed = self.strThProp[S[i]].swtCondensed
-            mi = n * self.strThProp[S[i]].mm
-            mmi = self.strThProp[S[i]].mm
+    for n, species in zip(N, Species):
+        hfi = self.strThProp[species].hf / 1000.
+        efi = self.strThProp[species].ef / 1000.
+        if len(self.strThProp[species].T > 1):
+            cPi = species_cP(species, T, self.strThProp)
+            cVi = species_cV(species, T, self.strThProp)
+            DeTi = species_DeT(species, T, self.strThProp)
+            DhTi = species_DhT(species, T, self.strThProp)
+            s0i = species_s0(species, T, self.strThProp)
+            swtCondensed = self.strThProp[species].swtCondensed
+            mi = n * self.strThProp[species].mm
+            mmi = self.strThProp[species].mm
             if not swtCondensed:
                 pVi = n * R0 * T / 100.  # For ideal gases
             else:
@@ -37,12 +36,12 @@ def SetSpecies(self, S, N, T):
             DeTi = 0.
             DhTi = 0.
             s0i = 0.
-            swtCondensed = self.strThProp[S[i]].swtCondensed
+            swtCondensed = self.strThProp[species].swtCondensed
             mi = 0.
-            mmi = self.strThProp[S[i]].mm
+            mmi = self.strThProp[species].mm
             pVi = 0.
         
-        M[indexes[i], :] = np.concatenate(
+        M[self.S.List_Compute_Species.index(species), :] = np.concatenate(
             (n, n * np.array([hfi, DhTi, efi, DeTi, cPi, cVi, s0i]), pVi, swtCondensed, mi, mmi), axis=None)
     return M
 

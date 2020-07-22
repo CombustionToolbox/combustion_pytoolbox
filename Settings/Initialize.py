@@ -11,7 +11,6 @@ Created on Mon Jun 22 12:15:00 2020
 import numpy as np
 import re
 from NASA_database.set_elements import *
-from NASA_database.set_element_matrix import set_element_matrix
 from NASA_database.ParseThermoInp import ParseThermoInp
 from NASA_database.GenerateDatabase import GenerateDatabase
 
@@ -20,12 +19,9 @@ def Initialize():
     app = App()
     app.S.NameSpecies = tuple(app.strThProp.keys())
     app.S.NSpecies = len(app.S.NameSpecies)
-    # Contained elements and species
+    # Contained elements
     app.E = ContainedElements(app)
     app.E = Index_Evaluable_Elements(app.E)
-    app.S = Index_Evaluable_Species(app.S)
-    # Element Matrices
-    app = Element_Matrices(app)
     # Guess initial calculation
     app.TN.guess = [2000., 2000., 0., 1.5, 2.]
     app.TN.ERRFT = 1e-5  # Tolerance SHOCK and Detonations numerical method
@@ -53,41 +49,6 @@ def Index_Evaluable_Elements(self):
     self.ind_N = self.Elements.index('N')
     self.ind_He = self.Elements.index('He')
     self.ind_Ar = self.Elements.index('Ar')
-
-    return self
-
-
-def Index_Evaluable_Species(self):
-    self.ind_CO2 = self.NameSpecies.index('CO2')
-    self.ind_CO = self.NameSpecies.index('CO')
-    self.ind_H2O = self.NameSpecies.index('H2O')
-    self.ind_H2 = self.NameSpecies.index('H2')
-    self.ind_O2 = self.NameSpecies.index('O2')
-    self.ind_N2 = self.NameSpecies.index('N2')
-    self.ind_He = self.NameSpecies.index('He')
-    self.ind_Ar = self.NameSpecies.index('Ar')
-    self.ind_Cgr = self.NameSpecies.index('Cbgrb')
-
-    self.List_fixed_Species = ['CO2', 'CO', 'H2O',
-                               'H2', 'O2', 'N2', 'He', 'Ar', 'Cbgrb']
-    self.ind_fixed = [self.ind_CO2, self.ind_CO, self.ind_H2O, self.ind_H2,
-                      self.ind_O2, self.ind_N2, self.ind_He, self.ind_Ar, self.ind_Cgr]
-
-    return self
-
-
-def Element_Matrices(self):
-    self.C.A0.Value = np.zeros((self.S.NSpecies, self.E.NE))
-    self.C.M0.Value = np.zeros((self.S.NSpecies, 12))
-    for i, species in enumerate(self.S.NameSpecies):
-        txFormula = self.strThProp[species].txFormula
-        self.strThProp[species].Element_matrix = set_element_matrix(
-            txFormula, self.E.ElementsUpper)
-        ind_Elements, atoms = (
-            self.strThProp[species].Element_matrix[0, :], self.strThProp[species].Element_matrix[1, :])
-        for ind_Element, atom in zip(ind_Elements, atoms):
-            self.C.A0.Value[i, int(ind_Element)] = atom
-        self.C.M0.Value[i, 9] = self.strThProp[species].swtCondensed
 
     return self
 
@@ -119,6 +80,9 @@ class App:
             self.Description = "Data of the chemical species"
             self.NameSpecies = []
             self.NSpecies = 0
+            self.N_Compute_Species = 0
+            self.List_fixed_Species = ['CO2', 'CO', 'H2O',
+                               'H2', 'O2', 'N2', 'He', 'Ar', 'Cbgrb']
 
     class MinorsProducts:
         def __init__(self):
@@ -134,18 +98,23 @@ class App:
             self.M0 = self.M0()
             self.MassorMolar = 'mass'
             self.firstrow = True
-            self.mintol_display = 1.e-8
-            self.mintol = 1.e-5
-            self.tolN = 1.e-14  # Tolerance for the segregated numerical method
+            self.mintol_display = 1e-8
+            self.mintol = 1e-5
+            self.tolN = 1e-14  # Tolerance for the segregated numerical method
 
         class A0:
             def __init__(self):
-                self.Description = 'Molar Matrix: number of atoms of each element contained in each species'
+                self.Description = 'Stoichiometric Matrix: number of atoms of each element contained in each species'
                 self.Value = None
 
         class M0:
             def __init__(self):
                 self.Description = 'Matrix with properties of each species'
+                self.Value = None
+                
+        class N0:
+            def __init__(self):
+                self.Description = 'Reduced Matrix with number of moles and swtCondensated of each species'
                 self.Value = None
 
     class Miscelaneous:

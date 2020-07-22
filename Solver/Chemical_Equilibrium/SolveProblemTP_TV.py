@@ -23,13 +23,15 @@ from Solver.Functions.SetSpecies import SetSpecies
 from Solver.Functions.ComputeProperties import ComputeProperties
 
 def SolveProblemTP_TV(self, strR, phi, pP, TP):
-    moles_CC, phi_c, FLAG_SOOT = CalculateProductsCC(self, strR.NatomE, phi, TP)
-    P = SetSpecies(self, self.S.List_Compute_Species, moles_CC.transpose(), TP)
-    if self.PD.CompleteOrIncomplete.upper() == 'Incomplete':
+    N_CC, phi_c, FLAG_SOOT = CalculateProductsCC(self, strR.NatomE, phi, TP)
+    P = SetSpecies(self, self.S.List_Compute_Species, N_CC[0, :], TP)
+    if self.PD.CompleteOrIncomplete.upper() == 'INCOMPLETE':
+        # N_CC matrix with number of moles and swtCondesated of each species
+        N_CC = P[:, [0, 9]]
         # Compute number of moles 
-        P, DeltaN = CalculateProductsIC(self, P, phi, pP, TP, vP, phi_c, FLAG_SOOT)
+        N_IC, DeltaNP = CalculateProductsIC(self, N_CC, phi, pP, TP, strR.v, phi_c, FLAG_SOOT)
         # Compute properties of all species
-        P = SetSpecies(self, self.S.List_Compute_Species, P[self.S.ind_all, 0], TP)
+        P = SetSpecies(self, self.S.List_Compute_Species, N_IC[:, 0], TP)
     else:
         DeltaNP = 0.
     if self.PD.ProblemType[1] == 'P':
