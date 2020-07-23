@@ -15,8 +15,9 @@ import pandas as pd
     
 def print_Dataframe(N_IC, S, it):
     print(f'\nit: {it}')
-    aux = np.array(S.NameSpecies)
+    aux = np.array(S.List_Compute_Species)
     df = pd.DataFrame(N_IC[N_IC[:,0]>0.000001, 0], index=(aux[N_IC[:,0]>0.000001]))
+    df.sort_values(0, ascending=False, inplace=True)
     print(df)   
      
 def correction(x0, x1, TP):
@@ -24,12 +25,12 @@ def correction(x0, x1, TP):
     relax = 0.00007385775 + (0.9854897 - 0.00007385775) / (1 + (TP/4058911)**1.817875)**658457.8
     return x0 + relax * (x1 - x0)
 
-def indexation(N_IC, N_IC_old, N, index, TP):
-    N_old = N_IC_old[index, 0]
-    if N_old:
-        N = correction(N_old, N, TP)
-    N_IC[index, 0] = N
-    return N_IC
+def indexation(N, N_old, n, index, TP):
+    n_old = N_old[index, 0]
+    if n_old:
+        n = correction(n_old, n, TP)
+    N[index, 0] = n
+    return N
 
 def correctionMajor(x0, x1, TP):
     if TP > 3000.0:
@@ -169,12 +170,14 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
 
                 if M.major_OH:
                     Ni[M.ind_m_OH] = np.sqrt(NH2 * NO2 * k11 * zeta**(-3/2))
-                
                 Ni[Ni > NP_old] = 0.75 * Ni[Ni > NP_old]
                 for ni, minor in zip(Ni, M.ind_minor):
                     N_IC = indexation(N_IC, N_IC_old, ni, minor, TP)
             
-            # print_Dataframe(N_IC, S, it)
+            print_Dataframe(N_IC_old, S, it)
+            
+            
+            print(sum(N_IC[:, 0] * A0[:, E.ind_C]), sum(N_IC[:, 0] * A0[:, E.ind_H]), sum(N_IC[:, 0] * A0[:, E.ind_O]), sum(N_IC[:, 0] * A0[:, E.ind_N]))
             # Correction of the number of moles of CO2, H2O, O2 and N2 from atom
             # conservation equations
             NCO2_old = NCO2
@@ -188,6 +191,7 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
             N_IC[[S.ind_CO2, S.ind_H2O], 0] = [NCO2, NH2O]
             
             NO2_old = NO2
+            
             NO2 = NO2_0 + NCO2_0 + NCO_0/2 + NH2O_0/2 - sum(N_IC[:, 0] * A0[:, E.ind_O]) / 2 # O-atom conservation
             NO2 = correctionMajor(NO2_old, NO2, TP)
             
@@ -205,6 +209,7 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
                                                z - sum(N_IC[:, 0] * A0[:, E.ind_O]),
                                                w - sum(N_IC[:, 0] * A0[:, E.ind_N])]))
             
+            print_Dataframe(N_IC, S, it)
             
         return (N_IC, DeltaNP)    
             
