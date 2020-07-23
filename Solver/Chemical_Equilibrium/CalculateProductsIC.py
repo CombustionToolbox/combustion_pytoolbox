@@ -174,14 +174,10 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
                 for ni, minor in zip(Ni, M.ind_minor):
                     N_IC = indexation(N_IC, N_IC_old, ni, minor, TP)
             
-            print_Dataframe(N_IC_old, S, it)
-            
-            
-            print(sum(N_IC[:, 0] * A0[:, E.ind_C]), sum(N_IC[:, 0] * A0[:, E.ind_H]), sum(N_IC[:, 0] * A0[:, E.ind_O]), sum(N_IC[:, 0] * A0[:, E.ind_N]))
             # Correction of the number of moles of CO2, H2O, O2 and N2 from atom
             # conservation equations
             NCO2_old = NCO2
-            NCO2 = NCO2 - sum(N_IC[:, 0] * A0[:, E.ind_C]) # C-atom conservation
+            NCO2 = NCO2_0 - sum(N_IC[:, 0] * A0[:, E.ind_C]) # C-atom conservation
             NCO2 = correctionMajor(NCO2_old, NCO2, TP)
             
             NH2O_old = NH2O
@@ -208,8 +204,6 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
                                                y - sum(N_IC[:, 0] * A0[:, E.ind_H]),
                                                z - sum(N_IC[:, 0] * A0[:, E.ind_O]),
                                                w - sum(N_IC[:, 0] * A0[:, E.ind_N])]))
-            
-            print_Dataframe(N_IC, S, it)
             
         return (N_IC, DeltaNP)    
             
