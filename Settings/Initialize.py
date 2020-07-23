@@ -83,6 +83,7 @@ class App:
             self.N_Compute_Species = 0
             self.List_fixed_Species = ['CO2', 'CO', 'H2O',
                                'H2', 'O2', 'N2', 'He', 'Ar', 'Cbgrb']
+            self.Nfixed = len(self.List_fixed_Species)
 
     class MinorsProducts:
         def __init__(self):
