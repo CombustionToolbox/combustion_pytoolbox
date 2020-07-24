@@ -115,16 +115,15 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
     # Correction to the initial guess of oxygene moles and overall number of moles
     NO2 = NO2_0 + ((NH2O * k2 + NCO2 * k1) / 2)**(2/3) * zeta**(1/3)
     NP += NO2 - NO2_0
-    
     if phi <= 1.0 and M.L_minor: # case lean-to-stoichiometric mixtures
         DNfactor_III = 1.0 - (C.beta + 2 * (C.gamma + C.omega)) / 4
-        DG0_III = np.array([(species_g0(minor, TP, strThProp) - C.alpha[i] * g_CO2
-                    - (C.beta[i]/2) * g_H2O) * 1e3 for i, minor in enumerate(M.minors_products)])
+        DG0_III = np.array([(species_g0(minor, TP, strThProp) - alpha * g_CO2
+                    - (beta/2) * g_H2O) * 1e3 for minor, alpha, beta in zip(M.minors_products, C.alpha, C.beta)])
         k3 = np.exp(-DG0_III / R0TP)
     elif phi > 1.0: # case rich mixtures
         if not x and y and M.Lminor: # if there are only hydrogens (H)
-            DG0_VI = np.array([(species_g0(minor, TP, strThProp) - C.alpha[i] * g_CO2
-                    - (C.gamma[i] - 2*C.alpha[i]) * g_H2O) * 1e3 for i, minor in enumerate(M.minors_products)])
+            DG0_VI = np.array([(species_g0(minor, TP, strThProp) - alpha * g_CO2
+                    - (gamma - 2*alpha) * g_H2O) * 1e3 for minor, alpha, gamma in zip(M.minors_products, C.alpha, C.gamma)])
             k6 = np.exp(-DG0_VI / R0TP)
             DNfactor_VI = 1.0 - C.alpha - (C.beta + C.omega) / 2
         # ..........
@@ -208,9 +207,9 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
         return (N_IC, DeltaNP)    
             
     # CHEMICAL EQUILIBRIUM COMPUTATIONS
-    N_IC = N0.copy()
+    N_IC = N0
     if phi <= 1.0: # case lean-to-stoichiometric mixtures
-        (N_IC, DeltaNP) = incomplete_phi_1()
+        return incomplete_phi_1()
     elif phi > 1.0 and not x and y: # case rich mixtures with only hydrogens (H)
         [N_IC, DeltaNP] = incomplete_phi_2(N_IC)
     elif (x and not y and phi < phi_c) and not FLAG_SOOT: # case rich mixtures with only carbons (C)
@@ -225,7 +224,7 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
     
     ##### PRINT CONVERGENCE
     
-    return (N_IC, DeltaNP)
+    # return (N_IC, DeltaNP)
     
                 
             
