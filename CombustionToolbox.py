@@ -22,6 +22,7 @@ Last update Wen Jun 24 20:04:00 2020
 ----------------------------------------------------------------------
 """
 import os
+import time
 from Settings.Initialize import Initialize
 from Settings.Initialize_2 import Initialize_2
 from Settings.MinorsProducts import MinorsProducts
@@ -80,15 +81,25 @@ def main():
         # COMPUTE PROPERTIES OF THE INITIAL MIXTURE
         app = Define_FOI(app, i)
         # SOLVE PROBLEM
+        # start = time.time()
         app.PS.strP.append(SolveProblemTP_TV(app, app.PS.strR[i], app.PD.phi.Value[i], app.PD.pR.Value, app.PD.TP.Value))
+        # end = time.time()
         # DISPLAY RESULTS
         displayResults(app, app.PS.strR[i], app.PS.strP[i])
-    
+        # print(end - start)
     return app
 
 
 if __name__ == '__main__':
-    print(__doc__)
-    app = main()
+    import cProfile, pstats
+    profiler = cProfile.Profile()
+    profiler.enable()
+    # print(__doc__)
+    # app = main()
+    main()
+    profiler.disable()
+    stats = pstats.Stats(profiler).sort_stats('tottime')
+    stats.print_stats()
+    # stats.dump_stats('/stats_file.dat')
     
     
