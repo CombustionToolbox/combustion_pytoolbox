@@ -111,17 +111,16 @@ def GenerateDatabase(self):  # self is a dictionary with Master Database
 
                 # Interpolation curves
 
-                aux.cPcurve = interp1d(aux.T, aux.cp, kind='cubic')
-                aux.cVcurve = interp1d(aux.T, aux.cv, kind='cubic')
-                aux.DeTcurve = interp1d(aux.T, aux.DeT, kind='cubic')
-                aux.DhTcurve = interp1d(aux.T, aux.DhT, kind='cubic')
-                aux.s0curve = interp1d(aux.T, aux.s0, kind='cubic')
-                aux.g0curve = interp1d(aux.T, aux.g0, kind='cubic')
+                aux.cPcurve = interp1d(aux.T, aux.cp, kind='linear')
+                aux.cVcurve = interp1d(aux.T, aux.cv, kind='linear')
+                aux.DeTcurve = interp1d(aux.T, aux.DeT, kind='linear')
+                aux.DhTcurve = interp1d(aux.T, aux.DhT, kind='linear')
+                aux.s0curve = interp1d(aux.T, aux.s0, kind='linear')
+                aux.g0curve = interp1d(aux.T, aux.g0, kind='linear')
 
                 strThProp.update({aux.name: aux})
             else:
-                print(
-                    f'Species {FullSpecies} does not exist as a field in strMaster structure')
+                print(f'Species {FullSpecies} does not exist as a field in strMaster structure')
         # Save StrThprop
         f = open("Databases/strThprop.pkl", "wb")
         pickle.dump(strThProp, f)
