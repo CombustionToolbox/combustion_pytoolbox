@@ -23,6 +23,7 @@ Last update Wen Jun 24 20:04:00 2020
 """
 import os
 import time
+import numpy as np
 from Settings.Initialize import Initialize
 from Settings.Initialize_2 import Initialize_2
 from Settings.MinorsProducts import MinorsProducts
@@ -58,7 +59,8 @@ def main():
     #   User definition:
     #       e.g., 'CH4, CO, O'
 
-    app = MinorsProducts(app, 'Soot formation')
+    # app = MinorsProducts(app, 'Soot formation')
+    app = MinorsProducts(app, 'Hydrogen')
     # PROBLEM CONDITIONS
 
     # INITIALIZATION
@@ -66,6 +68,7 @@ def main():
     # PROBLEM TYPE AND CONDITIONS
     app.PD.TR.Value = 300.  # [K]
     app.PD.pR.Value = 1.   # [bar]
+    app.PD.phi.Value = np.arange(0.5, 4.0, 0.1)  # [-]
     app.PD.phi.Value = [0.7]  # [-]
     
     app.PD.TP.Value = 2000
@@ -73,7 +76,7 @@ def main():
     app.C.l_phi = len(app.PD.phi.Value)
     for i in range(app.C.l_phi):
         # DEFINE FUEL
-        app = Define_F(app, {'CH4':1})
+        app = Define_F(app, {'H2':1})
         # DEFINE OXIDIZER
         app = Define_O(app, {'O2':app.PD.phi.t / app.PD.phi.Value[i]})
         # DEFINE DILUENT/INERT
@@ -81,12 +84,12 @@ def main():
         # COMPUTE PROPERTIES OF THE INITIAL MIXTURE
         app = Define_FOI(app, i)
         # SOLVE PROBLEM
-        # start = time.time()
+        start = time.time()
         app.PS.strP.append(SolveProblemTP_TV(app, app.PS.strR[i], app.PD.phi.Value[i], app.PD.pR.Value, app.PD.TP.Value))
-        # end = time.time()
+        end = time.time()
         # DISPLAY RESULTS
         displayResults(app, app.PS.strR[i], app.PS.strP[i])
-        # print(end - start)
+        print('Execution time:', end - start, 'seconds')
     return app
 
 
@@ -98,8 +101,8 @@ if __name__ == '__main__':
     # app = main()
     main()
     profiler.disable()
-    stats = pstats.Stats(profiler).sort_stats('tottime')
-    stats.print_stats()
+    #stats = pstats.Stats(profiler).sort_stats('tottime')
+    #stats.print_stats()
     # stats.dump_stats('/stats_file.dat')
     
     
