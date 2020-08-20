@@ -45,7 +45,7 @@ def CalculateProductsCC(self, NatomE, phi, TP):
         NO2 = 0.
         if not x and y:
             NCO2 = 0.
-            NCOP = 0.
+            NCO = 0.
             NH2O = z
             NH2 = y/2 - z
         elif x and not y and phi < phi_c: # if there are only carbons (C) 

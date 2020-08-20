@@ -69,7 +69,7 @@ def main():
     app.PD.TR.Value = 300.  # [K]
     app.PD.pR.Value = 1.   # [bar]
     app.PD.phi.Value = np.arange(0.5, 4.0, 0.1)  # [-]
-    app.PD.phi.Value = [0.7]  # [-]
+    app.PD.phi.Value = [1.2]  # [-]
     
     app.PD.TP.Value = 2000
     # COMPUTATIONS

@@ -121,7 +121,7 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
                     - (beta/2) * g_H2O) * 1e3 for minor, alpha, beta in zip(M.minors_products, C.alpha, C.beta)])
         k3 = np.exp(-DG0_III / R0TP)
     elif phi > 1.0: # case rich mixtures
-        if not x and y and M.Lminor: # if there are only hydrogens (H)
+        if not x and y and M.L_minor: # if there are only hydrogens (H)
             DG0_VI = np.array([(species_g0(minor, TP, strThProp) - alpha * g_CO2
                     - (gamma - 2*alpha) * g_H2O) * 1e3 for minor, alpha, gamma in zip(M.minors_products, C.alpha, C.gamma)])
             k6 = np.exp(-DG0_VI / R0TP)
@@ -245,20 +245,21 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
             # Correction of the number of moles of O2
             NO2_old = NO2
             NO2 = zeta*(k2 * NH2O/NH2)**2
-            NO2 = correctionMajor(NO2_old, NO2, TP)
+            if not NO2_old:
+                NO2 = correction(NO2_old, NO2, TP)
             # Correction of the number of moles of H2O, H2 and N2 from
             # atom conservation equations
             NH2O_old = NH2O
             NH2O = NH2O_0 - 2*NO2 + sum(N_IC[:, 0] * A0[:, E.ind_O]) # O-atom conservation
-            NH2O = correctionMajor(NH2O_old, NH2O, TP)
+            #NH2O = correctionMajor(NH2O_old, NH2O, TP)
             
-            NH2_old = NH2O
+            NH2_old = NH2
             NH2 = NH2_0 + 2*NO2 + sum(N_IC[:, 0] * A0[:, E.ind_O]) - sum(N_IC[:, 0] * A0[:, E.ind_H])/2 # H-atom conservation
-            NH2 = correctionMajor(NH2_old, NH2, TP)
+            #NH2 = correctionMajor(NH2_old, NH2, TP)
             
             NN2_old = NN2
-            NN2 = NN2_0 - sum(N_IC[:, 0] * A0[:, E.ind_N]) / 2 # O-atom conservation
-            NN2 = correctionMajor(NN2_old, NN2, TP)
+            NN2 = NN2_0 - sum(N_IC[:, 0] * A0[:, E.ind_N])/2 # O-atom conservation
+            #NN2 = correctionMajor(NN2_old, NN2, TP)
             
             N_IC[[S.ind_H2O, S.ind_H2], 0] = [NH2O, NH2]
             N_IC[[S.ind_O2, S.ind_N2], 0] = [NO2, NN2]
@@ -266,7 +267,6 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
             
             NP = sum(N_IC[:, 0] * (1.0 - N_IC[:, 1]))
             DeltaNP = np.linalg.norm(np.array([NP - NP_old,
-                                               x - sum(N_IC[:, 0] * A0[:, E.ind_C]),
                                                y - sum(N_IC[:, 0] * A0[:, E.ind_H]),
                                                z - sum(N_IC[:, 0] * A0[:, E.ind_O]),
                                                w - sum(N_IC[:, 0] * A0[:, E.ind_N])]))
