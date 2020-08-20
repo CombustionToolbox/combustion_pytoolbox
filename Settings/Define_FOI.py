@@ -35,10 +35,12 @@ def Define_O(self, Species=None):
 
 
 def Define_I(self, Species=None):
-    self.PD.S_Inert, self.PD.N_Inert = unpack_dict(Species)
     if Species:  # not empty, i.e., there is/are oxidizer/s in the mixture
+        self.PD.S_Inert, self.PD.N_Inert = unpack_dict(Species)
         self.PD.R_Inert = SetSpecies(
             self, self.PD.S_Inert, self.PD.N_Inert, self.PD.TR.Value)
+    else:
+        self.PD.R_Inert = 0
     if self.PD.S_Oxidizer or self.PD.S_Inert:
         self.PS.strR_Oxidizer_and_Inert.append(ComputeProperties(
             self, self.PD.R_Oxidizer + self.PD.R_Inert, self.PD.pR.Value, self.PD.TR.Value))
