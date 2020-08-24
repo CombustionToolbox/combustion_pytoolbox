@@ -133,10 +133,21 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
                               for minor, alpha, beta, gamma in zip(M.minors_products, C.alpha, C.beta, C.gamma)])
             k5 = np.exp(-DG0_V / R0TP)
             DNfactor_V = 1.0 - C.alpha - (C.beta + C.omega)/2
+        elif phi < phi_c * TN.factor_c and not FLAG_SOOT: # general case of rich mixtures with hydrogens (H) and carbons (C)
+            if M.L_minor:
+                DG0_V = np.array([(species_g0(minor, TP, strThProp) - (gamma - alpha - beta/2) * g_CO2
+                              - (beta/2) * g_H2O - (2*alpha - gamma + beta/2) * g_CO) * 1e3 
+                              for minor, alpha, beta, gamma in zip(M.minors_products, C.alpha, C.beta, C.gamma)])
+            
+                k5 = np.exp(-DG0_V / R0TP)
+                DNfactor_V = 1.0 - C.alpha - (C.beta + C.omega)/2
+            DG0_IV = (g_CO + g_H2O - g_CO2) * 1e3
+            k4 = np.exp(-DG0_IV / R0TP)
+        
         # ..........
     # NESTED FUNCTIONS
     def incomplete_phi_1():
-        nonlocal N_IC, it, NP, NCO2, NH2O, NH2, NO2, NN2 
+        nonlocal N_IC, it, NP, NCO2, NH2O, NO2, NN2 
         DeltaNP = 1.0
         while np.abs(DeltaNP / NP) > C.tolN and it < itMax:
             it += 1
@@ -210,7 +221,7 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
                                                z - sum(N_IC[:, 0] * A0[:, E.ind_O]),
                                                w - sum(N_IC[:, 0] * A0[:, E.ind_N])]))
             
-        return (N_IC, DeltaNP)    
+        return (N_IC, DeltaNP, it)    
     
     def incomplete_phi_2():
         nonlocal N_IC, it, NP, NCO2, NH2O, NH2, NO2, NN2 
@@ -257,7 +268,7 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
             # Correction of the number of moles of H2O, H2 and N2 from
             # atom conservation equations
             NH2O_old = NH2O
-            NH2O = NH2O_0 - 2*NO2 + sum(N_IC[:, 0] * A0[:, E.ind_O]) # O-atom conservation
+            NH2O = NH2O_0 - 2*NO2 - sum(N_IC[:, 0] * A0[:, E.ind_O]) # O-atom conservation
             #NH2O = correctionMajor(NH2O_old, NH2O, TP)
             
             NH2_old = NH2
@@ -278,7 +289,7 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
                                                z - sum(N_IC[:, 0] * A0[:, E.ind_O]),
                                                w - sum(N_IC[:, 0] * A0[:, E.ind_N])]))
             
-        return (N_IC, DeltaNP) 
+        return (N_IC, DeltaNP, it)
     
     
     def incomplete_phi_3():
@@ -346,19 +357,123 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
                                                z - sum(N_IC[:, 0] * A0[:, E.ind_O]),
                                                w - sum(N_IC[:, 0] * A0[:, E.ind_N])]))
             
-        return (N_IC, DeltaNP)
+        return (N_IC, DeltaNP, it)
     
+    def incomplete_phi_4():
+        nonlocal N_IC, it, NP, NCO2, NCO, NH2O, NH2, NO2, NN2 
+        DeltaNP = 1.0
+        while np.abs(DeltaNP / NP) > C.tolN and it < itMax:
+            it += 1
+            # Initialization of the product matrix for incomplete combustion (IC)
+            NP_old = NP
+            N_IC_old = N_IC
+            N_IC = N0.copy()
+            """
+            In rich combustion the product mixture always contains CO2, CO,
+            H2O, H2 and N2 (in fuel-air combustion). The number of moles of
+            these species must be calculated combining the 4 atom
+            conservation equations with the equilibrium condition for
+            the inverse water-gas shift reaction
+            
+                           CO2+H2 <-IV-> H2O+CO             [k4]
+            
+            For the remaining minor species, we calculate the number of
+            moles from the equilibrium condition for the generalized
+            reactions
+            
+            (C.gamma-C.alpha-C.beta/2) CO2+(C.beta/2) H2O
+               +(2*C.alpha-C.gamma+C.beta/2) CO+(C.omega/2) N2
+                           <-V-> C_alpha H_beta O_gamma N_omega   [k5]
+            
+            or
+            
+            C.alpha CO2+(C.gamma-2*C.alpha) H2O+(C.beta/2-C.gamma+2*C.alpha) H2
+            +(C.omega/2) N2 <-VI-> C_alpha H_beta O_gamma N_omega [k6]
+        
+            Reaction V is preferred for low hydrogen content (e.g., CO
+            combustion), whereas reaction VI is preferred for low carbon
+            content (e.g., H2 combustion). In general, we shall use
+            reaction V, and leave reaction VI exclusively for H2
+            combustion.
+        
+            To estimate the ammount of O2 in the product mixture we use the
+            equilibrium condition for the reactions
+        
+            low Hydrogen:    CO2 <-I -> CO+(1/2) O2              [k1]
+            low Carbon:      H2O <-II-> H2+(1/2) O2             [k2]
+            
+            Determination of the number of moles of the minor species from
+            the equilibrium condition for the above reaction
+            """
+            # Determination of the number of moles of the minor species                    
+            if M.L_minor:
+                Ni = (k5 * NCO2**(C.gamma - C.alpha - C.beta/2) * NH2O**(C.beta/2) * NN2**(C.omega/2)
+                      * NCO**(C.beta/2 - C.gamma + 2*C.alpha) * zeta**DNfactor_V)
+                if M.major_CH4:
+                    Ni[M.ind_m_CH4] = NH2 * Ni[M.ind_m_CH3] / (Ni[M.ind_m_H] * k8)
+                Ni[Ni > NP_old] = 0.75 * Ni[Ni > NP_old]
+                for ni, minor in zip(Ni, M.ind_minor):
+                    N_IC = indexation(N_IC, N_IC_old, ni, minor, TP)
+            
+            # Correction of the number of moles of O2
+            NO2_old = NO2
+            NO2 = zeta*(k1 * NCO2/NCO)**2
+            if not NO2_old:
+                NO2 = correction(NO2_old, NO2, TP)
+            # Correction of the number of moles of CO, H2, CO2, H2O and N2 from
+            # atom conservation equations and equilibrium condition
+            a = NCO2_0 + NCO_0 - sum(N_IC[:, 0] * A0[:, E.ind_C])
+            b = NH2O_0 + NH2_0 - sum(N_IC[:, 0] * A0[:,E.ind_H])/2
+            c = NCO_0 + NH2_0 + 2*NO2 - 2*sum(N_IC[:, 0] * A0[:,E.ind_C]) - sum(N_IC[:, 0] * A0[:,E.ind_H])/2 + sum(N_IC[:, 0] * A0[:,E.ind_O])
+            d = b-c
+            
+            
+            
+            NCO2_old = NCO2
+            NCO_old = NCO
+            NH2O_old = NH2O
+            NH2_old = NH2
+            NN2_old = NN2
+            
+            NCO  = 0.5*((a + c) * k4 + d - np.sqrt((a - c)**2 * k4**2 + (2*(2*a*c + d*(a+c))) * k4 + d**2)) / (k4-1)
+            
+            NH2  = c - NCO
+            NH2O = d + NCO
+            NCO2 = a - NCO
+            NN2  = NN2_0 - sum(N_IC[:,1] * A0[:,E.ind_N])/2 # N-atom conservation
+            
+            N_IC[[S.ind_CO2, S.ind_CO], 0] = [NCO2, NCO]
+            N_IC[[S.ind_H2O, S.ind_H2], 0] = [NH2O, NH2]
+            N_IC[[S.ind_O2, S.ind_N2], 0] = [NO2, NN2]
+            N_IC[[S.ind_He, S.ind_Ar], 0] = [NHe, NAr]
+            
+            NP = sum(N_IC[:, 0] * (1.0 - N_IC[:, 1]))
+            DeltaNP = np.linalg.norm(np.array([NP - NP_old,
+                                               x - sum(N_IC[:, 0] * A0[:, E.ind_C]),
+                                               y - sum(N_IC[:, 0] * A0[:, E.ind_H]),
+                                               z - sum(N_IC[:, 0] * A0[:, E.ind_O]),
+                                               w - sum(N_IC[:, 0] * A0[:, E.ind_N])]))
+            
+        return (N_IC, DeltaNP, it)
             
     # CHEMICAL EQUILIBRIUM COMPUTATIONS
     N_IC = N0
     if phi <= 1.0: # case lean-to-stoichiometric mixtures
-        return incomplete_phi_1()
+        (N_IC, DeltaNP, it) = incomplete_phi_1()
+        print(f'Iterations {it}')
+        return (N_IC, DeltaNP)
     elif phi > 1.0 and not x and y: # case rich mixtures with only hydrogens (H)
-        return incomplete_phi_2()
+        (N_IC, DeltaNP, it) = incomplete_phi_2()
+        print(f'Iterations {it}')
+        return (N_IC, DeltaNP)
     elif (x and not y and phi < phi_c) and not FLAG_SOOT: # case rich mixtures with only carbons (C)
-        return incomplete_phi_3()
+        (N_IC, DeltaNP, it) = incomplete_phi_3()
+        print(f'Iterations {it}')
+        return (N_IC, DeltaNP)
     elif phi < phi_c * TN.factor_c and not FLAG_SOOT: # general case of rich mixtures with hydrogens (H) and carbons (C) and without soot
-        return incomplete_phi_4()
+        (N_IC, DeltaNP, it) = incomplete_phi_4()
+        print(f'Iterations {it}')
+        return (N_IC, DeltaNP)
     elif phi >= phi_c * TN.factor_c or FLAG_SOOT: # rich mixtures with soot
         if x and not y: # with only carbons (C)
             return incomplete_phi_5()
