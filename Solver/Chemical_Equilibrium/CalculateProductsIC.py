@@ -123,9 +123,16 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
     elif phi > 1.0: # case rich mixtures
         if not x and y and M.L_minor: # if there are only hydrogens (H)
             DG0_VI = np.array([(species_g0(minor, TP, strThProp) - alpha * g_CO2
-                    - (gamma - 2*alpha) * g_H2O) * 1e3 for minor, alpha, gamma in zip(M.minors_products, C.alpha, C.gamma)])
+                               - (gamma - 2*alpha) * g_H2O) * 1e3 
+                               for minor, alpha, gamma in zip(M.minors_products, C.alpha, C.gamma)])
             k6 = np.exp(-DG0_VI / R0TP)
-            DNfactor_VI = 1.0 - C.alpha - (C.beta + C.omega) / 2
+            DNfactor_VI = 1.0 - C.alpha - (C.beta + C.omega)/2
+        elif (x and not y and M.L_minor and phi < phi_c) and not FLAG_SOOT:    
+            DG0_V = np.array([(species_g0(minor, TP, strThProp) - (gamma - alpha - beta/2) * g_CO2
+                              - (beta/2) * g_H2O - (2*alpha - gamma + beta/2) * g_CO) * 1e3 
+                              for minor, alpha, beta, gamma in zip(M.minors_products, C.alpha, C.beta, C.gamma)])
+            k5 = np.exp(-DG0_V / R0TP)
+            DNfactor_V = 1.0 - C.alpha - (C.beta + C.omega)/2
         # ..........
     # NESTED FUNCTIONS
     def incomplete_phi_1():
@@ -272,6 +279,75 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
                                                w - sum(N_IC[:, 0] * A0[:, E.ind_N])]))
             
         return (N_IC, DeltaNP) 
+    
+    
+    def incomplete_phi_3():
+        nonlocal N_IC, it, NP, NCO2, NCO, NH2O, NO2, NN2 
+        DeltaNP = 1.0
+        while np.abs(DeltaNP / NP) > C.tolN and it < itMax:
+            it += 1
+            # Initialization of the product matrix for incomplete combustion (IC)
+            NP_old = NP
+            N_IC_old = N_IC
+            N_IC = N0.copy()
+            """
+            In rich combustion without hydrogen atoms the product mixture
+            contains CO2, CO and N2 (in fuel-air combustion). The number
+            of moles of these species must be calculated using the C, O
+            and N-atom conservation equations
+            
+            For the minor species, we calculate the number of moles from
+            the equilibrium condition for the generalized reaction
+            
+            (C.gamma-C.alpha-C.beta/2) CO2+(C.beta/2) H2O
+               +(2*C.alpha-C.gamma+C.beta/2) CO+(C.omega/2) N2
+                            <-V-> C_alpha H_beta O_gamma N_omega   [k5]
+            
+            with C.beta = 0 if no hydrogen atoms are present.
+            
+            Determination of the number of moles of the minor species from
+            the equilibrium condition for the above reaction
+            """
+            # Determination of the number of moles of the minor species                    
+            if M.L_minor:
+                Ni = (k5 * NCO2**(C.gamma - C.alpha - C.beta/2) * NH2O**(C.beta/2) * NN2**(C.omega/2)
+                      * NCO**(C.beta/2 - C.gamma + 2*C.alpha) * zeta**DNfactor_V)
+
+                Ni[Ni > NP_old] = 0.75 * Ni[Ni > NP_old]
+                for ni, minor in zip(Ni, M.ind_minor):
+                    N_IC = indexation(N_IC, N_IC_old, ni, minor, TP)
+            
+            # Correction of the number of moles of O2
+            NO2_old = NO2
+            NO2 = zeta*(k1 * NCO2/NCO)**2
+            if not NO2_old:
+                NO2 = correction(NO2_old, NO2, TP)
+            # Correction of the number of moles of CO2, CO and N2 from
+            # atom conservation equations
+            NCO2_old = NCO2
+            NCO2 = NCO2_0 - 2*NO2 + 3*sum(N_IC[:, 0] * A0[:, E.ind_C]) + sum(N_IC[:, 0] * A0[:, E.ind_O]) # C-atom conservation
+            #NH2O = correctionMajor(NH2O_old, NH2O, TP)
+            
+            NCO_old = NCO
+            NCO = NCO_0 + 2*NO2 - 2*sum(N_IC[:, 0] * A0[:, E.ind_C]) + sum(N_IC[:, 0] * A0[:, E.ind_O]) # O-atom conservation
+            #NH2 = correctionMajor(NH2_old, NH2, TP)
+            
+            NN2_old = NN2
+            NN2 = NN2_0 - sum(N_IC[:, 0] * A0[:, E.ind_N])/2 # O-atom conservation
+            #NN2 = correctionMajor(NN2_old, NN2, TP)
+            
+            N_IC[[S.ind_CO2, S.ind_CO], 0] = [NCO2, NCO]
+            N_IC[[S.ind_O2, S.ind_N2], 0] = [NO2, NN2]
+            N_IC[[S.ind_He, S.ind_Ar], 0] = [NHe, NAr]
+            
+            NP = sum(N_IC[:, 0] * (1.0 - N_IC[:, 1]))
+            DeltaNP = np.linalg.norm(np.array([NP - NP_old,
+                                               x - sum(N_IC[:, 0] * A0[:, E.ind_C]),
+                                               z - sum(N_IC[:, 0] * A0[:, E.ind_O]),
+                                               w - sum(N_IC[:, 0] * A0[:, E.ind_N])]))
+            
+        return (N_IC, DeltaNP)
+    
             
     # CHEMICAL EQUILIBRIUM COMPUTATIONS
     N_IC = N0

@@ -59,8 +59,8 @@ def main():
     #   User definition:
     #       e.g., 'CH4, CO, O'
 
-    # app = MinorsProducts(app, 'Soot formation')
-    app = MinorsProducts(app, 'Hydrogen')
+    app = MinorsProducts(app, 'Soot formation')
+    # app = MinorsProducts(app, 'Hydrogen')
     # PROBLEM CONDITIONS
 
     # INITIALIZATION
@@ -76,7 +76,7 @@ def main():
     app.C.l_phi = len(app.PD.phi.Value)
     for i in range(app.C.l_phi):
         # DEFINE FUEL
-        app = Define_F(app, {'H2':1})
+        app = Define_F(app, {'CO':1})
         # DEFINE OXIDIZER
         app = Define_O(app, {'O2':app.PD.phi.t / app.PD.phi.Value[i]})
         # DEFINE DILUENT/INERT
