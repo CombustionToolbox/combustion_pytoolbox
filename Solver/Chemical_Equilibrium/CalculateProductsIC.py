@@ -336,7 +336,7 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
             # Correction of the number of moles of CO2, CO and N2 from
             # atom conservation equations
             NCO2_old = NCO2
-            NCO2 = NCO2_0 - 2*NO2 + 3*sum(N_IC[:, 0] * A0[:, E.ind_C]) + sum(N_IC[:, 0] * A0[:, E.ind_O]) # C-atom conservation
+            NCO2 = NCO2_0 - 2*NO2 + 3*sum(N_IC[:, 0] * A0[:, E.ind_C]) - sum(N_IC[:, 0] * A0[:, E.ind_O]) # C-atom conservation
             #NH2O = correctionMajor(NH2O_old, NH2O, TP)
             
             NCO_old = NCO
