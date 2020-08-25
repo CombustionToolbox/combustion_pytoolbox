@@ -104,7 +104,7 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
         DG0_IX = -(g_C6H6 - 3*g_C2H2) * 1e3
         k9 = np.exp(-DG0_IX / R0TP)
         
-        DG0_X = -(species_g0('H', TP, strThProp) - species_g0('CH', TP, strThProp)) * 1e3
+        DG0_X = -(species_g0('H', TP, strThProp) + species_g0('CH', TP, strThProp)) * 1e3
         k10 = np.exp(-DG0_X / R0TP)
     
     if M.major_OH:
@@ -222,7 +222,6 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
                                                w - sum(N_IC[:, 0] * A0[:, E.ind_N])]))
             
         return (N_IC, DeltaNP, it)    
-    
     def incomplete_phi_2():
         nonlocal N_IC, it, NP, NCO2, NH2O, NH2, NO2, NN2 
         DeltaNP = 1.0
@@ -256,7 +255,7 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
 
                 if M.major_OH:
                     Ni[M.ind_m_OH] = np.sqrt(NH2 * NO2 * k11 * zeta**(-3/2))
-                Ni[Ni > NP_old] = 0.75 * Ni[Ni > NP_old]
+                Ni[Ni > NP_old] = 0.
                 for ni, minor in zip(Ni, M.ind_minor):
                     N_IC = indexation(N_IC, N_IC_old, ni, minor, TP)
             
@@ -290,8 +289,6 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
                                                w - sum(N_IC[:, 0] * A0[:, E.ind_N])]))
             
         return (N_IC, DeltaNP, it)
-    
-    
     def incomplete_phi_3():
         nonlocal N_IC, it, NP, NCO2, NCO, NH2O, NO2, NN2 
         DeltaNP = 1.0
@@ -324,7 +321,7 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
                 Ni = (k5 * NCO2**(C.gamma - C.alpha - C.beta/2) * NH2O**(C.beta/2) * NN2**(C.omega/2)
                       * NCO**(C.beta/2 - C.gamma + 2*C.alpha) * zeta**DNfactor_V)
 
-                Ni[Ni > NP_old] = 0.75 * Ni[Ni > NP_old]
+                Ni[Ni > NP_old] = 0.
                 for ni, minor in zip(Ni, M.ind_minor):
                     N_IC = indexation(N_IC, N_IC_old, ni, minor, TP)
             
@@ -358,7 +355,6 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
                                                w - sum(N_IC[:, 0] * A0[:, E.ind_N])]))
             
         return (N_IC, DeltaNP, it)
-    
     def incomplete_phi_4():
         nonlocal N_IC, it, NP, NCO2, NCO, NH2O, NH2, NO2, NN2 
         DeltaNP = 1.0
@@ -399,7 +395,7 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
             To estimate the ammount of O2 in the product mixture we use the
             equilibrium condition for the reactions
         
-            low Hydrogen:    CO2 <-I -> CO+(1/2) O2              [k1]
+            low Hydrogen:    CO2 <-I -> CO+(1/2) O2             [k1]
             low Carbon:      H2O <-II-> H2+(1/2) O2             [k2]
             
             Determination of the number of moles of the minor species from
@@ -411,10 +407,11 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
                       * NCO**(C.beta/2 - C.gamma + 2*C.alpha) * zeta**DNfactor_V)
                 if M.major_CH4:
                     Ni[M.ind_m_CH4] = NH2 * Ni[M.ind_m_CH3] / (Ni[M.ind_m_H] * k8)
-                Ni[Ni > NP_old] = 0.75 * Ni[Ni > NP_old]
+                Ni[Ni > NP_old] = 0.
                 for ni, minor in zip(Ni, M.ind_minor):
                     N_IC = indexation(N_IC, N_IC_old, ni, minor, TP)
-            
+            # Check Ni
+            # print('CHON: ', sum(N_IC[:,0] * A0[:,E.ind_C]), sum(N_IC[:,0] * A0[:,E.ind_H]), sum(N_IC[:,0] * A0[:,E.ind_O]), sum(N_IC[:,0] * A0[:,E.ind_N]))
             # Correction of the number of moles of O2
             NO2_old = NO2
             NO2 = zeta*(k1 * NCO2/NCO)**2
@@ -440,7 +437,7 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
             NH2  = c - NCO
             NH2O = d + NCO
             NCO2 = a - NCO
-            NN2  = NN2_0 - sum(N_IC[:,1] * A0[:,E.ind_N])/2 # N-atom conservation
+            NN2  = NN2_0 - sum(N_IC[:,0] * A0[:,E.ind_N])/2 # N-atom conservation
             
             N_IC[[S.ind_CO2, S.ind_CO], 0] = [NCO2, NCO]
             N_IC[[S.ind_H2O, S.ind_H2], 0] = [NH2O, NH2]
