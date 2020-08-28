@@ -12,7 +12,8 @@ import numpy as np
 import pandas as pd
 from Solver.Functions.SetSpecies import species_g0
 import pandas as pd    
-    
+import traceback
+
 def print_Dataframe(N_IC, S, it):
     print(f'\nit: {it}')
     aux = np.array(S.List_Compute_Species)
@@ -23,7 +24,7 @@ def print_Dataframe(N_IC, S, it):
 def correction(x0, x1, TP):
     # Relaxation/iteration parameters
     relax = 0.00007385775 + (0.9854897 - 0.00007385775) / (1 + (TP/4058911)**1.817875)**658457.8
-    return x0 + relax * (x1 - x0)
+    return x0 + 0.1 * relax * (x1 - x0)
 
 def indexation(N, N_old, n, index, TP):
     n_old = N_old[index, 0]
@@ -39,6 +40,12 @@ def correctionMajor(x0, x1, TP):
         x1 = 0.75 * x0
     return x1
 
+def getZeta(ProblemType, NP, pP, vP, R0TP):
+    if 'P' in ProblemType: # TP, HP, SP
+        return NP/pP
+    elif 'V' in ProblemType: # TV, EV, SV
+        return (vP * 1e-3) * 1e5 / R0TP
+    
 def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
     E, S, C, M, PD, TN, strThProp = [self.E, self.S, self.C, self.M,
                                  self.PD, self.TN, self.strThProp]
@@ -80,10 +87,7 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
     # product mixture
     NP = sum(N_CC[:, 0] * (1.0 - N_CC[:,1])) # Sum of num of moles of gases-(1-swt), with swt == condensed phase
     
-    if 'P' in PD.ProblemType: # TP, HP, SP
-        zeta = NP/pP
-    elif 'V' in PD.ProblemType: # TV, EV, SV
-        zeta = (vP * 1e-3) * 1e5 / R0TP 
+    zeta = getZeta(PD.ProblemType, NP, pP, vP, R0TP)
     # CALCULATION OF GIBBS FREE ENERGY, CONSTANTS EQUILIBRIUM AND OTHER
     g_CO2 = species_g0('CO2', TP, strThProp)
     g_CO = species_g0('CO', TP, strThProp)
@@ -143,8 +147,19 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
                 DNfactor_V = 1.0 - C.alpha - (C.beta + C.omega)/2
             DG0_IV = (g_CO + g_H2O - g_CO2) * 1e3
             k4 = np.exp(-DG0_IV / R0TP)
-        
-        # ..........
+        elif phi >=  phi_c * TN.factor_c or FLAG_SOOT:
+            if M.L_minor:
+                DG0_V = np.array([(species_g0(minor, TP, strThProp) - (gamma - alpha - beta/2) * g_CO2
+                              - (beta/2) * g_H2O - (2*alpha - gamma + beta/2) * g_CO) * 1e3 
+                              for minor, alpha, beta, gamma in zip(M.minors_products, C.alpha, C.beta, C.gamma)])
+            
+                k5 = np.exp(-DG0_V / R0TP)
+                DNfactor_V = 1.0 - C.alpha - (C.beta + C.omega)/2
+            DG0_IV = (g_CO + g_H2O - g_CO2) * 1e3
+            k4 = np.exp(-DG0_IV / R0TP)
+            DG0_VII = (g_CO2 - 2*g_CO) * 1e3
+            k7 = np.exp(-DG0_VII / R0TP)
+            mu = k7/zeta
     # NESTED FUNCTIONS
     def incomplete_phi_1():
         nonlocal N_IC, it, NP, NCO2, NH2O, NO2, NN2 
@@ -255,7 +270,7 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
 
                 if M.major_OH:
                     Ni[M.ind_m_OH] = np.sqrt(NH2 * NO2 * k11 * zeta**(-3/2))
-                Ni[Ni > NP_old] = 0.
+                Ni[Ni > NP_old] = 0.75 * Ni[Ni > NP_old]
                 for ni, minor in zip(Ni, M.ind_minor):
                     N_IC = indexation(N_IC, N_IC_old, ni, minor, TP)
             
@@ -268,15 +283,15 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
             # atom conservation equations
             NH2O_old = NH2O
             NH2O = NH2O_0 - 2*NO2 - sum(N_IC[:, 0] * A0[:, E.ind_O]) # O-atom conservation
-            #NH2O = correctionMajor(NH2O_old, NH2O, TP)
+            NH2O = correctionMajor(NH2O_old, NH2O, TP)
             
             NH2_old = NH2
             NH2 = NH2_0 + 2*NO2 + sum(N_IC[:, 0] * A0[:, E.ind_O]) - sum(N_IC[:, 0] * A0[:, E.ind_H])/2 # H-atom conservation
-            #NH2 = correctionMajor(NH2_old, NH2, TP)
+            NH2 = correctionMajor(NH2_old, NH2, TP)
             
             NN2_old = NN2
             NN2 = NN2_0 - sum(N_IC[:, 0] * A0[:, E.ind_N])/2 # O-atom conservation
-            #NN2 = correctionMajor(NN2_old, NN2, TP)
+            NN2 = correctionMajor(NN2_old, NN2, TP)
             
             N_IC[[S.ind_H2O, S.ind_H2], 0] = [NH2O, NH2]
             N_IC[[S.ind_O2, S.ind_N2], 0] = [NO2, NN2]
@@ -321,7 +336,7 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
                 Ni = (k5 * NCO2**(C.gamma - C.alpha - C.beta/2) * NH2O**(C.beta/2) * NN2**(C.omega/2)
                       * NCO**(C.beta/2 - C.gamma + 2*C.alpha) * zeta**DNfactor_V)
 
-                Ni[Ni > NP_old] = 0.
+                Ni[Ni > NP_old] = 0.75 * Ni[Ni > NP_old]
                 for ni, minor in zip(Ni, M.ind_minor):
                     N_IC = indexation(N_IC, N_IC_old, ni, minor, TP)
             
@@ -334,15 +349,15 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
             # atom conservation equations
             NCO2_old = NCO2
             NCO2 = NCO2_0 - 2*NO2 + 3*sum(N_IC[:, 0] * A0[:, E.ind_C]) - sum(N_IC[:, 0] * A0[:, E.ind_O]) # C-atom conservation
-            #NH2O = correctionMajor(NH2O_old, NH2O, TP)
+            NCO2 = correctionMajor(NCO2_old, NCO2, TP)
             
             NCO_old = NCO
             NCO = NCO_0 + 2*NO2 - 2*sum(N_IC[:, 0] * A0[:, E.ind_C]) + sum(N_IC[:, 0] * A0[:, E.ind_O]) # O-atom conservation
-            #NH2 = correctionMajor(NH2_old, NH2, TP)
+            NCO = correctionMajor(NCO_old, NCO, TP)
             
             NN2_old = NN2
             NN2 = NN2_0 - sum(N_IC[:, 0] * A0[:, E.ind_N])/2 # O-atom conservation
-            #NN2 = correctionMajor(NN2_old, NN2, TP)
+            NN2 = correctionMajor(NN2_old, NN2, TP)
             
             N_IC[[S.ind_CO2, S.ind_CO], 0] = [NCO2, NCO]
             N_IC[[S.ind_O2, S.ind_N2], 0] = [NO2, NN2]
@@ -407,7 +422,7 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
                       * NCO**(C.beta/2 - C.gamma + 2*C.alpha) * zeta**DNfactor_V)
                 if M.major_CH4:
                     Ni[M.ind_m_CH4] = NH2 * Ni[M.ind_m_CH3] / (Ni[M.ind_m_H] * k8)
-                Ni[Ni > NP_old] = 0.
+                Ni[Ni > NP_old] = 0.75 * Ni[Ni > NP_old]
                 for ni, minor in zip(Ni, M.ind_minor):
                     N_IC = indexation(N_IC, N_IC_old, ni, minor, TP)
             # Check Ni
@@ -425,7 +440,6 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
             d = b-c
             
             
-            
             NCO2_old = NCO2
             NCO_old = NCO
             NH2O_old = NH2O
@@ -433,11 +447,16 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
             NN2_old = NN2
             
             NCO  = 0.5*((a + c) * k4 + d - np.sqrt((a - c)**2 * k4**2 + (2*(2*a*c + d*(a+c))) * k4 + d**2)) / (k4-1)
-            
             NH2  = c - NCO
             NH2O = d + NCO
             NCO2 = a - NCO
             NN2  = NN2_0 - sum(N_IC[:,0] * A0[:,E.ind_N])/2 # N-atom conservation
+            
+            NCO2 = correctionMajor(NCO2_old, NCO2, TP)
+            NCO = correctionMajor(NCO_old, NCO, TP)
+            NH2O = correctionMajor(NH2O_old, NH2O, TP)
+            NH2 = correctionMajor(NH2_old, NH2, TP)
+            NN2 = correctionMajor(NN2_old, NN2, TP)
             
             N_IC[[S.ind_CO2, S.ind_CO], 0] = [NCO2, NCO]
             N_IC[[S.ind_H2O, S.ind_H2], 0] = [NH2O, NH2]
@@ -452,24 +471,176 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
                                                w - sum(N_IC[:, 0] * A0[:, E.ind_N])]))
             
         return (N_IC, DeltaNP, it)
+    def incomplete_phi_5():
+        try:
+            pass
+        except Exception as e:
+            print('MODULE NOT IMPLEMENTED', repr(e))
+    def incomplete_phi_6():
+        nonlocal N_IC, it, NP, NCgr, NCO2, NCO, NH2O, NH2, NO2, NN2, zeta, NCgr_0, NCO2_0, NCO_0, NH2O_0, NH2_0, NN2_0 
+        DeltaNP = 1.0
+        while np.abs(DeltaNP / NP) > C.tolN and it < itMax:
+            it += 1
+            # Initialization of the product matrix for incomplete combustion (IC)
+            NP_old = NP
+            N_IC_old = N_IC
+            N_IC = N0.copy()
+            """
+            In rich combustion the product mixture always contains CO2, CO,
+            H2O, H2 and N2 (in fuel-air combustion). The number of moles of
+            these species must be calculated combining the 4 atom
+            conservation equations with the equilibrium condition for
+            the inverse water-gas shift reaction
+        
+                             CO2+H2 <-IV-> H2O+CO             [k4]
+        
+            For the remaining minor species, we calculate the number of
+            moles from the equilibrium condition for the generalized
+            reactions
             
+            (C.gamma-C.alpha-C.beta/2) CO2+(C.beta/2) H2O
+               +(2*C.alpha-C.gamma+C.beta/2) CO+(C.omega/2) N2
+                            <-V-> C_alpha H_beta O_gamma N_omega   [k5]
+            
+            or
+            
+            C.alpha CO2+(C.gamma-2*C.alpha) H2O+(C.beta/2-C.gamma+2*C.alpha) H2
+            +(C.omega/2) N2 <-VI-> C_alpha H_beta O_gamma N_omega [k6]
+        
+            Reaction V is preferred for low hydrogen content (e.g., CO
+            combustion), whereas reaction VI is preferred for low carbon
+            content (e.g., H2 combustion). In general, we shall use
+            reaction V, and leave reaction VI exclusively for H2
+            combustion.
+            
+            To estimate the ammount of O2 in the product mixture we use the
+            equilibrium condition for the reactions
+        
+            low Hydrogen:    CO2 <-I -> CO+(1/2) O2             [k1]
+            low Carbon:      H2O <-II-> H2+(1/2) O2             [k2]
+            
+            Determination of the number of moles of the minor species from
+            the equilibrium condition for the above reaction
+            """
+            if t:
+                # Determination of the number of moles of the minor species                    
+                if M.L_minor:
+                    Ni = (k5 * NCO2**(C.gamma - C.alpha - C.beta/2) * NH2O**(C.beta/2) * NN2**(C.omega/2)
+                        * NCO**(C.beta/2 - C.gamma + 2*C.alpha) * zeta**DNfactor_V)
+                    if M.major_CH4:
+                        Ni[M.ind_m_CH4] = NH2 * Ni[M.ind_m_CH3] / (Ni[M.ind_m_H] * k8)
+                    Ni[Ni > NP_old] = 0.75 * Ni[Ni > NP_old]
+                    for ni, minor in zip(Ni, M.ind_minor):
+                        N_IC = indexation(N_IC, N_IC_old, ni, minor, TP)
+                # Check Ni
+                # print('CHON: ', sum(N_IC[:,0] * A0[:,E.ind_C]), sum(N_IC[:,0] * A0[:,E.ind_H]), sum(N_IC[:,0] * A0[:,E.ind_O]), sum(N_IC[:,0] * A0[:,E.ind_N]))
+                # Correction of the number of moles of O2
+                NO2_old = NO2
+                NO2 = zeta*(k1 * NCO2/NCO)**2
+                if not NO2_old:
+                    NO2 = correction(NO2_old, NO2, TP)
+                # Correction of the number of moles of Cgr, CO, H2, CO2, H2O and N2 from
+                # atom conservation equations and equilibrium condition
+                a = NCO2_0 + NCO_0 + NCgr_0 - sum(N_IC[:, 0] * A0[:, E.ind_C])
+                b = NH2O_0+NH2_0 - sum(N_IC[:, 0] * A0[:, E.ind_H])/2
+                c = 2*NCO2_0 + NCO_0 + NH2O_0 - 2*NO2 - sum(N_IC[:, 0] * A0[:, E.ind_O])
+            
+                NCO2_old = NCO2
+                NCO_old = NCO
+                NCgr_old = NCgr
+                NH2O_old = NH2O
+                NH2_old = NH2
+                NN2_old = NN2
+                
+                NCgr = np.real(1/24*(24*a+(4*(2+k4))/(k4*mu)+(2*(1+1j*np.sqrt(3))*(-4+2*k4+k4**2*(-1+6*b*mu-6*c*mu)))/(k4*(8*mu**3-6*k4*mu**3-3*k4**2*mu**3+k4**3*mu**3-18*b*k4**2*mu**4-36*c*k4**2*mu**4-9*b*k4**3*mu**4+9*c*k4**3*mu**4+np.sqrt(mu**6*((-4+2*k4+k4**2*(-1+6*b*mu-6*c*mu))**3+(-8+6*k4+k4**3*(-1+9*b*mu-9*c*mu)+3*k4**2*(1+6*b*mu+12*c*mu))**2)))**(1/3))+(2*1j*(1j+np.sqrt(3))*(8*mu**3-6*k4*mu**3-3*k4**2*mu**3+k4**3*mu**3-18*b*k4**2*mu**4-36*c*k4**2*mu**4-9*b*k4**3*mu**4+9*c*k4**3*mu**4+np.sqrt(mu**6*((-4+2*k4+k4**2*(-1+6*b*mu-6*c*mu))**3+(-8+6*k4+k4**3*(-1+9*b*mu-9*c*mu)+3*k4**2*(1+6*b*mu+12*c*mu))**2)))**(1/3))/(k4*mu**2)-(1/(6*k4**2*mu**3))*((2*(2+k4)*mu+((1+1j*np.sqrt(3))*mu**2*(-4+2*k4+k4**2*(-1+6*b*mu-6*c*mu)))/(8*mu**3-6*k4*mu**3-3*k4**2*mu**3+k4**3*mu**3-18*b*k4**2*mu**4-36*c*k4**2*mu**4-9*b*k4**3*mu**4+9*c*k4**3*mu**4+np.sqrt(mu**6*((-4+2*k4+k4**2*(-1+6*b*mu-6*c*mu))**3+(-8+6*k4+k4**3*(-1+9*b*mu-9*c*mu)+3*k4**2*(1+6*b*mu+12*c*mu))**2)))**(1/3)+1j*(1j+np.sqrt(3))*(8*mu**3-6*k4*mu**3-3*k4**2*mu**3+k4**3*mu**3-18*b*k4**2*mu**4-36*c*k4**2*mu**4-9*b*k4**3*mu**4+9*c*k4**3*mu**4+np.sqrt(mu**6*((-4+2*k4+k4**2*(-1+6*b*mu-6*c*mu))**3+(-8+6*k4+k4**3*(-1+9*b*mu-9*c*mu)+3*k4**2*(1+6*b*mu+12*c*mu))**2)))**(1/3))**2))) 
+                NCO2 = (1 + 2*a*mu - 2*mu*NCgr - np.sqrt(1 + 4*a*mu - 4*mu*NCgr))/(2*mu)
+                
+                if not np.real(NCO2):
+                    NCgr = np.real(1/6*(6*a+(2+k4)/(k4*mu)+(4-2*k4+k4**2*(1-6*b*mu+6*c*mu))/(k4*(8*mu**3-6*k4*mu**3-3*k4**2*mu**3+k4**3*mu**3-18*b*k4**2*mu**4-36*c*k4**2*mu**4-9*b*k4**3*mu**4+9*c*k4**3*mu**4+np.sqrt(mu**6*((-4+2*k4+k4**2*(-1+6*b*mu-6*c*mu))**3+(-8+6*k4+k4**3*(-1+9*b*mu-9*c*mu)+3*k4**2*(1+6*b*mu+12*c*mu))**2)))**(1/3))+(1/(k4*mu**2))*((8*mu**3-6*k4*mu**3-3*k4**2*mu**3+k4**3*mu**3-18*b*k4**2*mu**4-36*c*k4**2*mu**4-9*b*k4**3*mu**4+9*c*k4**3*mu**4+np.sqrt(mu**6*((-4+2*k4+k4**2*(-1+6*b*mu-6*c*mu))**3+(-8+6*k4+k4**3*(-1+9*b*mu-9*c*mu)+3*k4**2*(1+6*b*mu+12*c*mu))**2)))**(1/3))-(1/(6*k4**2*mu**3))*((2*mu+k4*mu-(mu**2*(-4+2*k4+k4**2*(-1+6*b*mu-6*c*mu)))/(8*mu**3-6*k4*mu**3-3*k4**2*mu**3+k4**3*mu**3-18*b*k4**2*mu**4-36*c*k4**2*mu**4-9*b*k4**3*mu**4+9*c*k4**3*mu**4+np.sqrt(mu**6*((-4+2*k4+k4**2*(-1+6*b*mu-6*c*mu))**3+(-8+6*k4+k4**3*(-1+9*b*mu-9*c*mu)+3*k4**2*(1+6*b*mu+12*c*mu))**2)))**(1/3)+(8*mu**3-6*k4*mu**3-3*k4**2*mu**3+k4**3*mu**3-18*b*k4**2*mu**4-36*c*k4**2*mu**4-9*b*k4**3*mu**4+9*c*k4**3*mu**4+np.sqrt(mu**6*((-4+2*k4+k4**2*(-1+6*b*mu-6*c*mu))**3+(-8+6*k4+k4**3*(-1+9*b*mu-9*c*mu)+3*k4**2*(1+6*b*mu+12*c*mu))**2)))**(1/3))**2)))
+                    NCO2 = (1 + 2*a*mu - 2*mu*NCgr - np.sqrt(1 + 4*a*mu - 4*mu*NCgr))/(2*mu)
+                    
+                NCO = (-1 + np.sqrt(1 + 4*a*mu - 4*mu*NCgr))/(2*mu)
+                NH2O = c - 2*NCO2 - NCO
+                NH2 = b - NH2O
+                NN2  = NN2_0 - sum(N_IC[:,0] * A0[:,E.ind_N])/2 # N-atom conservation
+                
+                NCO2 = correctionMajor(NCO2_old, NCO2, TP)
+                NCO = correctionMajor(NCO_old, NCO, TP)
+                NH2O = correctionMajor(NH2O_old, NH2O, TP)
+                NH2 = correctionMajor(NH2_old, NH2, TP)
+                NN2 = correctionMajor(NN2_old, NN2, TP)
+            
+            if NCgr <= 1e-5:
+                if t:
+                    NCgr = 0.
+                    if it > 1:
+                        NCO_0  = NCO_old
+                        NCO2_0 = NCO2_old
+                        NH2O_0 = NH2O_old
+                        NH2_0  = NH2_old
+                        NN2_0  = NN2_old
+                        NO2_0  = NO2_old
+                        NCgr_0 = NCgr_old
+                    
+                        N_minor_C_0 = sum(N_IC_old[:, 0] * A0[:, E.ind_C]) - NCO2_0 - NCO_0 - NCgr_0
+                        N_minor_H_0 = sum(N_IC_old[:, 0] * A0[:, E.ind_H]) - 2*NH2O_0 - 2*NH2_0
+                        N_minor_O_0 = sum(N_IC_old[:, 0] * A0[:, E.ind_O]) - 2*NO2_0 - 2*NCO2_0 - NCO_0 - NH2O_0
+                        N_minor_N_0 = sum(N_IC_old[:, 0] * A0[:, E.ind_N]) - 2*NN2_0
+                        
+                        N_minor_C_0_nswt = sum(N_IC_old[:, 0] * A0[:, E.ind_C] * (1 - N_IC[:, 9])) - NCO2_0 - NCO_0 - NCgr_0
+                        N_minor_H_0_nswt = sum(N_IC_old[:, 0] * A0[:, E.ind_H] * (1 - N_IC[:, 9])) - 2*NH2O_0 - 2*NH2_0
+                        N_minor_O_0_nswt = sum(N_IC_old[:, 0] * A0[:, E.ind_O] * (1 - N_IC[:, 9])) - 2*NO2_0 - 2*NCO2_0 - NCO_0 - NH2O_0
+                        N_minor_N_0_nswt = sum(N_IC_old[:, 0] * A0[:, E.ind_N] * (1 - N_IC[:, 9])) - 2*NN2_0
+                    else:
+                        N_minor_C_0 = 0.
+                        N_minor_H_0 = 0.
+                        N_minor_O_0 = 0.
+                        N_minor_N_0 = 0.
+
+                        N_minor_C_0_nswt = 0.
+                        N_minor_H_0_nswt = 0.
+                        N_minor_O_0_nswt = 0.
+                        N_minor_N_0_nswt = 0.
+                    
+                    NP_old = N_minor_C_0_nswt + N_minor_H_0_nswt + N_minor_O_0_nswt + N_minor_N_0_nswt + y/4 + 0.5 + (NH2_0 + NCO_0 + z + w)/2 + NHe + NAr
+                    NP_old = 0.5 * (NP + NP_old)
+                    zeta = getZeta(PD.ProblemType, NP, pP, vP, R0TP)
+                    
+                    NCO2 = NCO2_0
+                    NCO = NCO_0
+                    NH2O = NH2O_0
+                    NH2 = NH2_0
+                    
+            N_IC[[S.ind_CO2, S.ind_CO], 0] = [NCO2, NCO]
+            N_IC[[S.ind_H2O, S.ind_H2], 0] = [NH2O, NH2]
+            N_IC[[S.ind_O2, S.ind_N2], 0] = [NO2, NN2]
+            N_IC[[S.ind_He, S.ind_Ar], 0] = [NHe, NAr]
+            
+            NP = sum(N_IC[:, 0] * (1.0 - N_IC[:, 1]))
+            DeltaNP = np.linalg.norm(np.array([NP - NP_old,
+                                               x - sum(N_IC[:, 0] * A0[:, E.ind_C]),
+                                               y - sum(N_IC[:, 0] * A0[:, E.ind_H]),
+                                               z - sum(N_IC[:, 0] * A0[:, E.ind_O]),
+                                               w - sum(N_IC[:, 0] * A0[:, E.ind_N])]))
+            
+        return (N_IC, DeltaNP, it)        
     # CHEMICAL EQUILIBRIUM COMPUTATIONS
     N_IC = N0
     if phi <= 1.0: # case lean-to-stoichiometric mixtures
         (N_IC, DeltaNP, it) = incomplete_phi_1()
-        print(f'Iterations {it}')
+        # print(f'Iterations {it}')
         return (N_IC, DeltaNP)
     elif phi > 1.0 and not x and y: # case rich mixtures with only hydrogens (H)
         (N_IC, DeltaNP, it) = incomplete_phi_2()
-        print(f'Iterations {it}')
+        # print(f'Iterations {it}')
         return (N_IC, DeltaNP)
     elif (x and not y and phi < phi_c) and not FLAG_SOOT: # case rich mixtures with only carbons (C)
         (N_IC, DeltaNP, it) = incomplete_phi_3()
-        print(f'Iterations {it}')
+        # print(f'Iterations {it}')
         return (N_IC, DeltaNP)
     elif phi < phi_c * TN.factor_c and not FLAG_SOOT: # general case of rich mixtures with hydrogens (H) and carbons (C) and without soot
         (N_IC, DeltaNP, it) = incomplete_phi_4()
-        print(f'Iterations {it}')
+        # print(f'Iterations {it}')
         return (N_IC, DeltaNP)
     elif phi >= phi_c * TN.factor_c or FLAG_SOOT: # rich mixtures with soot
         if x and not y: # with only carbons (C)

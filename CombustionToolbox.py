@@ -69,12 +69,13 @@ def main():
     # PROBLEM TYPE AND CONDITIONS
     app.PD.TR.Value = 300.  # [K]
     app.PD.pR.Value = 1.   # [bar]
-    app.PD.phi.Value = np.arange(0.5, 4.0, 0.1)  # [-]
-    app.PD.phi.Value = [1.2]  # [-]
+    # app.PD.phi.Value = np.arange(0.5, 2.5, 0.05)  # [-]
+    app.PD.phi.Value = [2]  # [-]
     
     app.PD.TP.Value = 2000
     # COMPUTATIONS
     app.C.l_phi = len(app.PD.phi.Value)
+    start = time.time()
     for i in range(app.C.l_phi):
         # DEFINE FUEL
         app = Define_F(app, {'C3H8':1})
@@ -85,13 +86,13 @@ def main():
         # COMPUTE PROPERTIES OF THE INITIAL MIXTURE
         app = Define_FOI(app, i)
         # SOLVE PROBLEM
-        start = time.time()
         app.PS.strP.append(SolveProblemTP_TV(app, app.PS.strR[i], app.PD.phi.Value[i], app.PD.pR.Value, app.PD.TP.Value))
-        end = time.time()
         # DISPLAY RESULTS
         displayResults(app, app.PS.strR[i], app.PS.strP[i])
-        print('Execution time:', end - start, 'seconds')
+    end = time.time()
+    print('Execution time:', end - start, 'seconds')    
     return app
+    
 
 
 if __name__ == '__main__':
