@@ -23,7 +23,7 @@ from Solver.Functions.SetSpecies import SetSpecies
 from Solver.Functions.ComputeProperties import ComputeProperties
 
 def SolveProblemTP_TV(self, strR, phi, pP, TP):
-    N_CC, phi_c, FLAG_SOOT = CalculateProductsCC(self, strR.NatomE, phi, TP)
+    N_CC, phi_c, FLAG_SOOT = CalculateProductsCC(self, strR.NatomE, phi, pP, TP)
     P = SetSpecies(self, self.S.List_Compute_Species, N_CC[0, :], TP)
     if self.PD.CompleteOrIncomplete.upper() == 'INCOMPLETE':
         # N_CC matrix with number of moles and swtCondesated of each species
@@ -42,5 +42,6 @@ def SolveProblemTP_TV(self, strR, phi, pP, TP):
         strP = ComputeProperties(self, P, pP, TP)
         
     strP.error_moles = DeltaNP
+    strP.phi, strP.phi_c = [phi, phi_c]
     
     return strP
