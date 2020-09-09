@@ -21,9 +21,7 @@ class Struct:
     def __init__(self, app, SpeciesMatrix, p, T):
         R0 = app.C.R0
         A0 = app.C.A0.Value
-        ind_C = app.E.ind_C
-        ind_H = app.E.ind_H
-        ind_O = app.E.ind_O
+        ind_C, ind_H, ind_O, ind_N = [app.E.ind_C, app.E.ind_H, app.E.ind_O, app.E.ind_N]
 
         self.phi = None
         self.error_moles = None
@@ -33,6 +31,7 @@ class Struct:
         self.x = self.NatomE[ind_C]
         self.y = self.NatomE[ind_H]
         self.z = self.NatomE[ind_O]
+        self.w = self.NatomE[ind_N]
         self.N = sum(SpeciesMatrix[:, 0])
         self.hf = sum(SpeciesMatrix[:, 1])  # [kJ]
         self.DhT = sum(SpeciesMatrix[:, 2]) # [kJ]
