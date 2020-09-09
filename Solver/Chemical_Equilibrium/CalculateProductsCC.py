@@ -9,9 +9,11 @@ Last update Wen Jul 15 11:55:00 2020
 ----------------------------------------------------------------------
 """
 import numpy as np
-from Solver.Functions.SetSpecies import species_g0
+from Solver.Functions.SetSpecies import species_g0, equil_constant
+from Solver.Chemical_Equilibrium.CalculatePhic import get_phic
+from cmath import sqrt
 
-def CalculateProductsCC(self, NatomE, phi, TP):
+def CalculateProductsCC(self, NatomE, phi, pP, TP):
     Elements, factor_c, Fuel, strThProp = [
         self.E.Elements, self.TN.factor_c, self.PD.Fuel, self.strThProp]
     R0 = self.C.R0  # [J/(K mol)]
@@ -25,15 +27,18 @@ def CalculateProductsCC(self, NatomE, phi, TP):
 
     FLAG_SOOT = False
 
-    if Fuel.x and Fuel.x != Fuel.z:
-        if Fuel.eps <= 0.5 and Fuel.eps > 1e-16:
-            phi_c = (2 * (Fuel.x + Fuel.y/4 - Fuel.z/2)) / (-Fuel.z +
-                    ((2 * Fuel.eps * Fuel.x + Fuel.x + Fuel.eps * Fuel.y/2)
-                     / (1 + Fuel.eps)))  # C_x H_y O_z
-        else:
-            phi_c = 2 / (Fuel.x - Fuel.z) * (Fuel.x + Fuel.y/4 - Fuel.z/2)
-    else:
-        phi_c = 1.1 * phi
+    Ninerts = NHe + NAr
+    phi_c = get_phic(self, Ninerts, TP, pP)
+    # if Fuel.x and Fuel.x != Fuel.z:
+    #     if Fuel.eps <= 0.5 and Fuel.eps > 1e-16:
+    #         phi_c = (2 * (Fuel.x + Fuel.y/4 - Fuel.z/2)) / (-Fuel.z +
+    #                 ((2 * Fuel.eps * Fuel.x + Fuel.x + Fuel.eps * Fuel.y/2)
+    #                  / (1 + Fuel.eps)))  # C_x H_y O_z
+    #     else:
+    #         phi_c = 2/Fuel.x * (Fuel.x + Fuel.y/4 - Fuel.z/2)
+    # else:
+    #     phi_c = 1.1 * phi
+    
     
     if phi <= 1.0: # Lean or stoichiometric mixtures
         NCO2 = x
@@ -62,8 +67,8 @@ def CalculateProductsCC(self, NatomE, phi, TP):
             """
             DG0 = (species_g0('CO', TP, strThProp)
                    + species_g0('H2O', TP, strThProp)
-                   - species_g0 ('CO2', TP, strThProp)) * 1000
-            k4 = np.exp(-DG0 / (R0 * TP))
+                   - species_g0 ('CO2', TP, strThProp)) * 1e3
+            k4 = equil_constant(DG0, TP, R0)
             
             NCO = round((1/4) * (6*k4*x + k4*y - 2*k4*z - 4*x + 2*z
                             - np.sqrt(24*k4*x*z + 16*x**2 - 16*x*z - 16*k4*x**2 +
@@ -84,11 +89,10 @@ def CalculateProductsCC(self, NatomE, phi, TP):
             
             CO2+H2 <-IV-> CO+H2O
             """
-            
             DG0 = (species_g0('CO2', TP, strThProp) - 2*species_g0('CO', TP, strThProp)) * 1000
-            k7 = np.exp(-DG0 / (R0 * TP))
+            k7 = equil_constant(DG0, TP, R0)
             DG0 = (species_g0('CO', TP, strThProp) + species_g0('H2O', TP, strThProp) - species_g0('CO2', TP, strThProp)) * 1000
-            k4 = np.exp(-DG0 / (R0 * TP))
+            k4 = equil_constant(DG0, TP, R0)
             
             zeta = 1.0
             mu = k7 / zeta
@@ -98,8 +102,8 @@ def CalculateProductsCC(self, NatomE, phi, TP):
             a2 = 4*k7**2 * zeta
             a3 = 2*k4*z / zeta
             
-            NCO = np.real(-(a1/(3*a2))-(2**(1/3)*(-a1**2-3*a0*a2))/(3*a2*(-2*a1**3-9*a0*a1*a2+27*a2**2*a3+np.sqrt(-4*(a1**2+3*a0*a2)**3+(2*a1**3+9*a0*a1*a2-27*a2**2*a3)**2))**(1/3))+(-2*a1**3-9*a0*a1*a2+27*a2**2*a3+np.sqrt(-4*(a1**2+3*a0*a2)**3+(2*a1**3+9*a0*a1*a2-27*a2**2*a3)**2))**(1/3)/(3*2**(1/3)*a2))
-            
+            NCO = np.real(-(a1/(3*a2))-(2**(1/3)*(-a1**2-3*a0*a2))/(3*a2*(-2*a1**3-9*a0*a1*a2+27*a2**2*a3+sqrt(-4*(a1**2+3*a0*a2)**3+(2*a1**3+9*a0*a1*a2-27*a2**2*a3)**2))**(1/3))+(-2*a1**3-9*a0*a1*a2+27*a2**2*a3+sqrt(-4*(a1**2+3*a0*a2)**3+(2*a1**3+9*a0*a1*a2-27*a2**2*a3)**2))**(1/3)/(3*2**(1/3)*a2))
+
             NCO2 = mu*NCO**2
             NCgr = x - NCO2 - NCO
             NH2O = z - 2*NCO2 - NCO

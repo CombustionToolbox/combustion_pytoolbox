@@ -101,7 +101,8 @@ class App:
             self.firstrow = True
             self.mintol_display = 1e-8
             self.mintol = 1e-5
-            self.tolN = 1e-14  # Tolerance for the segregated numerical method
+            self.tolN = 1e-14  # Tolerance of the segregated numerical method
+            self.tolPhiSoot = 1e-6  # Tolerance of the soot formation equivalence ratio numerical method
 
         class A0:
             def __init__(self):
@@ -142,7 +143,7 @@ class App:
             self.TR = self.TR()
             self.TP = self.TP()
             self.pR = self.pR()
-
+            self.proportion_N2_O2 = None
         class Phi:
             def __init__(self):
                 self.Description = "Equivalence ratio"
@@ -154,6 +155,7 @@ class App:
                 self.x = None  # C atoms in the fuel mixture
                 self.y = None  # H atoms in the fuel mixture
                 self.z = None  # O atoms in the fuel mixture
+                self.w = None  # N atoms in the fuel mixture
                 self.eps = 0.
 
         class TR:

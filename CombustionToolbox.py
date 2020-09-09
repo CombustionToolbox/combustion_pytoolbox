@@ -70,7 +70,7 @@ def main():
     app.PD.TR.Value = 300.  # [K]
     app.PD.pR.Value = 1.   # [bar]
     # app.PD.phi.Value = np.arange(0.5, 2.5, 0.05)  # [-]
-    app.PD.phi.Value = [2]  # [-]
+    app.PD.phi.Value = [4]  # [-]
     
     app.PD.TP.Value = 2000
     # COMPUTATIONS
@@ -78,11 +78,12 @@ def main():
     start = time.time()
     for i in range(app.C.l_phi):
         # DEFINE FUEL
-        app = Define_F(app, {'C3H8':1})
+        app = Define_F(app, {'CH4':1})
         # DEFINE OXIDIZER
         app = Define_O(app, {'O2':app.PD.phi.t / app.PD.phi.Value[i]})
         # DEFINE DILUENT/INERT
-        app = Define_I(app, {'N2':app.PD.phi.t / app.PD.phi.Value[i] * 79/21})
+        app.PD.proportion_N2_O2 = 79/21
+        app = Define_I(app, {'N2':app.PD.phi.t / app.PD.phi.Value[i] * app.PD.proportion_N2_O2})
         # COMPUTE PROPERTIES OF THE INITIAL MIXTURE
         app = Define_FOI(app, i)
         # SOLVE PROBLEM
@@ -90,7 +91,7 @@ def main():
         # DISPLAY RESULTS
         displayResults(app, app.PS.strR[i], app.PS.strP[i])
     end = time.time()
-    print('Execution time:', end - start, 'seconds')    
+    print('Execution time:', end - start, 'seconds')
     return app
     
 
