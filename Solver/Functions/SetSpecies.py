@@ -68,3 +68,6 @@ def species_g0(species, T, strThProp):
 
 def species_s0(species, T, strThProp):
     return strThProp[species].s0curve(T) / 1000.  # [kJ/mol K]
+
+def equil_constant(DG0, TP, R0):
+    return np.exp(-DG0 / (R0 * TP))
