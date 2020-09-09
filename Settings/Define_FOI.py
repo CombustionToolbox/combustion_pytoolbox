@@ -22,6 +22,7 @@ def Define_F(self, Species=None):
         self.PD.Fuel.x = self.PS.strR_Fuel.NatomE[self.E.ind_C]
         self.PD.Fuel.y = self.PS.strR_Fuel.NatomE[self.E.ind_H]
         self.PD.Fuel.z = self.PS.strR_Fuel.NatomE[self.E.ind_O]
+        self.PD.Fuel.w = self.PS.strR_Fuel.NatomE[self.E.ind_N]
         self.PD.phi.t = self.PD.Fuel.x + self.PD.Fuel.y / 4 - self.PD.Fuel.z / 2
     return self
 
