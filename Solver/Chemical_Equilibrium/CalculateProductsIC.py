@@ -11,8 +11,9 @@ Last update Fri Jul 17 12:54:00 2020
 import numpy as np
 import pandas as pd    
 import traceback
-from Solver.Functions.SetSpecies import species_g0
 from cmath import sqrt
+from Solver.Functions.SetSpecies import SetSpecies, species_g0
+from .CalculateProductsCC import CalculateProductsCC
 
 def print_Dataframe(N_IC, S, it):
     print(f'\nit: {it}')
@@ -572,47 +573,41 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
                 NH2 = correctionMajor(NH2_old, NH2, TP)
                 NN2 = correctionMajor(NN2_old, NN2, TP)
             
-            if NCgr <= 1e-5:
+            if NCgr <= 1e-5 and it == 1:
+                NCgr = 0.
                 if t:
-                    NCgr = 0.
-                    if it > 1:
-                        NCO_0  = NCO_old
-                        NCO2_0 = NCO2_old
-                        NH2O_0 = NH2O_old
-                        NH2_0  = NH2_old
-                        NN2_0  = NN2_old
-                        NO2_0  = NO2_old
-                        NCgr_0 = NCgr_old
+                    N_CC, phi_c, FLAG_SOOT = CalculateProductsCC(self, NatomE, phi, pP, TP)
+                    P = SetSpecies(self, self.S.List_Compute_Species, N_CC[0, :], TP)
+                    N_CC = P[:, [0, 9]]
                     
-                        N_minor_C_0 = sum(N_IC_old[:, 0] * A0[:, E.ind_C]) - NCO2_0 - NCO_0 - NCgr_0
-                        N_minor_H_0 = sum(N_IC_old[:, 0] * A0[:, E.ind_H]) - 2*NH2O_0 - 2*NH2_0
-                        N_minor_O_0 = sum(N_IC_old[:, 0] * A0[:, E.ind_O]) - 2*NO2_0 - 2*NCO2_0 - NCO_0 - NH2O_0
-                        N_minor_N_0 = sum(N_IC_old[:, 0] * A0[:, E.ind_N]) - 2*NN2_0
-                        
-                        N_minor_C_0_nswt = sum(N_IC_old[:, 0] * A0[:, E.ind_C] * (1 - N_IC[:, 1])) - NCO2_0 - NCO_0 - NCgr_0
-                        N_minor_H_0_nswt = sum(N_IC_old[:, 0] * A0[:, E.ind_H] * (1 - N_IC[:, 1])) - 2*NH2O_0 - 2*NH2_0
-                        N_minor_O_0_nswt = sum(N_IC_old[:, 0] * A0[:, E.ind_O] * (1 - N_IC[:, 1])) - 2*NO2_0 - 2*NCO2_0 - NCO_0 - NH2O_0
-                        N_minor_N_0_nswt = sum(N_IC_old[:, 0] * A0[:, E.ind_N] * (1 - N_IC[:, 1])) - 2*NN2_0
-                    else:
-                        N_minor_C_0 = 0.
-                        N_minor_H_0 = 0.
-                        N_minor_O_0 = 0.
-                        N_minor_N_0 = 0.
-
-                        N_minor_C_0_nswt = 0.
-                        N_minor_H_0_nswt = 0.
-                        N_minor_O_0_nswt = 0.
-                        N_minor_N_0_nswt = 0.
+                    it = 0
                     
-                    # NP_old = N_minor_C_0_nswt + N_minor_H_0_nswt + N_minor_O_0_nswt + N_minor_N_0_nswt + y/4 + (NH2_0 + NCO_0 + z + w)/2 + NHe + NAr
-                    NP_old = N_minor_C_0_nswt + N_minor_H_0_nswt + N_minor_O_0_nswt + N_minor_N_0_nswt + NN2_0 + NCO_0 + NCO2_0 + NH2O_0 + NH2_0 + NO2_0 + NHe + NAr
-                    
+                    # Number of moles of the major species in the product mixture under the
+                    # assumption of complete combustion (CC), denoted by subscript _0
+                    NCO2_0 = N_CC[S.ind_CO2, 0]
+                    NCO_0  = N_CC[S.ind_CO, 0]
+                    NH2O_0 = N_CC[S.ind_H2O, 0]
+                    NH2_0  = N_CC[S.ind_H2, 0]
+                    NO2_0  = N_CC[S.ind_O2, 0]
+                    NN2_0  = N_CC[S.ind_N2, 0]
+                    NCgr_0 = N_CC[S.ind_Cgr, 0]
+                    # Initial guess for the number of moles of the major species in the
+                    # product species under the assumption of incomplete combustion (IC)
+                    NCO2   = NCO2_0
+                    NCO    = NCO_0
+                    NH2O   = NH2O_0
+                    NH2    = NH2_0
+                    NO2    = NO2_0
+                    NN2    = NN2_0
+                    NCgr   = NCgr_0
+                    # Initial guess for the overall number of moles of gaseous species in the
+                    # product mixture
+                    NP = sum(N_CC[:, 0] * (1.0 - N_CC[:,1])) # Sum of num of moles of gases-(1-swt), with swt == condensed phase
                     zeta = getZeta(PD.ProblemType, NP, pP, vP, R0TP)
+                    # Correction to the initial guess of oxygene moles and overall number of moles
+                    NO2 = NO2_0 + ((NH2O * k2 + NCO2 * k1) / 2)**(2/3) * zeta**(1/3)
+                    NP += NO2 - NO2_0
                     
-                    NCO2 = NCO2_0
-                    NCO = NCO_0
-                    NH2O = NH2O_0
-                    NH2 = NH2_0
 
                 # Determination of the number of moles of the minor species                    
                 if M.L_minor:
@@ -632,9 +627,9 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
                     NO2 = correction(NO2_old, NO2, TP)
                 # Correction of the number of moles of CO, H2, CO2, H2O and N2 from
                 # atom conservation equations and equilibrium condition
-                a = NCO2_0 + NCO_0 + NCgr_0 + N_minor_C_0 - sum(N_IC[:, 0] * A0[:, E.ind_C])
-                b = NH2O_0 + NH2_0 + N_minor_H_0/2 - sum(N_IC[:, 0] * A0[:,E.ind_H])/2
-                c = NCO_0 + NH2_0 + (2*NCgr_0 + 2*N_minor_C_0 + N_minor_H_0/2 - N_minor_O_0) + 2*(NO2 -NO2_0) - 2*sum(N_IC[:, 0] * A0[:,E.ind_C]) - sum(N_IC[:, 0] * A0[:,E.ind_H])/2 + sum(N_IC[:, 0] * A0[:,E.ind_O])
+                a = NCO2_0 + NCO_0 - sum(N_IC[:, 0] * A0[:, E.ind_C])
+                b = NH2O_0 + NH2_0 - sum(N_IC[:, 0] * A0[:,E.ind_H])/2
+                c = NCO_0 + NH2_0 + 2*(NO2 -NO2_0) - 2*sum(N_IC[:, 0] * A0[:,E.ind_C]) - sum(N_IC[:, 0] * A0[:,E.ind_H])/2 + sum(N_IC[:, 0] * A0[:,E.ind_O])
                 d = b-c
                 
                 NCO2_old = NCO2
@@ -647,15 +642,13 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
                 NH2  = c - NCO
                 NH2O = d + NCO
                 NCO2 = a - NCO
-                NN2  = NN2_0 + N_minor_N_0/2 - sum(N_IC[:,0] * A0[:,E.ind_N])/2 # N-atom conservation
+                NN2  = NN2_0 - sum(N_IC[:,0] * A0[:,E.ind_N])/2 # N-atom conservation
                 
-                NCO2 = NCO2_old + 0.001*relax(TP)*(NCO2 - NCO2_old)
-                NH2O = NH2O_old + 0.001*relax(TP)*(NH2O - NH2O_old)
-                
+                NCO2 = correctionMajor(NCO2_old, NCO2, TP)
+                NH2O = correctionMajor(NH2O_old, NH2O, TP)
                 NCO = correctionMajor(NCO_old, NCO, TP)
                 NH2 = correctionMajor(NH2_old, NH2, TP)
                 NN2 = correctionMajor(NN2_old, NN2, TP)
-                NCgr = correctionMajor(NCgr_old, NCgr, TP)
             
                     
             N_IC[[S.ind_CO2, S.ind_CO, S.ind_Cgr], 0] = [NCO2, NCO, NCgr]

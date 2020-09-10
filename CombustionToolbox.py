@@ -69,10 +69,10 @@ def main():
     # PROBLEM TYPE AND CONDITIONS
     app.PD.TR.Value = 300.  # [K]
     app.PD.pR.Value = 1.   # [bar]
-    # app.PD.phi.Value = np.arange(0.5, 2.5, 0.05)  # [-]
-    app.PD.phi.Value = [4]  # [-]
+    # app.PD.phi.Value = np.arange(0.5, 3, 0.05)  # [-]
+    app.PD.phi.Value = [5]  # [-]
     
-    app.PD.TP.Value = 2000
+    app.PD.TP.Value = 1000
     # COMPUTATIONS
     app.C.l_phi = len(app.PD.phi.Value)
     start = time.time()
