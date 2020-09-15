@@ -21,7 +21,7 @@ from .CalculateProductsCC import CalculateProductsCC
 from .CalculateProductsIC import CalculateProductsIC
 from Solver.Functions.SetSpecies import SetSpecies
 from Solver.Functions.ComputeProperties import ComputeProperties
-
+from Solver.Chemical_Equilibrium.GibbsMinimization import equilibrium
 def SolveProblemTP_TV(self, strR, phi, pP, TP):
     N_CC, phi_c, FLAG_SOOT = CalculateProductsCC(self, strR.NatomE, phi, pP, TP)
     P = SetSpecies(self, self.S.List_Compute_Species, N_CC[0, :], TP)
@@ -29,7 +29,8 @@ def SolveProblemTP_TV(self, strR, phi, pP, TP):
         # N_CC matrix with number of moles and swtCondesated of each species
         N_CC = P[:, [0, 9]]
         # Compute number of moles 
-        N_IC, DeltaNP = CalculateProductsIC(self, N_CC, phi, pP, TP, strR.v, phi_c, FLAG_SOOT)
+        # N_IC, DeltaNP = CalculateProductsIC(self, N_CC, phi, pP, TP, strR.v, phi_c, FLAG_SOOT)
+        N_IC, DeltaNP = equilibrium(self, N_CC, phi, pP, TP, strR.v)
         # Compute properties of all species
         P = SetSpecies(self, self.S.List_Compute_Species, N_IC[:, 0], TP)
     else:

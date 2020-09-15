@@ -36,7 +36,7 @@ def ContainedElements(self):
         if any(species in element for element in self.E.Elements):  # Case sensitive
             uniques.add(species)
 
-    self.E.Elements = tuple(uniques)
+    self.E.Elements = sorted(uniques)
     self.E.ElementsUpper = UpperCase(self.E.Elements)
     self.E.NE = len(self.E.Elements)
     return self.E

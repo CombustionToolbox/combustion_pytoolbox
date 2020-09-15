@@ -52,8 +52,8 @@ def getZeta(ProblemType, NP, pP, vP, R0TP):
 def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
     E, S, C, M, PD, TN, strThProp = [self.E, self.S, self.C, self.M,
                                  self.PD, self.TN, self.strThProp]
-    N0, A0 = (self.C.N0.Value, self.C.A0.Value)
-    R0TP = self.C.R0 * TP # [J/(mol)]
+    N0, A0 = (C.N0.Value, C.A0.Value)
+    R0TP = C.R0 * TP # [J/(mol)]
     
     it = 0
     itMax = 500
