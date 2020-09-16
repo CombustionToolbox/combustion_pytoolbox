@@ -31,6 +31,9 @@ def Initialize_2(self):
 def Compute_Species(self):
     # First we eliminate from the minor species list those considered major
     # species in case the user has included any of them
+    print(type(self.M.minors_products))
+    if type(self.M.minors_products) != 'list':
+        self.M.minors_products = [self.M.minors_products]
     self.M.minors_products = [minor for minor in self.M.minors_products if not minor in self.S.List_fixed_Species]
     self.S.List_Compute_Species = self.S.List_fixed_Species + self.M.minors_products
     self.S.N_Compute_Species = len(self.S.List_Compute_Species)
@@ -45,10 +48,12 @@ def Index_fixed_Species(self):
     self.ind_N2 = self.List_Compute_Species.index('N2')
     self.ind_He = self.List_Compute_Species.index('He')
     self.ind_Ar = self.List_Compute_Species.index('Ar')
-    self.ind_Cgr = self.List_Compute_Species.index('Cbgrb')
+    # self.ind_Cgr = self.List_Compute_Species.index('Cbgrb')
 
+    # self.ind_fixed = [self.ind_CO2, self.ind_CO, self.ind_H2O, self.ind_H2,
+    #                   self.ind_O2, self.ind_N2, self.ind_He, self.ind_Ar, self.ind_Cgr]
     self.ind_fixed = [self.ind_CO2, self.ind_CO, self.ind_H2O, self.ind_H2,
-                      self.ind_O2, self.ind_N2, self.ind_He, self.ind_Ar, self.ind_Cgr]
+                      self.ind_O2, self.ind_N2, self.ind_He, self.ind_Ar]
 
     return self
 
