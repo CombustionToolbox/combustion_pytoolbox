@@ -39,15 +39,18 @@ def equilibrium(self, N_CC, phi, pP, TP, vP):
     DeltaNP = 1.
     # Gibbs free energy
     G0 = -np.array([(species_g0(species, TP, strThProp)) / R0TP * 1e3 for species in S.List_Compute_Species])
-    while np.abs(DeltaNP / NP) > C.tolN and it < itMax:
+    # Construction of part of matrix A
+    A11 = np.eye(S.N_Compute_Species)
+    A12 = -np.concatenate((A0, np.ones(S.N_Compute_Species).reshape(S.N_Compute_Species, 1)), axis = 1)
+    A1 = np.concatenate((A11, A12), axis=1)
+    A22 = np.zeros((E.NE + 1, E.NE + 1))
+    A0_T = A0.transpose()
+    while DeltaNP > C.tolN and it < itMax:
         it += 1
         # Construction of matrix A
-        A11 = np.eye(S.N_Compute_Species)
-        A12 = -np.concatenate((A0, np.ones(S.N_Compute_Species).reshape(S.N_Compute_Species, 1)), axis = 1)
-        A21 = np.concatenate((N0[:, 0] * A0.transpose(), [N0[:, 0]]))
-        A22 = np.zeros((E.NE + 1, E.NE + 1))
+        A21 = np.concatenate((N0[:, 0] * A0_T, [N0[:, 0]]))
         A22[-1, -1] = -NP
-        A = np.concatenate((np.concatenate((A11, A12), axis=1), np.concatenate((A21, A22), axis=1)))
+        A = np.concatenate((A1, np.concatenate((A21, A22), axis=1)))
         # Construction of vector b
         bi_0 = np.array([NatomE[E] - sum(N0[:, 0] * A0[:, E]) for E in range(E.NE)])
         NP_0 = NP - sum(N0[:, 0] * (1.0 - N0[:, 1]))
@@ -62,11 +65,7 @@ def equilibrium(self, N_CC, phi, pP, TP, vP):
             else:
                 e.append(2/max(5*abs(x[-1]), abs(n_log_new)))
         e = min(1, min(e))
-        DeltaNP = np.linalg.norm(np.array([NP - NP_0,
-                                               x0 - sum(N0[:, 0] * A0[:, E.ind_C]),
-                                               y0 - sum(N0[:, 0] * A0[:, E.ind_H]),
-                                               z0 - sum(N0[:, 0] * A0[:, E.ind_O]),
-                                               w0 - sum(N0[:, 0] * A0[:, E.ind_N])]))        
+           
         # Apply correction
         N0_log = log(N0[:, 0]) + e * x[0:S.N_Compute_Species]
         NP_log = log(NP) + e * x[-1]
@@ -75,4 +74,15 @@ def equilibrium(self, N_CC, phi, pP, TP, vP):
         # print(f'\nit: {it}')
         # print(pd.DataFrame(N0[:, 0], index=np.array(S.List_Compute_Species)))
         NP = exp(NP_log)
-    return (N0, e)
+        
+        # DeltaNP = np.linalg.norm(np.array([NP - NP_0,
+        #                                        x0 - sum(N0[:, 0] * A0[:, E.ind_C]),
+        #                                        y0 - sum(N0[:, 0] * A0[:, E.ind_H]),
+        #                                        z0 - sum(N0[:, 0] * A0[:, E.ind_O]),
+        #                                        w0 - sum(N0[:, 0] * A0[:, E.ind_N])]))
+        
+        DeltaN1 = max(np.array([n * abs(n_log) / NP * (1 - n_swt) for n, n_log, n_swt in zip(N0[:, 0], x[0:S.N_Compute_Species], N0[:, 1])]))
+        DeltaN2 = max(np.array([abs(n_log) / NP * n_swt for n, n_log, n_swt in zip(N0[:, 0], x[0:S.N_Compute_Species], N0[:, 1])]))
+        DeltaN3 = NP_0 * abs(x[-1]) / NP
+        DeltaNP = max(DeltaN1, DeltaN2, DeltaN3) 
+    return (N0, DeltaNP)
