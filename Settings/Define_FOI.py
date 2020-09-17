@@ -22,7 +22,12 @@ def add_species(self, Species):
                 # Add one row to A0 and M0 matrix, respectively
                 self.C.A0.Value = np.concatenate((self.C.A0.Value, np.zeros((1, self.E.NE))))
                 self.C.M0.Value = np.concatenate((self.C.M0.Value, np.zeros((1, 12))))
-                self.C.N0.Value = self.C.M0.Value[:, [0, 9]] 
+                # Increase one the number of species 
+                self.S.N_Compute_Species += 1
+                # Update N0 moles matrix and list of gaseouse and condensed species
+                self.C.N0.Value = self.C.M0.Value[:, [0, 9]]
+                self.S.ind_swt = list(filter(lambda i: self.C.N0.Value[i, 1] == True, range(self.S.N_Compute_Species)))
+                self.S.ind_nswt = list(filter(lambda i: self.C.N0.Value[i, 1] == False, range(self.S.N_Compute_Species)))
                 # Obtain the formula of the species
                 txFormula = self.strThProp[species].txFormula 
                 # Obtain the element matrix
@@ -32,9 +37,7 @@ def add_species(self, Species):
                 ind_Elements, atoms = (self.strThProp[species].Element_matrix[0, :], self.strThProp[species].Element_matrix[1, :])
                 # Update A0 matrix
                 for ind_Element, atom in zip(ind_Elements, atoms):
-                    self.C.A0.Value[self.S.N_Compute_Species, int(ind_Element)] = atom
-                # Increase one the number of species 
-                self.S.N_Compute_Species += 1
+                    self.C.A0.Value[self.S.N_Compute_Species-1, int(ind_Element)] = atom
     return (self.S.List_Compute_Species, self.C.M0.Value)
 
 
