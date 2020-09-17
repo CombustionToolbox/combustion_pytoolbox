@@ -31,7 +31,6 @@ def Initialize_2(self):
 def Compute_Species(self):
     # First we eliminate from the minor species list those considered major
     # species in case the user has included any of them
-    print(type(self.M.minors_products))
     if type(self.M.minors_products) != list:
         self.M.minors_products = [self.M.minors_products]
     self.M.minors_products = [minor for minor in self.M.minors_products if not minor in self.S.List_fixed_Species]
