@@ -111,12 +111,12 @@ def GenerateDatabase(self):  # self is a dictionary with Master Database
 
                 # Interpolation curves
 
-                aux.cPcurve = interp1d(aux.T, aux.cp, kind='cubic')
-                aux.cVcurve = interp1d(aux.T, aux.cv, kind='cubic')
-                aux.DeTcurve = interp1d(aux.T, aux.DeT, kind='cubic')
-                aux.DhTcurve = interp1d(aux.T, aux.DhT, kind='cubic')
-                aux.s0curve = interp1d(aux.T, aux.s0, kind='cubic')
-                aux.g0curve = interp1d(aux.T, aux.g0, kind='cubic')
+                aux.cPcurve = interp1d(aux.T, aux.cp, kind='cubic', fill_value='extrapolate')
+                aux.cVcurve = interp1d(aux.T, aux.cv, kind='cubic', fill_value='extrapolate')
+                aux.DeTcurve = interp1d(aux.T, aux.DeT, kind='cubic', fill_value='extrapolate')
+                aux.DhTcurve = interp1d(aux.T, aux.DhT, kind='cubic', fill_value='extrapolate')
+                aux.s0curve = interp1d(aux.T, aux.s0, kind='cubic', fill_value='extrapolate')
+                aux.g0curve = interp1d(aux.T, aux.g0, kind='cubic', fill_value='extrapolate')
 
                 strThProp.update({aux.name: aux})
             else:
