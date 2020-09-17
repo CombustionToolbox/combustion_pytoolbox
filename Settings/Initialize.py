@@ -81,10 +81,13 @@ class App:
             self.NameSpecies = []
             self.NSpecies = 0
             self.N_Compute_Species = 0
+            # self.List_fixed_Species = ['CO2', 'CO', 'H2O',
+            #                    'H2', 'O2', 'N2', 'He', 'Ar', 'Cbgrb']
             self.List_fixed_Species = ['CO2', 'CO', 'H2O',
-                               'H2', 'O2', 'N2', 'He', 'Ar', 'Cbgrb']
+                               'H2', 'O2', 'N2', 'He', 'Ar']
             self.Nfixed = len(self.List_fixed_Species)
-
+            self.ind_swt = []
+            self.ind_nswt = []
     class MinorsProducts:
         def __init__(self):
             self.Description = "Data of minors products"

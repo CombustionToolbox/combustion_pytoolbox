@@ -39,8 +39,9 @@ def equilibrium(self, N_CC, phi, pP, TP, vP):
     SIZE = -log(C.tolN)
     e = 0.
     DeltaNP = 1.
-    # Gibbs free energy
-    G0 = np.array([(species_g0(species, TP, strThProp)) / R0TP * 1e3 for species in S.List_Compute_Species])
+    # Dimensionless Standard Gibbs free energy 
+    g0 = -np.array([(species_g0(species, TP, strThProp)) * 1e3 for species in S.List_Compute_Species]) / R0TP
+    G0 = g0
     # Construction of part of matrix A
     A11 = np.eye(S.N_Compute_Species)
     A12 = -np.concatenate((A0, np.ones(S.N_Compute_Species).reshape(S.N_Compute_Species, 1)), axis = 1)
@@ -51,6 +52,8 @@ def equilibrium(self, N_CC, phi, pP, TP, vP):
     A11 = np.empty([E.NE, E.NE])
     while DeltaNP > 0.5*1e-5 and it < itMax:
         it += 1
+        # Gibbs free energy
+        G0[S.ind_nswt] =  g0[S.ind_nswt] / R0TP * log(N0[S.ind_nswt, 0] / NP) + log(pP)
         # Construction of matrix A
         for k in range(0, E.NE):
             for i in range(0, E.NE):

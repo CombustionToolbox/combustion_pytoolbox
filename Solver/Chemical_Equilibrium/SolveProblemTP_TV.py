@@ -21,8 +21,8 @@ from .CalculateProductsCC import CalculateProductsCC
 from .CalculateProductsIC import CalculateProductsIC
 from Solver.Functions.SetSpecies import SetSpecies
 from Solver.Functions.ComputeProperties import ComputeProperties
-from Solver.Chemical_Equilibrium.GibbsMinimization import equilibrium
-# from Solver.Chemical_Equilibrium.GibbsMinimization_Soot import equilibrium
+# from Solver.Chemical_Equilibrium.GibbsMinimization import equilibrium
+from Solver.Chemical_Equilibrium.GibbsMinimization_Soot import equilibrium
 # from Solver.Chemical_Equilibrium.GibbsMinimization_Reduced import equilibrium
 # from Solver.Chemical_Equilibrium.GibbsMinimization_Direct import equilibrium # For checks
 

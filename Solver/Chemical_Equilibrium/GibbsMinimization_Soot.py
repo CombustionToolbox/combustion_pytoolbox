@@ -38,8 +38,9 @@ def equilibrium(self, N_CC, phi, pP, TP, vP):
     SIZE = -log(C.tolN)
     e = 0.
     DeltaNP = 1.
-    # Gibbs free energy
-    G0 = -np.array([(species_g0(species, TP, strThProp)) / R0TP * 1e3 for species in S.List_Compute_Species])
+    # Dimensionless Standard Gibbs free energy 
+    g0 = -np.array([(species_g0(species, TP, strThProp)) * 1e3 for species in S.List_Compute_Species]) / R0TP
+    G0 = g0
     # Construction of part of matrix A
     A11 = np.eye(S.N_Compute_Species)
     A11[S.ind_swt, S.ind_swt] = 0. # For condensed species
@@ -50,6 +51,8 @@ def equilibrium(self, N_CC, phi, pP, TP, vP):
     A0_T = A0.transpose()
     while DeltaNP > 0.5 * 1e-5 and it < itMax:
         it += 1
+        # Gibbs free energy
+        G0[S.ind_nswt] =  g0[S.ind_nswt] / R0TP * log(N0[S.ind_nswt, 0] / NP) + log(pP)
         # Construction of matrix A
         A21[0:-1, S.ind_nswt] = N0[S.ind_nswt, 0] * A21[0:-1, S.ind_nswt]
         A21[-1, S.ind_nswt] = N0[S.ind_nswt, 0]
@@ -82,6 +85,8 @@ def equilibrium(self, N_CC, phi, pP, TP, vP):
         N0_log[S.ind_swt] = N0[S.ind_swt, 0] + e * x[S.ind_swt]
         NP_log = log(NP) + e * x[-1]
         # Apply antilog
+        N0[:, 0] = N0_log
+        N0[S.ind_nswt, 0] = exp(N0_log[S.ind_nswt])
         N0 = np.concatenate((np.array([exp(n0_log) for i, n0_log in enumerate(N0_log) if not N0[i, 1]]).reshape(S.N_Compute_Species, 1),
                              N0[:, 1].reshape(S.N_Compute_Species, 1)), axis=1)
         for i, n in enumerate(N0[:, 0]):

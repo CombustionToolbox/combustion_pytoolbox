@@ -59,11 +59,11 @@ def main():
     #   User definition:
     #       e.g., 'CH4, CO, O'
 
-    app = MinorsProducts(app, 'Soot formation')
+    # app = MinorsProducts(app, 'Soot formation')
     # app = MinorsProducts(app, 'HC/02/N2 EXTENDED')
     # app = MinorsProducts(app, 'Hydrogen')
     # app = MinorsProducts(app, 'NASA ALL')
-    # app = MinorsProducts(app) 
+    app = MinorsProducts(app) 
     # PROBLEM CONDITIONS
 
     # INITIALIZATION
@@ -74,7 +74,7 @@ def main():
     # app.PD.phi.Value = np.arange(1, 2, 0.05)  # [-]
     app.PD.phi.Value = [2]  # [-]
     
-    app.PD.TP.Value = 1500
+    app.PD.TP.Value = 3000
     # COMPUTATIONS
     app.C.l_phi = len(app.PD.phi.Value)
     start = time.time()

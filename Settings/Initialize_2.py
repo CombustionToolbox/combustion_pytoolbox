@@ -47,10 +47,13 @@ def Index_fixed_Species(self):
     self.ind_N2 = self.List_Compute_Species.index('N2')
     self.ind_He = self.List_Compute_Species.index('He')
     self.ind_Ar = self.List_Compute_Species.index('Ar')
-    self.ind_Cgr = self.List_Compute_Species.index('Cbgrb')
+    # self.ind_Cgr = self.List_Compute_Species.index('Cbgrb')
 
+    # self.ind_fixed = [self.ind_CO2, self.ind_CO, self.ind_H2O, self.ind_H2,
+    #                   self.ind_O2, self.ind_N2, self.ind_He, self.ind_Ar, self.ind_Cgr]
+    
     self.ind_fixed = [self.ind_CO2, self.ind_CO, self.ind_H2O, self.ind_H2,
-                      self.ind_O2, self.ind_N2, self.ind_He, self.ind_Ar, self.ind_Cgr]
+                      self.ind_O2, self.ind_N2, self.ind_He, self.ind_Ar]
 
     return self
 
