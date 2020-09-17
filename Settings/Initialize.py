@@ -81,10 +81,8 @@ class App:
             self.NameSpecies = []
             self.NSpecies = 0
             self.N_Compute_Species = 0
-            # self.List_fixed_Species = ['CO2', 'CO', 'H2O',
-            #                    'H2', 'O2', 'N2', 'He', 'Ar', 'Cbgrb']
             self.List_fixed_Species = ['CO2', 'CO', 'H2O',
-                               'H2', 'O2', 'N2', 'He', 'Ar']
+                               'H2', 'O2', 'N2', 'He', 'Ar', 'Cbgrb']
             self.Nfixed = len(self.List_fixed_Species)
 
     class MinorsProducts:

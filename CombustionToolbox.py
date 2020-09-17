@@ -59,11 +59,11 @@ def main():
     #   User definition:
     #       e.g., 'CH4, CO, O'
 
-    # app = MinorsProducts(app, 'Soot formation')
+    app = MinorsProducts(app, 'Soot formation')
     # app = MinorsProducts(app, 'HC/02/N2 EXTENDED')
     # app = MinorsProducts(app, 'Hydrogen')
     # app = MinorsProducts(app, 'NASA ALL')
-    app = MinorsProducts(app) 
+    # app = MinorsProducts(app) 
     # PROBLEM CONDITIONS
 
     # INITIALIZATION
