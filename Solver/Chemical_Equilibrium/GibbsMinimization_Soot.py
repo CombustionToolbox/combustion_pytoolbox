@@ -22,7 +22,7 @@ def equilibrium(self, N_CC, phi, pP, TP, vP):
     R0TP = C.R0 * TP # [J/(mol)]
     # Initialization
     NatomE = np.dot(N_CC[:, 0], A0)
-    NP_0 = np.dot(N_CC[:, 0], 1.0 - N_CC[:, 1]) # Sum of num of moles of gases-(1-swt), with swt == condensed phase
+    NP_0 = sum(N0[S.ind_nswt, 0]) # Sum of number of moles of gases
     NP_0 = 0.1
     NP = NP_0
     
@@ -77,7 +77,6 @@ def equilibrium(self, N_CC, phi, pP, TP, vP):
                 e.append(abs(-log(n/NP) - 9.2103404 / (n_log_new - x[-1])))
             else:
                 e.append(min(2/max(5*abs(x[-1]), abs(n_log_new)), math.e**2))
-                # e.append(2/max(5*abs(x[-1]), abs(n_log_new)))
         e = min(1, min(e))
            
         # Apply correction
@@ -96,12 +95,6 @@ def equilibrium(self, N_CC, phi, pP, TP, vP):
         # print(pd.DataFrame(N0[:, 0], index=np.array(S.List_Compute_Species)))
         NP = exp(NP_log)
         
-        # DeltaNP = np.linalg.norm(np.array([NP - NP_0,
-        #                                        x0 - sum(N0[:, 0] * A0[:, E.ind_C]),
-        #                                        y0 - sum(N0[:, 0] * A0[:, E.ind_H]),
-        #                                        z0 - sum(N0[:, 0] * A0[:, E.ind_O]),
-        #                                        w0 - sum(N0[:, 0] * A0[:, E.ind_N])]))
-        
         DeltaN1 = max(np.array([n * abs(n_log) / NP for n, n_log in zip(N0[S.ind_nswt, 0], x[S.ind_nswt])]))
         if S.ind_swt:
             DeltaN2 = max(np.array([abs(n_log) / NP for n, n_log in zip(N0[S.ind_swt, 0], x[S.ind_swt])]))
@@ -110,9 +103,4 @@ def equilibrium(self, N_CC, phi, pP, TP, vP):
         DeltaN3 = NP_0 * abs(x[-1]) / NP
         DeltaNP = max(DeltaN1, DeltaN2, DeltaN3) 
         
-        # DeltaN1 = max(np.array([n * abs(n_log) / NP for n, n_log in zip(N0[:, 0], x[0:S.N_Compute_Species])]))
-        # DeltaN3 = NP_0 * abs(x[-1]) / NP
-        # DeltaNP = max(DeltaN1, DeltaN3) 
-        # Deltab = [abs(bi - sum(N0[:, 0] * A0[:, i])) for i, bi in enumerate(x[S.N_Compute_Species:-1]) if bi > 1e-6]
-        # print(Deltab)
     return (N0, DeltaNP)
