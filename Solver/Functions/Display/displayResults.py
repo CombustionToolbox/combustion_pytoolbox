@@ -15,7 +15,7 @@ import pandas as pd
 def displayResults(self, *args):
     ProblemType = self.PD.ProblemType
     mintol_display = self.C.mintol_display
-    NameSpecies = self.S.List_Compute_Species
+    NameSpecies = self.S.LS
     
     strR = args[0]
     strP = args[1]

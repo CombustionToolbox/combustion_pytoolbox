@@ -16,6 +16,10 @@ def Initialize_2(self):
     self = Compute_Species(self)
     # Index fixed species
     self.S = Index_fixed_Species(self.S)
+    # Index gaseous and condensed species
+    self = list_phase_species(self, self.S.LS)
+    # Sort species: first gaseous species, secondly condensed species
+    self.S = rearrange_species(self.S)
     # Stoichiometric Matrix
     self = Stoich_Matrix(self)
     # Compute CHON equilibria for the minors products considered
@@ -33,34 +37,50 @@ def Compute_Species(self):
     # species in case the user has included any of them
     if type(self.M.minors_products) != list:
         self.M.minors_products = [self.M.minors_products]
-    self.M.minors_products = [minor for minor in self.M.minors_products if not minor in self.S.List_fixed_Species]
-    self.S.List_Compute_Species = self.S.List_fixed_Species + self.M.minors_products
-    self.S.N_Compute_Species = len(self.S.List_Compute_Species)
+    self.M.minors_products = [minor for minor in self.M.minors_products if not minor in self.S.LS_fixed]
+    self.S.LS = self.S.LS_fixed + self.M.minors_products # List compute Species
+    self.S.NS = len(self.S.LS)
     return self
+
+def list_phase_species(self, LS):
+    self.S.ind_nswt = []
+    self.S.ind_swt = []
+    for ind, species in enumerate(LS):
+        if not self.strThProp[species].swtCondensed:
+            self.S.ind_nswt.append(ind)
+        else:
+            self.S.ind_swt.append(ind)
+    # Number of gaseous species
+    self.S.NG = len(self.S.ind_nswt)
+    return self
+
+
+def rearrange_species(self):
+    self.LS = [self.LS[i] for i in self.ind_nswt + self.ind_swt]
+    return self
+
 
 def Index_fixed_Species(self):
-    self.ind_CO2 = self.List_Compute_Species.index('CO2')
-    self.ind_CO = self.List_Compute_Species.index('CO')
-    self.ind_H2O = self.List_Compute_Species.index('H2O')
-    self.ind_H2 = self.List_Compute_Species.index('H2')
-    self.ind_O2 = self.List_Compute_Species.index('O2')
-    self.ind_N2 = self.List_Compute_Species.index('N2')
-    self.ind_He = self.List_Compute_Species.index('He')
-    self.ind_Ar = self.List_Compute_Species.index('Ar')
-    # self.ind_Cgr = self.List_Compute_Species.index('Cbgrb')
-
-    # self.ind_fixed = [self.ind_CO2, self.ind_CO, self.ind_H2O, self.ind_H2,
-    #                   self.ind_O2, self.ind_N2, self.ind_He, self.ind_Ar, self.ind_Cgr]
+    """ List of fixed gaseous species """
+    self.ind_CO2 = self.LS.index('CO2')
+    self.ind_CO = self.LS.index('CO')
+    self.ind_H2O = self.LS.index('H2O')
+    self.ind_H2 = self.LS.index('H2')
+    self.ind_O2 = self.LS.index('O2')
+    self.ind_N2 = self.LS.index('N2')
+    self.ind_He = self.LS.index('He')
+    self.ind_Ar = self.LS.index('Ar')
+    self.ind_Cgr = self.LS.index('Cbgrb')
     
     self.ind_fixed = [self.ind_CO2, self.ind_CO, self.ind_H2O, self.ind_H2,
-                      self.ind_O2, self.ind_N2, self.ind_He, self.ind_Ar]
-
+                      self.ind_O2, self.ind_N2, self.ind_He, self.ind_Ar, self.ind_Cgr]
     return self
 
+
 def Stoich_Matrix(self):
-    self.C.A0.Value = np.zeros((self.S.N_Compute_Species, self.E.NE))
-    self.C.M0.Value = np.zeros((self.S.N_Compute_Species, 12))
-    for i, species in enumerate(self.S.List_Compute_Species):
+    self.C.A0.Value = np.zeros((self.S.NS, self.E.NE))
+    self.C.M0.Value = np.zeros((self.S.NS, 12))
+    for i, species in enumerate(self.S.LS):
         txFormula = self.strThProp[species].txFormula
         self.strThProp[species].Element_matrix = set_element_matrix(
             txFormula, self.E.ElementsUpper)
@@ -79,7 +99,7 @@ def Compute_minors_species(self):
         self.M.L_minor = len(self.M.minors_products)
         if self.M.L_minor > 0:
             # Find index minors species
-            self.M.ind_minor = [self.S.List_Compute_Species.index(minor) for minor in self.M.minors_products]
+            self.M.ind_minor = [self.S.LS.index(minor) for minor in self.M.minors_products]
             # Properties of other minor species under consideration, which can
             # be written in the generic form C_alpha H_beta O_gamma N_omega
             self.C.alpha = np.array([self.C.A0.Value[ind_minor, self.E.ind_C]

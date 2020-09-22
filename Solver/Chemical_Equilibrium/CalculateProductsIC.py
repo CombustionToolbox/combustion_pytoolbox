@@ -17,7 +17,7 @@ from .CalculateProductsCC import CalculateProductsCC
 
 def print_Dataframe(N_IC, S, it):
     print(f'\nit: {it}')
-    aux = np.array(S.List_Compute_Species)
+    aux = np.array(S.LS)
     df = pd.DataFrame(N_IC[N_IC[:,0]>0.000001, 0], index=(aux[N_IC[:,0]>0.000001]))
     df.sort_values(0, ascending=False, inplace=True)
     print(df)   
@@ -577,7 +577,7 @@ def CalculateProductsIC(self, N_CC, phi, pP, TP, vP, phi_c, FLAG_SOOT):
                 NCgr = 0.
                 if t:
                     N_CC, phi_c, FLAG_SOOT = CalculateProductsCC(self, NatomE, phi, pP, TP)
-                    P = SetSpecies(self, self.S.List_Compute_Species, N_CC[0, :], TP)
+                    P = SetSpecies(self, self.S.LS, N_CC[0, :], TP)
                     N_CC = P[:, [0, 9]]
                     
                     it = 0
