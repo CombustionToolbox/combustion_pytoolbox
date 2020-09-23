@@ -39,8 +39,8 @@ def equilibrium(self, N_CC, phi, pP, TP, vP):
     e = 0.
     DeltaNP = 1.
     # Dimensionless Standard Gibbs free energy 
-    g0 = -np.array([(species_g0(species, TP, strThProp)) * 1e3 for species in S.LS]) / R0TP
-    G0 = g0
+    g0 = np.array([(species_g0(species, TP, strThProp)) * 1e3 for species in S.LS])
+    G0RT = g0/R0TP
     # Construction of part of matrix A
     A11 = np.eye(S.NS)
     A12 = -np.concatenate((A0, np.ones(S.NS).reshape(S.NS, 1)), axis = 1)
@@ -50,7 +50,7 @@ def equilibrium(self, N_CC, phi, pP, TP, vP):
     while DeltaNP > C.tolN and it < itMax:
         it += 1
         # Gibbs free energy
-        G0[S.ind_nswt] =  g0[S.ind_nswt] / R0TP * log(N0[S.ind_nswt, 0] / NP) + log(pP)
+        G0RT[S.ind_nswt] =  -(g0[S.ind_nswt] / R0TP + log(N0[S.ind_nswt, 0] / NP) + log(pP))
         # Construction of matrix A
         A21 = np.concatenate((N0[:, 0] * A0_T, [N0[:, 0]]))
         A22[-1, -1] = -NP
@@ -58,7 +58,7 @@ def equilibrium(self, N_CC, phi, pP, TP, vP):
         # Construction of vector b            
         bi_0 = np.array([NatomE[E] - np.dot(N0[:, 0], A0[:, E]) for E in range(E.NE)])
         NP_0 = NP - np.dot(N0[:, 0], 1.0 - N0[:, 1])
-        b = np.concatenate((G0, bi_0, np.array([NP_0])))
+        b = np.concatenate((G0RT, bi_0, np.array([NP_0])))
         # Solve of the linear system A*x = b
         x = np.linalg.solve(A, b)
         # Calculate correction factor
@@ -81,9 +81,9 @@ def equilibrium(self, N_CC, phi, pP, TP, vP):
         NP_log = log(NP) + e * x[-1]
         # Apply antilog
         N0 = np.concatenate((exp(N0_log).reshape(S.NS, 1), N0[:, 1].reshape(S.NS, 1)), axis=1)
-        for i, n in enumerate(N0[:, 0]):
-            if log(n/NP) < -SIZE:
-                N0[i, 0] = 0. 
+        # for i, n in enumerate(N0[:, 0]):
+        #     if log(n/NP) < -SIZE:
+        #         N0[i, 0] = 0. 
         # print(f'\nit: {it}')
         # print(pd.DataFrame(N0[:, 0], index=np.array(S.LS)))
         NP = exp(NP_log)
