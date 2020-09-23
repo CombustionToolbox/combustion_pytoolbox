@@ -66,12 +66,12 @@ def equilibrium(self, N_CC, phi, pP, TP, vP):
         x = np.linalg.solve(A, b)
         # Calculate correction factor
         e = []
-        sum_elements = np.dot(N0[:, 0], A0)
-        BRATIO = min(sum_elements)/max(sum_elements)
-        if BRATIO < 1e-5:
-            SIZE = log(1000)/BRATIO + log(1000) * 6.9077553
-        else:
-            SIZE = -log(C.tolN) 
+        # sum_elements = np.dot(N0[:, 0], A0)
+        # BRATIO = min(sum_elements)/max(sum_elements)
+        # if BRATIO < 1e-5:
+        #     SIZE = log(1000)/BRATIO + log(1000) * 6.9077553
+        # else:
+        #     SIZE = -log(C.tolN) 
         for n, n_log_new in zip(N0[:, 0], x[0:S.NS + 1]):
             if log(n)/log(NP) <= -SIZE and n_log_new >= 0.:
                 e.append(abs(-log(n/NP) - 9.2103404 / (n_log_new - x[-1])))
@@ -84,10 +84,10 @@ def equilibrium(self, N_CC, phi, pP, TP, vP):
         N0[S.ind_swt, 0] = N0[S.ind_swt, 0] + e * x[S.ind_swt]
         NP = exp(log(NP) + e * x[-1])
         # Apply antilog
-        # N0[S.ind_nswt, 0] = exp(N0[S.ind_nswt, 0])
-        # for i, n in enumerate(N0[:, 0]):
-        #     if log(n/NP) < -SIZE:
-        #         N0[i, 0] = 0. 
+        N0[S.ind_nswt, 0] = exp(N0[S.ind_nswt, 0])
+        for i, n in enumerate(N0[:, 0]):
+            if log(n/NP) < -SIZE:
+                N0[i, 0] = 0.
         # print(f'\nit: {it}')
         # print(pd.DataFrame(N0[:, 0], index=np.array(S.LS)))
         
