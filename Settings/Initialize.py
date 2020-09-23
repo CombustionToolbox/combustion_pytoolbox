@@ -84,7 +84,9 @@ class App:
             self.NS = 0
             # List of fixed gaseous and condensed species
             self.LS_fixed = ['CO2', 'CO', 'H2O', 
-                               'H2', 'O2', 'N2', 'He', 'Ar', 'Cbgrb'] 
+                               'H2', 'O2', 'N2', 'He', 'Ar', 'Cbgrb']
+            self.LS_fixed = ['CO2', 'CO', 'H2O', 
+                               'H2', 'O2', 'N2', 'He', 'Ar']  
             self.NSfixed = len(self.LS_fixed)
     class MinorsProducts:
         def __init__(self):

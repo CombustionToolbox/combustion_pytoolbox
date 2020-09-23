@@ -74,7 +74,7 @@ def main():
     # app.PD.phi.Value = np.arange(1, 2, 0.05)  # [-]
     app.PD.phi.Value = [2]  # [-]
     
-    app.PD.TP.Value = 3000
+    app.PD.TP.Value = 2000
     # COMPUTATIONS
     app.C.l_phi = len(app.PD.phi.Value)
     start = time.time()
