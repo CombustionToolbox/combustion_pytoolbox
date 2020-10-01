@@ -17,33 +17,33 @@ from Settings.Initialize_2 import list_phase_species
 
 def add_species(self, Species):
     for species in Species:
-            if species not in self.S.LS:
-                # 
-                self.S.LS.insert(self.S.NG, species)
-                self = list_phase_species(self, self.S.LS)
-                ind_species = self.S.LS.index(species)
-                # Add one row to A0 and M0 matrix, respectively
-                if ind_species in self.S.ind_swt:
-                    self.C.A0.Value = np.vstack((self.C.A0.Value, np.zeros((1, self.E.NE))))
-                    self.C.M0.Value = np.vstack((self.C.M0.Value, np.zeros((1, 12))))
-                    self.C.M0.Value[-1, 9] = 1
-                else:
-                    self.C.A0.Value = np.insert(self.C.A0.Value, self.S.NG - 1, np.zeros((1, self.E.NE)), axis=0)
-                    self.C.M0.Value = np.insert(self.C.M0.Value, self.S.NG - 1, np.zeros((1, 12)), axis=0)
-                # Increase one the number of species 
-                self.S.NS += 1
-                # Update N0 moles matrix and list of gaseouse and condensed species
-                self.C.N0.Value = self.C.M0.Value[:, [0, 9]]
-                # Obtain the formula of the species
-                txFormula = self.strThProp[species].txFormula 
-                # Obtain the element matrix
-                self.strThProp[species].Element_matrix = set_element_matrix(
-                    txFormula, self.E.ElementsUpper) 
-                # Obtain index of the elements that compound the species and the number of atoms of each element
-                ind_Elements, atoms = (self.strThProp[species].Element_matrix[0, :], self.strThProp[species].Element_matrix[1, :])
-                # Update A0 matrix
-                for ind_Element, atom in zip(ind_Elements, atoms):
-                    self.C.A0.Value[ind_species, int(ind_Element)] = atom
+        if species not in self.S.LS:
+            # 
+            self.S.LS.insert(self.S.NG, species)
+            self = list_phase_species(self, self.S.LS)
+            ind_species = self.S.LS.index(species)
+            # Add one row to A0 and M0 matrix, respectively
+            if ind_species in self.S.ind_swt:
+                self.C.A0.Value = np.vstack((self.C.A0.Value, np.zeros((1, self.E.NE))))
+                self.C.M0.Value = np.vstack((self.C.M0.Value, np.zeros((1, 12))))
+                self.C.M0.Value[-1, 9] = 1
+            else:
+                self.C.A0.Value = np.insert(self.C.A0.Value, self.S.NG - 1, np.zeros((1, self.E.NE)), axis=0)
+                self.C.M0.Value = np.insert(self.C.M0.Value, self.S.NG - 1, np.zeros((1, 12)), axis=0)
+            # Increase one the number of species 
+            self.S.NS += 1
+            # Update N0 moles matrix and list of gaseouse and condensed species
+            self.C.N0.Value = self.C.M0.Value[:, [0, 9]]
+            # Obtain the formula of the species
+            txFormula = self.strThProp[species].txFormula 
+            # Obtain the element matrix
+            self.strThProp[species].Element_matrix = set_element_matrix(
+                txFormula, self.E.ElementsUpper) 
+            # Obtain index of the elements that compound the species and the number of atoms of each element
+            ind_Elements, atoms = (self.strThProp[species].Element_matrix[0, :], self.strThProp[species].Element_matrix[1, :])
+            # Update A0 matrix
+            for ind_Element, atom in zip(ind_Elements, atoms):
+                self.C.A0.Value[ind_species, int(ind_Element)] = atom
     return (self.S.LS, self.C.M0.Value)
 
 
