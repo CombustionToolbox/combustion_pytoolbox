@@ -49,13 +49,14 @@ def remove_item(N0, zip1, zip2, ls1, ls2, NP, SIZE):
                 
     return (N0, ls0, ls1, ls2)
 
-def update_temp(temp_ind_remove, temp_ind, temp_NS):
+def update_temp(temp_ind, temp_NS, N0, zip1, zip2, ls1, ls2, NP, SIZE):
     """ Update temp items """
+    N0, temp_ind_remove, temp_ind_swt, temp_ind_nswt = remove_item(N0, zip1, zip2, ls1, ls2, NP, SIZE)
     if temp_ind_remove:
         temp_ind = list(set(temp_ind) - set(temp_ind_remove))
         temp_NS = len(temp_ind)
         
-    return (temp_ind, temp_NS)
+    return (temp_ind, temp_ind_swt, temp_ind_nswt, temp_NS)
 
 def update_matrix_A1(A0, temp_NS, temp_ind, temp_ind_E):
     """ Update stoichiometric submatrix A1 """
@@ -137,11 +138,8 @@ def equilibrium(self, N_CC, phi, pP, TP, vP):
     # List of indices with nonzero values
     (temp_ind, temp_ind_nswt, temp_ind_swt, temp_ind_E,
      temp_NE, temp_NS, temp_ind_remove) = temp_values(S, NatomE, self.C.tolN)
-    # Remove species from the computed indeces list of gaseous and condensed species 
-    # and append the indeces of species that we have to remove
-    N0, temp_ind_remove, temp_ind_swt, temp_ind_nswt = remove_item(N0,N0[ind_A0_E0, 0], ind_A0_E0, temp_ind_swt, temp_ind_nswt, NP=self.C.tolN, SIZE=SIZE)
     # Update temp values
-    temp_ind, temp_NS = update_temp(temp_ind_remove, temp_ind, temp_NS)
+    temp_ind, temp_ind_swt, temp_ind_nswt, temp_NS = update_temp(temp_ind, temp_NS, N0, N0[ind_A0_E0, 0], ind_A0_E0, temp_ind_swt, temp_ind_nswt, NP=self.C.tolN, SIZE=SIZE)
     # Initialize species vector N0 
     N0[temp_ind, 0] = 0.1/temp_NS
     # Dimensionless Standard Gibbs free energy 
@@ -172,10 +170,8 @@ def equilibrium(self, N_CC, phi, pP, TP, vP):
         NP_log = log(NP) + e * x[-1]
         # Apply antilog
         N0, NP = apply_antilog(N0, N0_log, NP_log, temp_NS, temp_ind)
-        # Remove species with moles < tolerance
-        N0, temp_ind_remove, temp_ind_swt, temp_ind_nswt = remove_item(N0, N0[temp_ind, 0], temp_ind, temp_ind_swt, temp_ind_nswt, NP=NP, SIZE=SIZE)
-        # Update temp values
-        temp_ind, temp_NS = update_temp(temp_ind_remove, temp_ind, temp_NS)
+        # Update temp values in order to remove species with moles < tolerance
+        temp_ind, temp_ind_swt, temp_ind_nswt, temp_NS = update_temp(temp_ind, temp_NS, N0, N0[temp_ind, 0], temp_ind, temp_ind_swt, temp_ind_nswt, NP=NP, SIZE=SIZE)
         # Update matrix A
         A1 = update_matrix_A1(A0, temp_NS, temp_ind, temp_ind_E)
         # Print moles per iteration
