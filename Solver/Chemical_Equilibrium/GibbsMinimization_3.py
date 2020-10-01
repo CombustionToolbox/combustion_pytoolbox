@@ -146,9 +146,7 @@ def equilibrium(self, N_CC, phi, pP, TP, vP):
     g0 = np.array([(species_g0(species, TP, strThProp)) * 1e3 for species in S.LS])
     G0RT = g0/R0TP
     # Construction of part of matrix A (complete)
-    A11 = np.eye(temp_NS)
-    A12 = -np.concatenate((A0[np.ix_(temp_ind, temp_ind_E)], np.ones(temp_NS).reshape(temp_NS, 1)), axis = 1)
-    A1 = np.concatenate((A11, A12), axis=1)
+    A1 = update_matrix_A1(A0, temp_NS, temp_ind, temp_ind_E)
     A22 = np.zeros((temp_NE + 1, temp_NE + 1))
     A0_T = A0.transpose()
             
