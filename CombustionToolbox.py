@@ -18,7 +18,7 @@ Type of problems:
          PhD Candidate - Group Fluid Mechanics
          Office 1.1.D17, Universidad Carlos III de Madrid
          
-Last update Wen Jun 24 20:04:00 2020
+Last update Thu Oct 1 13:10:00 2020
 ----------------------------------------------------------------------
 """
 import os
@@ -63,7 +63,7 @@ def main():
     # app = MinorsProducts(app, 'HC/02/N2 EXTENDED')
     # app = MinorsProducts(app, 'Hydrogen')
     # app = MinorsProducts(app, 'NASA ALL')
-    app = MinorsProducts(app) 
+    # app = MinorsProducts(app, 'Cbgrb')
     # PROBLEM CONDITIONS
 
     # INITIALIZATION
@@ -74,7 +74,7 @@ def main():
     # app.PD.phi.Value = np.arange(1, 2, 0.05)  # [-]
     app.PD.phi.Value = [1]  # [-]
     
-    app.PD.TP.Value = 2000
+    app.PD.TP.Value = 1000
     # COMPUTATIONS
     app.C.l_phi = len(app.PD.phi.Value)
     start = time.time()

@@ -41,7 +41,7 @@ def SetSpecies(self, Species, N, T):
             mmi = self.strThProp[species].mm
             pVi = 0.
         
-        M[self.S.List_Compute_Species.index(species), :] = np.concatenate(
+        M[self.S.LS.index(species), :] = np.concatenate(
             (n, n * np.array([hfi, DhTi, efi, DeTi, cPi, cVi, s0i]), pVi, swtCondensed, mi, mmi), axis=None)
     return M
 
