@@ -57,6 +57,8 @@ def list_phase_species(self, LS):
 
 def rearrange_species(self):
     self.LS = [self.LS[i] for i in self.ind_nswt + self.ind_swt]
+    if 'Cbgrb' in self.LS:
+        self.ind_Cgr = self.LS.index('Cbgrb')
     return self
 
 

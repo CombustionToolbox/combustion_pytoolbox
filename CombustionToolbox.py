@@ -63,7 +63,7 @@ def main():
     # app = MinorsProducts(app, 'HC/02/N2 EXTENDED')
     # app = MinorsProducts(app, 'Hydrogen')
     # app = MinorsProducts(app, 'NASA ALL')
-    # app = MinorsProducts(app, 'Cbgrb')
+    app = MinorsProducts(app, 'Cbgrb')
     # PROBLEM CONDITIONS
 
     # INITIALIZATION
