@@ -34,8 +34,6 @@ def add_species(self, Species):
                 self.S.NS += 1
                 # Update N0 moles matrix and list of gaseouse and condensed species
                 self.C.N0.Value = self.C.M0.Value[:, [0, 9]]
-                # self.S.ind_swt = list(filter(lambda i: self.C.N0.Value[i, 1] == True, range(self.S.NS)))
-                # self.S.ind_nswt = list(filter(lambda i: self.C.N0.Value[i, 1] == False, range(self.S.NS)))
                 # Obtain the formula of the species
                 txFormula = self.strThProp[species].txFormula 
                 # Obtain the element matrix
