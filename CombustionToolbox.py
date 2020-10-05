@@ -29,6 +29,7 @@ from Settings.Initialize_2 import Initialize_2
 from Settings.MinorsProducts import MinorsProducts
 from Settings.Define_FOI import *
 from Solver.Functions.Display.displayResults import displayResults
+from Solver.Functions.Display.plotResults import plotResults
 from Solver.Chemical_Equilibrium.SolveProblemTP_TV import SolveProblemTP_TV
 
 def main():
@@ -71,8 +72,8 @@ def main():
     # PROBLEM TYPE AND CONDITIONS
     app.PD.TR.Value = 300.  # [K]
     app.PD.pR.Value = 1.   # [bar]
-    # app.PD.phi.Value = np.arange(1, 2, 0.05)  # [-]
-    app.PD.phi.Value = [1]  # [-]
+    app.PD.phi.Value = np.arange(0.5, 1.5, 0.01)  # [-]
+    # app.PD.phi.Value = [1]  # [-]
     
     app.PD.TP.Value = 1000
     # COMPUTATIONS
@@ -94,6 +95,8 @@ def main():
         displayResults(app, app.PS.strR[i], app.PS.strP[i])
     end = time.time()
     print('Execution time:', end - start, 'seconds')
+    # PLOT RESULTS
+    plotResults(app, display_species=app.S.LS, mintol=app.C.mintol_display)
     return app
     
 

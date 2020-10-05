@@ -102,7 +102,7 @@ class App:
             self.M0 = self.M0()
             self.MassorMolar = 'mass'
             self.firstrow = True
-            self.mintol_display = 1e-16
+            self.mintol_display = 1e-10
             self.mintol = 1e-5
             self.tolN = 1e-14  # Tolerance of the segregated numerical method
             self.tolPhiSoot = 1e-6  # Tolerance of the soot formation equivalence ratio numerical method
