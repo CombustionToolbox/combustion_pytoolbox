@@ -13,6 +13,7 @@ import numpy as np
 import math
 import pandas as pd 
 from numpy import log, exp
+from memory_profiler import profile
 from Solver.Functions.SetSpecies import SetSpecies, species_g0
 
 def remove_elements(NatomE, A0, tol):
@@ -114,7 +115,8 @@ def print_moles(N0, LS, it):
     """ Print number of moles of each species per iteration """
     print(f'\nit: {it}')
     print(pd.DataFrame(N0, index=np.array(LS)))
-    
+
+@profile
 def equilibrium(self, N_CC, phi, pP, TP, vP):
     """ Generalized Gibbs minimization method """
     E, S, C, M, PD, TN, strThProp = [self.E, self.S, self.C, self.M,
