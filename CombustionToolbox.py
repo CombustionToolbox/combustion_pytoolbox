@@ -72,8 +72,8 @@ def main():
     # PROBLEM TYPE AND CONDITIONS
     app.PD.TR.Value = 300.  # [K]
     app.PD.pR.Value = 1.   # [bar]
-    app.PD.phi.Value = np.arange(0.5, 1.5, 0.01)  # [-]
-    # app.PD.phi.Value = [1]  # [-]
+    # app.PD.phi.Value = np.arange(0.5, 1.5, 0.01)  # [-]
+    app.PD.phi.Value = [1]  # [-]
     
     app.PD.TP.Value = 1000
     # COMPUTATIONS
