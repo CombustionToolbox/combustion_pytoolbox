@@ -19,7 +19,7 @@ def MinorsProducts(self, minors=None):
         self.M.minors_products = minors
     elif minors.upper() == 'HC/02/N2 EXTENDED':
         self.M.minors_products = ['OH', 'H', 'O', 'HO2', 'NO', 'HCO', 'CH4', 'CH3', 'HO2',
-                                  'NO2', 'NH3', 'NH2', 'N', 'HCN', 'CN', 'N2O', 'C2', 'CH']
+                                  'NO2', 'NH3', 'NH2', 'N', 'HCN', 'CN', 'N2O', 'C2', 'CH', 'Cbgrb']
     elif minors.upper() == 'SOOT FORMATION':
         self.M.minors_products = ['H2', 'H', 'O', 'O2', 'OH', 'H2O', 'HO2', 'H2O2',
                                   'CH', 'CH2', 'CH3', 'CH4', 'CO', 'CO2', 'HCO', 'CH2OH', 'CH3O', 'CH3OH',
