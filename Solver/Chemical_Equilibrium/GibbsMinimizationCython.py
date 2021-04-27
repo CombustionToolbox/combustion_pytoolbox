@@ -5,7 +5,7 @@ COMPUTE CHEMICAL EQUILIBRIUM USING THE GENERALIZED GIBBS MINIMIZATION METHOD
          PhD Candidate - Group Fluid Mechanics
          Office 1.1.D17, Universidad Carlos III de Madrid
          
-Last update Mon Nov 16 9:40:00 2020
+Last update Thur Oct 1 13:00:00 2020
 ----------------------------------------------------------------------
 """
 import scipy
@@ -15,13 +15,7 @@ import pandas as pd
 from numpy import log, exp
 from memory_profiler import profile
 from Solver.Functions.SetSpecies import SetSpecies, species_g0
-
-def remove_elements(NatomE, A0, tol):
-    """ Find zero sum elements """
-    ind_E0 = np.where(NatomE <= tol)
-    ind_E0 = list(ind_E0[0])
-    ind_A0_E0 = np.where(A0[:, ind_E0] > 0)
-    return list(ind_A0_E0[0])
+from Solver.Chemical_Equilibrium.cython.cython_functions import *
 
 def temp_values(S, NatomE, tol):
     """ List of indices with nonzero values and lengths """
@@ -61,10 +55,6 @@ def update_temp(temp_ind, temp_NS, N0, zip1, zip2, ls1, ls2, NP, SIZE):
 
 def update_matrix_A1(A0, temp_NS, temp_ind, temp_ind_E):
     """ Update stoichiometric submatrix A1 """
-    A11 = np.empty(temp_NE, temp_NE)
-    for k in range(temp_NE):
-        for i in range(temp_NE):
-            A11[k, i] = np.dot(A0[0:temp_NG, k] * A0[0:temp_NG, i], N0[0:temp_NG, 0])
     A11 = np.eye(temp_NS)
     A12 = -np.concatenate((A0[np.ix_(temp_ind, temp_ind_E)], np.ones(temp_NS).reshape(temp_NS, 1)), axis = 1)
     return np.concatenate((A11, A12), axis=1)

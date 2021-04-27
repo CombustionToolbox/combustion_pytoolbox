@@ -72,8 +72,8 @@ def main():
     # PROBLEM TYPE AND CONDITIONS
     app.PD.TR.Value = 300.  # [K]
     app.PD.pR.Value = 1.   # [bar]
-    # app.PD.phi.Value = np.arange(0.5, 1.5, 0.01)  # [-]
-    app.PD.phi.Value = [1]  # [-]
+    app.PD.phi.Value = np.arange(0.5, 1.5, 0.01)  # [-]
+    # app.PD.phi.Value = [1]  # [-]
     
     app.PD.TP.Value = 1000
     # COMPUTATIONS
@@ -92,7 +92,7 @@ def main():
         # SOLVE PROBLEM
         app.PS.strP.append(SolveProblemTP_TV(app, app.PS.strR[i], app.PD.phi.Value[i], app.PD.pR.Value, app.PD.TP.Value))
         # DISPLAY RESULTS
-        displayResults(app, app.PS.strR[i], app.PS.strP[i])
+        # displayResults(app, app.PS.strR[i], app.PS.strP[i])
     end = time.time()
     print('Execution time:', end - start, 'seconds')
     # PLOT RESULTS
@@ -106,11 +106,9 @@ if __name__ == '__main__':
     profiler = cProfile.Profile()
     profiler.enable()
     # print(__doc__)
-    # app = main()
     main()
     profiler.disable()
-    #stats = pstats.Stats(profiler).sort_stats('tottime')
-    #stats.print_stats()
+    # stats = pstats.Stats(profiler).sort_stats('tottime')
+    # stats.print_stats()
     # stats.dump_stats('/stats_file.dat')
-    
     

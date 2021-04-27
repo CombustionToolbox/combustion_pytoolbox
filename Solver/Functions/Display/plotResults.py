@@ -29,9 +29,11 @@ def plotMoles(self, x_vec, display_species, mintol, xlabel, ax=None, plt_args=[]
     for j in Ndisplay:
         ax.plot(x_vec,y_matrix[j, :], *plt_args, **plt_kwargs, **kwargs)
     # Legend    
-    ax.legend(labels=labels, loc='right')
+    ax.legend(labels=labels, loc='upper left', bbox_to_anchor=(1.05, 1))
+    plt.subplots_adjust(right=0.8)
     plt.show()
     return self
+
 def plotResults(self, display_species=None, mintol=1e-16):
     phi = self.PD.phi.Value
     ProblemType = self.PD.ProblemType

@@ -1,0 +1,2215 @@
+event: ns : Nanoseconds
+events: ns
+summary: 6440400100
+fl=<__array_function__ internals>
+fn=any
+2 2008100
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\fromnumeric.py
+cfn=_any_dispatcher
+calls=3120 2245
+2 502800
+cfl=~
+cfn=<built-in method numpy.core._multiarray_umath.implement_array_function>
+calls=3120 0
+2 17159000
+
+fl=<__array_function__ internals>
+fn=argsort
+2 899500
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\fromnumeric.py
+cfn=_argsort_dispatcher
+calls=936 995
+2 182100
+cfl=~
+cfn=<built-in method numpy.core._multiarray_umath.implement_array_function>
+calls=936 0
+2 6093700
+
+fl=<__array_function__ internals>
+fn=atleast_1d
+2 59110600
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\shape_base.py
+cfn=_atleast_1d_dispatcher
+calls=115570 20
+2 13095300
+cfl=~
+cfn=<built-in method numpy.core._multiarray_umath.implement_array_function>
+calls=115570 0
+2 681718300
+
+fl=<__array_function__ internals>
+fn=concatenate
+2 59079500
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\multiarray.py
+cfn=concatenate
+calls=114790 143
+2 14492400
+cfl=~
+cfn=<built-in method numpy.core._multiarray_umath.implement_array_function>
+calls=114790 0
+2 197304300
+
+fl=<__array_function__ internals>
+fn=copyto
+2 7200
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\multiarray.py
+cfn=copyto
+calls=1 1043
+2 600
+cfl=~
+cfn=<built-in method numpy.core._multiarray_umath.implement_array_function>
+calls=1 0
+2 20600
+
+fl=<__array_function__ internals>
+fn=dot
+2 20774600
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\multiarray.py
+cfn=dot
+calls=31785 706
+2 5772900
+cfl=~
+cfn=<built-in method numpy.core._multiarray_umath.implement_array_function>
+calls=31785 0
+2 45945800
+
+fl=<__array_function__ internals>
+fn=hstack
+2 61427200
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\shape_base.py
+cfn=_vhstack_dispatcher
+calls=113698 219
+2 92579200
+cfl=~
+cfn=<built-in method numpy.core._multiarray_umath.implement_array_function>
+calls=113698 0
+2 1269013200
+
+fl=<__array_function__ internals>
+fn=linspace
+2 333600
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\function_base.py
+cfn=_linspace_dispatcher
+calls=312 18
+2 69700
+cfl=~
+cfn=<built-in method numpy.core._multiarray_umath.implement_array_function>
+calls=312 0
+2 13895900
+
+fl=<__array_function__ internals>
+fn=ndim
+2 1897400
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\fromnumeric.py
+cfn=_ndim_dispatcher
+calls=3120 3071
+2 473200
+cfl=~
+cfn=<built-in method numpy.core._multiarray_umath.implement_array_function>
+calls=3120 0
+2 10084100
+
+fl=<__array_function__ internals>
+fn=result_type
+2 292300
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\multiarray.py
+cfn=result_type
+calls=312 634
+2 54400
+cfl=~
+cfn=<built-in method numpy.core._multiarray_umath.implement_array_function>
+calls=312 0
+2 812100
+
+fl=<__array_function__ internals>
+fn=rollaxis
+2 1343900
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\numeric.py
+cfn=_rollaxis_dispatcher
+calls=1872 1214
+2 295300
+cfl=~
+cfn=<built-in method numpy.core._multiarray_umath.implement_array_function>
+calls=1872 0
+2 3509700
+
+fl=<__array_function__ internals>
+fn=take
+2 852900
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\fromnumeric.py
+cfn=_take_dispatcher
+calls=936 90
+2 166000
+cfl=~
+cfn=<built-in method numpy.core._multiarray_umath.implement_array_function>
+calls=936 0
+2 3688100
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\_bootlocale.py
+fn=getpreferredencoding
+11 6900
+cfl=~
+cfn=<built-in method _locale._getdefaultlocale>
+calls=1 0
+11 4300
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\codecs.py
+fn=__init__
+260 800
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\codecs.py
+fn=getstate
+281 22800
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\copyreg.py
+fn=_slotnames
+99 22400
+cfl=~
+cfn=<built-in method builtins.hasattr>
+calls=4 0
+99 4200
+cfl=~
+cfn=<built-in method builtins.isinstance>
+calls=1 0
+99 300
+cfl=~
+cfn=<method 'append' of 'list' objects>
+calls=3 0
+99 300
+cfl=~
+cfn=<method 'get' of 'mappingproxy' objects>
+calls=4 0
+99 2500
+cfl=~
+cfn=<method 'startswith' of 'str' objects>
+calls=3 0
+99 800
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\encodings\cp1252.py
+fn=decode
+22 117100
+cfl=~
+cfn=<built-in method _codecs.charmap_decode>
+calls=159 0
+22 1741400
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\enum.py
+fn=__call__
+278 4300
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\enum.py
+cfn=__new__
+calls=6 557
+278 3200
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\enum.py
+fn=__new__
+557 3200
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\enum.py
+fn=__and__
+828 6100
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\enum.py
+cfn=__call__
+calls=6 278
+828 7500
+cfl=~
+cfn=<built-in method builtins.isinstance>
+calls=3 0
+828 1100
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\genericpath.py
+fn=exists
+16 5600
+cfl=~
+cfn=<built-in method nt.stat>
+calls=2 0
+16 68100
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\re.py
+fn=match
+188 17351700
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\re.py
+cfn=_compile
+calls=34027 289
+188 19304100
+cfl=~
+cfn=<method 'match' of 're.Pattern' objects>
+calls=34027 0
+188 17161000
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\re.py
+fn=sub
+203 36594600
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\re.py
+cfn=_compile
+calls=68055 289
+203 62276000
+cfl=~
+cfn=<method 'sub' of 're.Pattern' objects>
+calls=68055 0
+203 53453200
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\re.py
+fn=_compile
+289 54764900
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\enum.py
+cfn=__and__
+calls=3 828
+289 14700
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_compile.py
+cfn=isstring
+calls=3 595
+289 2200
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_compile.py
+cfn=compile
+calls=3 759
+289 188900
+cfl=~
+cfn=<built-in method builtins.isinstance>
+calls=102085 0
+289 26609000
+cfl=~
+cfn=<built-in method builtins.len>
+calls=3 0
+289 400
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\_asarray.py
+fn=asarray
+14 1630500
+cfl=~
+cfn=<built-in method numpy.array>
+calls=5616 0
+14 5986900
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\_asarray.py
+fn=asanyarray
+86 57918300
+cfl=~
+cfn=<built-in method numpy.array>
+calls=231764 0
+86 263828300
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\_asarray.py
+fn=ascontiguousarray
+139 1112100
+cfl=~
+cfn=<built-in method numpy.array>
+calls=3744 0
+139 2211500
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\_methods.py
+fn=_sum
+45 4465700
+cfl=~
+cfn=<method 'reduce' of 'numpy.ufunc' objects>
+calls=9620 0
+45 47932900
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\_methods.py
+fn=_any
+53 680100
+cfl=~
+cfn=<method 'reduce' of 'numpy.ufunc' objects>
+calls=2184 0
+53 5293400
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\fromnumeric.py
+fn=_wrapfunc
+52 1340500
+cfl=~
+cfn=<built-in method builtins.getattr>
+calls=1872 0
+52 435700
+cfl=~
+cfn=<method 'argsort' of 'numpy.ndarray' objects>
+calls=936 0
+52 3450400
+cfl=~
+cfn=<method 'take' of 'numpy.ndarray' objects>
+calls=936 0
+52 1584500
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\fromnumeric.py
+fn=_wrapreduction
+70 4733300
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\fromnumeric.py
+cfn=<dictcomp>
+calls=3120 71
+70 1093000
+cfl=~
+cfn=<built-in method builtins.getattr>
+calls=312 0
+70 127200
+cfl=~
+cfn=<method 'any' of 'numpy.generic' objects>
+calls=312 0
+70 1595300
+cfl=~
+cfn=<method 'items' of 'dict' objects>
+calls=3120 0
+70 472000
+cfl=~
+cfn=<method 'reduce' of 'numpy.ufunc' objects>
+calls=2808 0
+70 5019600
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\fromnumeric.py
+fn=<dictcomp>
+71 1093000
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\fromnumeric.py
+fn=_take_dispatcher
+90 166000
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\fromnumeric.py
+fn=take
+94 808000
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\fromnumeric.py
+cfn=_wrapfunc
+calls=936 52
+94 2304400
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\fromnumeric.py
+fn=_argsort_dispatcher
+995 182100
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\fromnumeric.py
+fn=argsort
+999 968900
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\fromnumeric.py
+cfn=_wrapfunc
+calls=936 52
+999 4506700
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\fromnumeric.py
+fn=_any_dispatcher
+2245 502800
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\fromnumeric.py
+fn=any
+2249 2509800
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\fromnumeric.py
+cfn=_wrapreduction
+calls=3120 70
+2249 13040400
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\fromnumeric.py
+fn=_ndim_dispatcher
+3071 473200
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\fromnumeric.py
+fn=ndim
+3075 3114800
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\_asarray.py
+cfn=asarray
+calls=1872 14
+3075 5445900
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\function_base.py
+fn=_linspace_dispatcher
+18 69700
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\function_base.py
+fn=linspace
+23 5557000
+cfl=<__array_function__ internals>
+cfn=any
+calls=312 2
+23 3697800
+cfl=<__array_function__ internals>
+cfn=ndim
+calls=312 2
+23 664200
+cfl=<__array_function__ internals>
+cfn=result_type
+calls=312 2
+23 1158800
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\_asarray.py
+cfn=asanyarray
+calls=624 86
+23 757200
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\numeric.py
+cfn=isscalar
+calls=312 1816
+23 294600
+cfl=~
+cfn=<built-in method _operator.index>
+calls=312 0
+23 57700
+cfl=~
+cfn=<built-in method numpy.arange>
+calls=312 0
+23 768500
+cfl=~
+cfn=<method 'astype' of 'numpy.ndarray' objects>
+calls=312 0
+23 329500
+cfl=~
+cfn=<method 'reshape' of 'numpy.ndarray' objects>
+calls=312 0
+23 261000
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\multiarray.py
+fn=concatenate
+143 14492400
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\multiarray.py
+fn=result_type
+634 54400
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\multiarray.py
+fn=dot
+706 5772900
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\multiarray.py
+fn=copyto
+1043 600
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\numeric.py
+fn=ones
+144 16200
+cfl=<__array_function__ internals>
+cfn=copyto
+calls=1 2
+144 28400
+cfl=~
+cfn=<built-in method numpy.empty>
+calls=1 0
+144 11900
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\numeric.py
+fn=_rollaxis_dispatcher
+1214 295300
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\numeric.py
+fn=rollaxis
+1218 2052700
+cfl=~
+cfn=<built-in method numpy.core._multiarray_umath.normalize_axis_index>
+calls=1872 0
+1218 597400
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\numeric.py
+fn=isscalar
+1816 234900
+cfl=~
+cfn=<built-in method builtins.isinstance>
+calls=312 0
+1816 59700
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\numerictypes.py
+fn=issubclass_
+286 3790500
+cfl=~
+cfn=<built-in method builtins.issubclass>
+calls=9360 0
+286 2200800
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\numerictypes.py
+fn=issubdtype
+360 4298300
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\numerictypes.py
+cfn=issubclass_
+calls=9360 286
+360 5991300
+cfl=~
+cfn=<built-in method builtins.issubclass>
+calls=4680 0
+360 521800
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\numerictypes.py
+fn=_can_coerce_all
+545 9754300
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\numerictypes.py
+cfn=<listcomp>:554
+calls=13104 554
+545 2985300
+cfl=~
+cfn=<built-in method builtins.len>
+calls=14976 0
+545 1245700
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\numerictypes.py
+fn=<listcomp>:554
+554 2985300
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\numerictypes.py
+fn=find_common_type
+569 1909300
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\numerictypes.py
+cfn=_can_coerce_all
+calls=1872 545
+569 13985300
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\numerictypes.py
+cfn=<listcomp>:621
+calls=936 621
+569 744400
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\numerictypes.py
+cfn=<listcomp>:622
+calls=936 622
+569 136900
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\numerictypes.py
+fn=<listcomp>:621
+621 744400
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\numerictypes.py
+fn=<listcomp>:622
+622 136900
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\shape_base.py
+fn=_atleast_1d_dispatcher
+20 13095300
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\shape_base.py
+fn=atleast_1d
+24 197561000
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\_asarray.py
+cfn=asanyarray
+calls=231140 86
+24 320989400
+cfl=~
+cfn=<built-in method builtins.len>
+calls=115570 0
+24 12614400
+cfl=~
+cfn=<method 'append' of 'list' objects>
+calls=231140 0
+24 26278800
+cfl=~
+cfn=<method 'reshape' of 'numpy.ndarray' objects>
+calls=69888 0
+24 53823000
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\shape_base.py
+fn=_arrays_for_stack_dispatcher
+208 31243900
+cfl=~
+cfn=<built-in method builtins.hasattr>
+calls=113698 0
+208 25869700
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\shape_base.py
+fn=_vhstack_dispatcher
+219 35465600
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\shape_base.py
+cfn=_arrays_for_stack_dispatcher
+calls=113698 208
+219 57113600
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\shape_base.py
+fn=hstack
+286 151705700
+cfl=<__array_function__ internals>
+cfn=atleast_1d
+calls=113698 2
+286 740420600
+cfl=<__array_function__ internals>
+cfn=concatenate
+calls=113698 2
+286 266507100
+cfl=~
+cfn=<built-in method builtins.isinstance>
+calls=113698 0
+286 12650700
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\lib\index_tricks.py
+fn=__getitem__
+316 10629900
+cfl=<__array_function__ internals>
+cfn=concatenate
+calls=936 2
+316 3896400
+cfl=<__array_function__ internals>
+cfn=ndim
+calls=2808 2
+316 11790500
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\numerictypes.py
+cfn=find_common_type
+calls=936 569
+316 16775900
+cfl=~
+cfn=<built-in method builtins.isinstance>
+calls=10296 0
+316 1285100
+cfl=~
+cfn=<built-in method numpy.array>
+calls=2808 0
+316 4188000
+cfl=~
+cfn=<method 'append' of 'list' objects>
+calls=5616 0
+316 589200
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\_lib\_util.py
+fn=prod
+143 461200
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\interpolate\_bsplines.py
+fn=_get_dtype
+16 1713600
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\numerictypes.py
+cfn=issubdtype
+calls=2808 360
+16 6083800
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\interpolate\_bsplines.py
+fn=_as_float_array
+24 3326100
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\_asarray.py
+cfn=ascontiguousarray
+calls=2808 139
+24 2135500
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\interpolate\_bsplines.py
+cfn=_get_dtype
+calls=2808 16
+24 7797400
+cfl=~
+cfn=<method 'astype' of 'numpy.ndarray' objects>
+calls=2808 0
+24 2183600
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\interpolate\_bsplines.py
+fn=construct_fast
+219 1308300
+cfl=~
+cfn=<built-in method __new__ of type object at 0x00007FFA554EB810>
+calls=936 0
+219 323600
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\interpolate\_bsplines.py
+fn=_not_a_knot
+569 3837600
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\_asarray.py
+cfn=asarray
+calls=936 14
+569 458800
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\lib\index_tricks.py
+cfn=__getitem__
+calls=936 316
+569 49155000
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\interpolate\_bsplines.py
+fn=_convert_string_aliases
+587 640100
+cfl=~
+cfn=<built-in method builtins.isinstance>
+calls=1872 0
+587 333700
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\interpolate\_bsplines.py
+fn=_process_deriv_spec
+598 1275400
+cfl=<__array_function__ internals>
+cfn=atleast_1d
+calls=1872 2
+598 13503600
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\interpolate\_bsplines.py
+fn=make_interp_spline
+611 35867900
+cfl=<__array_function__ internals>
+cfn=any
+calls=2808 2
+611 15972100
+cfl=<__array_function__ internals>
+cfn=rollaxis
+calls=936 2
+611 2477100
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\_asarray.py
+cfn=asarray
+calls=936 14
+611 563500
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\_asarray.py
+cfn=ascontiguousarray
+calls=936 139
+611 1188100
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\_lib\_util.py
+cfn=prod
+calls=936 143
+611 461200
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\interpolate\_bsplines.py
+cfn=_as_float_array
+calls=2808 24
+611 15442600
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\interpolate\_bsplines.py
+cfn=construct_fast
+calls=936 219
+611 1631900
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\interpolate\_bsplines.py
+cfn=_not_a_knot
+calls=936 569
+611 53451400
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\interpolate\_bsplines.py
+cfn=_convert_string_aliases
+calls=1872 587
+611 973800
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\interpolate\_bsplines.py
+cfn=_process_deriv_spec
+calls=1872 598
+611 14779000
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\linalg\blas.py
+cfn=getter
+calls=936 370
+611 2412100
+cfl=~
+cfn=<built-in method _operator.index>
+calls=936 0
+611 213100
+cfl=~
+cfn=<built-in method numpy.core._multiarray_umath.normalize_axis_index>
+calls=936 0
+611 203400
+cfl=~
+cfn=<built-in method numpy.empty>
+calls=936 0
+611 732900
+cfl=~
+cfn=<built-in method numpy.zeros>
+calls=936 0
+611 1937500
+cfl=~
+cfn=<method 'reshape' of 'numpy.ndarray' objects>
+calls=1872 0
+611 1146800
+cfl=~
+cfn=<scipy.interpolate._bspl._colloc>
+calls=936 0
+611 11150100
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\interpolate\interpolate.py
+fn=_do_extrapolate
+323 461000
+cfl=~
+cfn=<built-in method builtins.isinstance>
+calls=936 0
+323 126500
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\interpolate\interpolate.py
+fn=__init__
+417 15493000
+cfl=<__array_function__ internals>
+cfn=argsort
+calls=936 2
+417 7175300
+cfl=<__array_function__ internals>
+cfn=take
+calls=936 2
+417 4707000
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\interpolate\_bsplines.py
+cfn=make_interp_spline
+calls=936 611
+417 160604500
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\interpolate\interpolate.py
+cfn=fill_value
+calls=936 545
+417 1458500
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\interpolate\polyint.py
+cfn=__init__
+calls=936 50
+417 11110200
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\interpolate\polyint.py
+cfn=_reshape_yi
+calls=936 100
+417 5422100
+cfl=~
+cfn=<built-in method builtins.issubclass>
+calls=936 0
+417 157700
+cfl=~
+cfn=<built-in method builtins.len>
+calls=936 0
+417 142200
+cfl=~
+cfn=<built-in method numpy.array>
+calls=1872 0
+417 2227300
+cfl=~
+cfn=<method 'any' of 'numpy.ndarray' objects>
+calls=1872 0
+417 5934100
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\interpolate\interpolate.py
+fn=fill_value
+545 871000
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\interpolate\interpolate.py
+cfn=_do_extrapolate
+calls=936 323
+545 587500
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\interpolate\polyint.py
+fn=__init__
+50 1232300
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\interpolate\polyint.py
+cfn=_set_yi
+calls=936 108
+50 9877900
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\interpolate\polyint.py
+fn=_reshape_yi
+100 1598400
+cfl=<__array_function__ internals>
+cfn=rollaxis
+calls=936 2
+100 2671800
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\_asarray.py
+cfn=asarray
+calls=936 14
+100 538500
+cfl=~
+cfn=<method 'reshape' of 'numpy.ndarray' objects>
+calls=936 0
+100 613400
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\interpolate\polyint.py
+fn=_set_yi
+108 2939900
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\_asarray.py
+cfn=asarray
+calls=936 14
+108 610700
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\interpolate\polyint.py
+cfn=_set_dtype
+calls=936 128
+108 6234900
+cfl=~
+cfn=<built-in method builtins.len>
+calls=936 0
+108 92400
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\interpolate\polyint.py
+fn=_set_dtype
+128 1507300
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\numerictypes.py
+cfn=issubdtype
+calls=1872 360
+128 4727600
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\linalg\blas.py
+fn=find_best_blas_type
+252 8500
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\linalg\blas.py
+cfn=<listcomp>
+calls=1 299
+252 1100
+cfl=~
+cfn=<built-in method builtins.len>
+calls=1 0
+252 200
+cfl=~
+cfn=<built-in method builtins.max>
+calls=1 0
+252 800
+cfl=~
+cfn=<method 'get' of 'dict' objects>
+calls=2 0
+252 700
+cfl=~
+cfn=<method 'index' of 'list' objects>
+calls=1 0
+252 300
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\linalg\blas.py
+fn=<listcomp>
+299 900
+cfl=~
+cfn=<method 'get' of 'dict' objects>
+calls=2 0
+299 200
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\linalg\blas.py
+fn=_get_funcs
+317 7900
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\linalg\blas.py
+cfn=find_best_blas_type
+calls=1 252
+317 11600
+cfl=~
+cfn=<built-in method builtins.getattr>
+calls=1 0
+317 800
+cfl=~
+cfn=<built-in method builtins.isinstance>
+calls=1 0
+317 200
+cfl=~
+cfn=<method 'append' of 'list' objects>
+calls=1 0
+317 200
+cfl=~
+cfn=<method 'get' of 'dict' objects>
+calls=1 0
+317 300
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\linalg\blas.py
+fn=getter
+370 1901100
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\linalg\lapack.py
+cfn=get_lapack_funcs
+calls=1 854
+370 23300
+cfl=~
+cfn=<method 'get' of 'dict' objects>
+calls=936 0
+370 487700
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\linalg\lapack.py
+fn=get_lapack_funcs
+854 2300
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\linalg\blas.py
+cfn=_get_funcs
+calls=1 317
+854 21000
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_compile.py
+fn=_compile
+71 7500
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_compile.py
+cfn=_compile_charset
+calls=3 249
+71 3300
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_compile.py
+cfn=_optimize_charset
+calls=3 276
+71 9800
+cfl=~
+cfn=<built-in method builtins.len>
+calls=6 0
+71 300
+cfl=~
+cfn=<method 'append' of 'list' objects>
+calls=6 0
+71 400
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_compile.py
+fn=_compile_charset
+249 6900
+cfl=~
+cfn=<method 'append' of 'list' objects>
+calls=22 0
+249 1500
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_compile.py
+fn=_optimize_charset
+276 20100
+cfl=~
+cfn=<built-in method builtins.len>
+calls=16 0
+276 1300
+cfl=~
+cfn=<method 'append' of 'list' objects>
+calls=10 0
+276 700
+cfl=~
+cfn=<method 'find' of 'bytearray' objects>
+calls=14 0
+276 4100
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_compile.py
+fn=_get_iscased
+453 1000
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_compile.py
+fn=_get_literal_prefix
+461 3200
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_compile.py
+cfn=_get_iscased
+calls=3 453
+461 600
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_compile.py
+fn=_get_charset_prefix
+492 2600
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_compile.py
+cfn=_get_iscased
+calls=3 453
+492 400
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_compile.py
+fn=_compile_info
+536 15500
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_compile.py
+cfn=_compile_charset
+calls=3 249
+536 5100
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_compile.py
+cfn=_optimize_charset
+calls=3 276
+536 16400
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_compile.py
+cfn=_get_literal_prefix
+calls=3 461
+536 3800
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_compile.py
+cfn=_get_charset_prefix
+calls=3 492
+536 3000
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+cfn=getwidth
+calls=3 174
+536 8100
+cfl=~
+cfn=<built-in method builtins.len>
+calls=6 0
+536 500
+cfl=~
+cfn=<built-in method builtins.min>
+calls=3 0
+536 600
+cfl=~
+cfn=<method 'append' of 'list' objects>
+calls=15 0
+536 1400
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_compile.py
+fn=isstring
+595 2600
+cfl=~
+cfn=<built-in method builtins.isinstance>
+calls=6 0
+595 600
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_compile.py
+fn=_code
+598 5000
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_compile.py
+cfn=_compile
+calls=3 71
+598 21300
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_compile.py
+cfn=_compile_info
+calls=3 536
+598 54400
+cfl=~
+cfn=<method 'append' of 'list' objects>
+calls=3 0
+598 100
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_compile.py
+fn=compile
+759 15100
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_compile.py
+cfn=isstring
+calls=3 595
+759 1000
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_compile.py
+cfn=_code
+calls=3 598
+759 80800
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+cfn=groups
+calls=6 81
+759 2200
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+cfn=parse
+calls=3 937
+759 87000
+cfl=~
+cfn=<built-in method _sre.compile>
+calls=3 0
+759 2300
+cfl=~
+cfn=<method 'items' of 'dict' objects>
+calls=3 0
+759 500
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+fn=__init__:76
+76 1900
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+fn=groups
+81 2100
+cfl=~
+cfn=<built-in method builtins.len>
+calls=6 0
+81 100
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+fn=__init__:111
+111 2000
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+fn=__len__
+160 1200
+cfl=~
+cfn=<built-in method builtins.len>
+calls=3 0
+160 200
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+fn=__getitem__
+164 1500
+cfl=~
+cfn=<built-in method builtins.isinstance>
+calls=3 0
+164 400
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+fn=append
+172 1300
+cfl=~
+cfn=<method 'append' of 'list' objects>
+calls=3 0
+172 300
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+fn=getwidth
+174 6000
+cfl=~
+cfn=<built-in method builtins.min>
+calls=6 0
+174 2100
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+fn=__init__:224
+224 4700
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+cfn=__next
+calls=3 233
+224 2400
+cfl=~
+cfn=<built-in method builtins.isinstance>
+calls=3 0
+224 100
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+fn=__next
+233 7700
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+fn=match
+249 2000
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+cfn=__next
+calls=1 233
+249 300
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+fn=get
+254 2700
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+cfn=__next
+calls=9 233
+254 5000
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+fn=tell
+286 2500
+cfl=~
+cfn=<built-in method builtins.len>
+calls=5 0
+286 900
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+fn=_escape
+355 1200
+cfl=~
+cfn=<method 'get' of 'dict' objects>
+calls=1 0
+355 500
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+fn=_uniq
+432 4400
+cfl=~
+cfn=<built-in method fromkeys>
+calls=2 0
+432 2000
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+fn=_parse_sub
+435 7700
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+cfn=match
+calls=3 249
+435 800
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+cfn=tell
+calls=3 286
+435 2600
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+cfn=_parse
+calls=3 493
+435 54400
+cfl=~
+cfn=<built-in method builtins.len>
+calls=3 0
+435 100
+cfl=~
+cfn=<method 'append' of 'list' objects>
+calls=3 0
+435 400
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+fn=_parse
+493 26000
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+cfn=__init__:111
+calls=3 111
+493 2000
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+cfn=__getitem__
+calls=3 164
+493 1900
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+cfn=append
+calls=3 172
+493 1600
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+cfn=match
+calls=5 249
+493 1500
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+cfn=get
+calls=9 254
+493 7700
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+cfn=tell
+calls=2 286
+493 800
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+cfn=_escape
+calls=1 355
+493 1700
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+cfn=_uniq
+calls=2 432
+493 6400
+cfl=~
+cfn=<built-in method builtins.len>
+calls=5 0
+493 3400
+cfl=~
+cfn=<built-in method builtins.ord>
+calls=4 0
+493 700
+cfl=~
+cfn=<method 'append' of 'list' objects>
+calls=3 0
+493 700
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+fn=fix_flags
+921 2900
+cfl=~
+cfn=<built-in method builtins.isinstance>
+calls=3 0
+921 300
+
+fl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+fn=parse
+937 8700
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+cfn=__init__:76
+calls=3 76
+937 1900
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+cfn=__init__:224
+calls=3 224
+937 7200
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+cfn=_parse_sub
+calls=3 435
+937 66000
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+cfn=fix_flags
+calls=3 921
+937 3200
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\FullName2name.py
+fn=FullName2name
+14 54229100
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\re.py
+cfn=match
+calls=34027 188
+14 53816800
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\re.py
+cfn=sub
+calls=68055 203
+14 152323800
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\GenerateDatabase.py
+fn=GenerateDatabase
+19 86171400
+cfl=<__array_function__ internals>
+cfn=concatenate
+calls=156 2
+19 472700
+cfl=<__array_function__ internals>
+cfn=hstack
+calls=69888 2
+19 801352600
+cfl=<__array_function__ internals>
+cfn=linspace
+calls=312 2
+19 14299200
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\scipy\interpolate\interpolate.py
+cfn=__init__
+calls=936 417
+19 214431900
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\FullName2name.py
+cfn=FullName2name
+calls=156 14
+19 1755700
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\GenerateDatabase.py
+cfn=existFile
+calls=1 138
+19 42100
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\GenerateDatabase.py
+cfn=__init__
+calls=156 144
+19 354800
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\SpeciesThermProp.py
+cfn=SpeciesThermProp
+calls=10140 19
+19 5164336400
+cfl=~
+cfn=<built-in method _pickle.dump>
+calls=1 0
+19 49433700
+cfl=~
+cfn=<built-in method builtins.max>
+calls=156 0
+19 125100
+cfl=~
+cfn=<built-in method builtins.min>
+calls=156 0
+19 38800
+cfl=~
+cfn=<built-in method builtins.print>
+calls=2 0
+19 516700
+cfl=~
+cfn=<built-in method io.open>
+calls=1 0
+19 279100
+cfl=~
+cfn=<built-in method numpy.array>
+calls=1092 0
+19 1124100
+cfl=~
+cfn=<method 'close' of '_io.BufferedWriter' objects>
+calls=1 0
+19 164800
+cfl=~
+cfn=<method 'update' of 'dict' objects>
+calls=156 0
+19 170200
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\GenerateDatabase.py
+fn=existFile
+138 3600
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\genericpath.py
+cfn=exists
+calls=1 16
+138 38500
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\GenerateDatabase.py
+fn=__init__
+144 354800
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\ParseThermoInp.py
+fn=ParseThermoInp
+17 3256200
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\ParseThermoInp.py
+cfn=StrMaster_reduced
+calls=1 60
+17 3417700
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\ParseThermoInp.py
+cfn=existFile
+calls=1 80
+17 36500
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\ParseThermoInp.py
+cfn=__init__
+calls=2086 86
+17 70056900
+cfl=~
+cfn=<built-in method _pickle.dump>
+calls=1 0
+17 1780400
+cfl=~
+cfn=<built-in method builtins.print>
+calls=2 0
+17 512500
+cfl=~
+cfn=<built-in method io.open>
+calls=2 0
+17 20444300
+cfl=~
+cfn=<method 'close' of '_io.BufferedWriter' objects>
+calls=1 0
+17 44600
+cfl=~
+cfn=<method 'readline' of '_io.TextIOWrapper' objects>
+calls=2131 0
+17 967900
+cfl=~
+cfn=<method 'update' of 'dict' objects>
+calls=2086 0
+17 678400
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\ParseThermoInp.py
+fn=StrMaster_reduced
+60 3082200
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\numeric.py
+cfn=ones
+calls=1 144
+60 56500
+cfl=~
+cfn=<built-in method builtins.len>
+calls=1 0
+60 700
+cfl=~
+cfn=<method 'startswith' of 'str' objects>
+calls=2075 0
+60 278300
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\ParseThermoInp.py
+fn=existFile
+80 1300
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\genericpath.py
+cfn=exists
+calls=1 16
+80 35200
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\ParseThermoInp.py
+fn=__init__
+86 794000
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\ParseThermoInp.py
+cfn=struct
+calls=2086 89
+86 69262900
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\ParseThermoInp.py
+fn=struct
+89 33072600
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\FullName2name.py
+cfn=FullName2name
+calls=2086 14
+89 11634700
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\ParseThermoInp.py
+cfn=<listcomp>:103
+calls=40 103
+89 115700
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\ParseThermoInp.py
+cfn=<listcomp>:104
+calls=40 104
+89 96800
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\ParseThermoInp.py
+cfn=<listcomp>:105
+calls=40 105
+89 16000
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\ParseThermoInp.py
+cfn=<listcomp>:114
+calls=3795 114
+89 3308900
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\ParseThermoInp.py
+cfn=<listcomp>:115
+calls=3795 115
+89 7584600
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\ParseThermoInp.py
+cfn=<listcomp>:117
+calls=3795 117
+89 1871500
+cfl=~
+cfn=<method 'append' of 'list' objects>
+calls=18975 0
+89 1668500
+cfl=~
+cfn=<method 'readline' of '_io.TextIOWrapper' objects>
+calls=13511 0
+89 6233700
+cfl=~
+cfn=<method 'replace' of 'str' objects>
+calls=2086 0
+89 556100
+cfl=~
+cfn=<method 'split' of 'str' objects>
+calls=11505 0
+89 3103800
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\ParseThermoInp.py
+fn=<listcomp>:103
+103 115700
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\ParseThermoInp.py
+fn=<listcomp>:104
+104 96800
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\ParseThermoInp.py
+fn=<listcomp>:105
+105 16000
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\ParseThermoInp.py
+fn=<listcomp>:114
+114 3308900
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\ParseThermoInp.py
+fn=<listcomp>:115
+115 7584600
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\ParseThermoInp.py
+fn=<listcomp>:117
+117 1871500
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\SpeciesThermProp.py
+fn=SpeciesThermProp
+19 1698230700
+cfl=<__array_function__ internals>
+cfn=dot
+calls=31785 2
+19 72493300
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\FullName2name.py
+cfn=FullName2name
+calls=31785 14
+19 246979300
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\SpeciesThermProp.py
+cfn=SpeciesThermProp
+calls=21645 19
+19 2951891200
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\detect_location_of_phase_specifier.py
+cfn=detect_location_of_phase_specifier
+calls=31785 12
+19 26671400
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\isRefElm.py
+cfn=isRefElm
+calls=53430 14
+19 818741300
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\set_element_matrix.py
+cfn=set_element_matrix
+calls=31785 28
+19 901557700
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\set_reference_form_of_elements_with_T_intervals.py
+cfn=set_reference_form_of_elements_with_T_intervals
+calls=31785 12
+19 28796700
+cfl=~
+cfn=<built-in method builtins.any>
+calls=21645 0
+19 14727100
+cfl=~
+cfn=<built-in method builtins.len>
+calls=19240 0
+19 1958100
+cfl=~
+cfn=<built-in method builtins.sum>
+calls=158925 0
+19 723192500
+cfl=~
+cfn=<built-in method numpy.array>
+calls=222495 0
+19 563379000
+cfl=~
+cfn=<built-in method numpy.zeros>
+calls=9620 0
+19 6404600
+cfl=~
+cfn=<method 'sum' of 'numpy.ndarray' objects>
+calls=9620 0
+19 61204700
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\detect_location_of_phase_specifier.py
+fn=detect_location_of_phase_specifier
+12 17972000
+cfl=~
+cfn=<built-in method builtins.len>
+calls=31785 0
+12 3595800
+cfl=~
+cfn=<method 'find' of 'str' objects>
+calls=195 0
+12 65000
+cfl=~
+cfn=<method 'rfind' of 'str' objects>
+calls=16900 0
+12 5038600
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\isRefElm.py
+fn=isRefElm
+14 338580800
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\isRefElm.py
+cfn=<listcomp>
+calls=53430 30
+14 383610600
+cfl=~
+cfn=<built-in method builtins.len>
+calls=53430 0
+14 6937700
+cfl=~
+cfn=<method 'find' of 'str' objects>
+calls=512395 0
+14 89612200
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\isRefElm.py
+fn=<listcomp>
+30 383610600
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\set_element_matrix.py
+fn=set_element_matrix
+28 181984300
+cfl=<__array_function__ internals>
+cfn=hstack
+calls=43810 2
+28 621667000
+cfl=~
+cfn=<built-in method numpy.array>
+calls=31785 0
+28 53867100
+cfl=~
+cfn=<method 'index' of 'tuple' objects>
+calls=43810 0
+28 11460500
+cfl=~
+cfn=<method 'replace' of 'str' objects>
+calls=43810 0
+28 11337900
+cfl=~
+cfn=<method 'reshape' of 'numpy.ndarray' objects>
+calls=31785 0
+28 21240900
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\set_elements.py
+fn=set_elements
+13 2200
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\set_elements.py
+cfn=UpperCase
+calls=1 138
+13 29400
+cfl=~
+cfn=<built-in method builtins.len>
+calls=1 0
+13 100
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\set_elements.py
+fn=UpperCase
+138 4300
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\set_elements.py
+cfn=<listcomp>
+calls=2 139
+138 30600
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\set_elements.py
+fn=<listcomp>
+139 21200
+cfl=~
+cfn=<method 'upper' of 'str' objects>
+calls=124 0
+139 9400
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\set_reference_form_of_elements_with_T_intervals.py
+fn=set_reference_form_of_elements_with_T_intervals
+12 28796700
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+fn=Initialize
+18 34400
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+cfn=ContainedElements
+calls=1 33
+18 3537700
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+cfn=Index_Evaluable_Elements
+calls=1 45
+18 6200
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+cfn=__init__:59
+calls=1 59
+18 6436820700
+cfl=~
+cfn=<built-in method builtins.len>
+calls=1 0
+18 700
+cfl=~
+cfn=<method 'keys' of 'dict' objects>
+calls=1 0
+18 400
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+fn=ContainedElements
+33 89900
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\set_elements.py
+cfn=UpperCase
+calls=1 138
+33 5500
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+cfn=<genexpr>
+calls=6 36
+33 1100
+cfl=~
+cfn=<built-in method builtins.any>
+calls=155 0
+33 3436800
+cfl=~
+cfn=<built-in method builtins.len>
+calls=1 0
+33 300
+cfl=~
+cfn=<built-in method builtins.sorted>
+calls=1 0
+33 2500
+cfl=~
+cfn=<method 'add' of 'set' objects>
+calls=6 0
+33 1600
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+fn=<genexpr>
+36 1763700
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+fn=Index_Evaluable_Elements
+45 5100
+cfl=~
+cfn=<method 'index' of 'list' objects>
+calls=6 0
+45 1100
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+fn=__init__:59
+59 503600
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\GenerateDatabase.py
+cfn=GenerateDatabase
+calls=1 19
+59 6335069300
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\ParseThermoInp.py
+cfn=ParseThermoInp
+calls=1 17
+59 101195400
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+cfn=__init__:74
+calls=1 74
+59 34100
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+cfn=__init__:79
+calls=1 79
+59 2900
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+cfn=__init__:92
+calls=1 92
+59 700
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+cfn=__init__:98
+calls=1 98
+59 3900
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+cfn=__init__:126
+calls=1 126
+59 1500
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+cfn=__init__:137
+calls=1 137
+59 8300
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+cfn=__init__:180
+calls=1 180
+59 800
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+cfn=__init__:188
+calls=1 188
+59 200
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+fn=__init__:74
+74 2400
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\NASA_database\set_elements.py
+cfn=set_elements
+calls=1 13
+74 31700
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+fn=__init__:79
+79 2800
+cfl=~
+cfn=<built-in method builtins.len>
+calls=1 0
+79 100
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+fn=__init__:92
+92 700
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+fn=__init__:98
+98 3000
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+cfn=__init__:111
+calls=1 111
+98 500
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+cfn=__init__:116
+calls=1 116
+98 400
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+fn=__init__:111
+111 500
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+fn=__init__:116
+116 400
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+fn=__init__:126
+126 1200
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+cfn=__init__:132
+calls=1 132
+126 300
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+fn=__init__:132
+132 300
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+fn=__init__:137
+137 5500
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+cfn=__init__:151
+calls=1 151
+137 500
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+cfn=__init__:157
+calls=1 157
+137 1200
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+cfn=__init__:165
+calls=1 165
+137 400
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+cfn=__init__:170
+calls=1 170
+137 300
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+cfn=__init__:175
+calls=1 175
+137 400
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+fn=__init__:151
+151 500
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+fn=__init__:157
+157 1200
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+fn=__init__:165
+165 400
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+fn=__init__:170
+170 300
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+fn=__init__:175
+175 400
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+fn=__init__:180
+180 800
+
+fl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+fn=__init__:188
+188 200
+
+fl=~
+fn=<built-in method __new__ of type object at 0x00007FFA554EB810>
+0 323600
+
+fl=~
+fn=<built-in method _codecs.charmap_decode>
+0 1741400
+
+fl=~
+fn=<built-in method _locale._getdefaultlocale>
+0 4300
+
+fl=~
+fn=<built-in method _operator.index>
+0 270800
+
+fl=~
+fn=<built-in method _pickle.dump>
+0 51183600
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\copyreg.py
+cfn=_slotnames
+calls=4 99
+0 30500
+
+fl=~
+fn=<built-in method _sre.compile>
+0 2300
+
+fl=~
+fn=<built-in method builtins.any>
+0 16401300
+cfl=d:\Google Drive\Phd\Combustion_Toolbox\ThermochemicalCode_Python\ThermochemicalCode_Python\Settings\Initialize.py
+cfn=<genexpr>
+calls=17773 36
+0 1762600
+
+fl=~
+fn=<built-in method builtins.getattr>
+0 563700
+
+fl=~
+fn=<built-in method builtins.hasattr>
+0 25873900
+
+fl=~
+fn=<built-in method builtins.isinstance>
+0 41067700
+
+fl=~
+fn=<built-in method builtins.issubclass>
+0 2880300
+
+fl=~
+fn=<built-in method builtins.len>
+0 26594200
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\sre_parse.py
+cfn=__len__
+calls=3 160
+0 1400
+
+fl=~
+fn=<built-in method builtins.max>
+0 125900
+
+fl=~
+fn=<built-in method builtins.min>
+0 41500
+
+fl=~
+fn=<built-in method builtins.ord>
+0 700
+
+fl=~
+fn=<built-in method builtins.print>
+0 1029200
+
+fl=~
+fn=<built-in method builtins.sorted>
+0 2500
+
+fl=~
+fn=<built-in method builtins.sum>
+0 723192500
+
+fl=~
+fn=<built-in method fromkeys>
+0 2000
+
+fl=~
+fn=<built-in method io.open>
+0 20711400
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\_bootlocale.py
+cfn=getpreferredencoding
+calls=1 11
+0 11200
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\codecs.py
+cfn=__init__
+calls=1 260
+0 800
+
+fl=~
+fn=<built-in method nt.stat>
+0 68100
+
+fl=~
+fn=<built-in method numpy.arange>
+0 768500
+
+fl=~
+fn=<built-in method numpy.array>
+0 896812200
+
+fl=~
+fn=<built-in method numpy.core._multiarray_umath.implement_array_function>
+0 417798800
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\fromnumeric.py
+cfn=take
+calls=936 94
+0 3112400
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\fromnumeric.py
+cfn=argsort
+calls=936 999
+0 5475600
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\fromnumeric.py
+cfn=any
+calls=3120 2249
+0 15550200
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\fromnumeric.py
+cfn=ndim
+calls=3120 3075
+0 8560700
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\function_base.py
+cfn=linspace
+calls=312 23
+0 13546300
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\numeric.py
+cfn=rollaxis
+calls=1872 1218
+0 2650100
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\shape_base.py
+cfn=atleast_1d
+calls=115570 24
+0 611266600
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\shape_base.py
+cfn=hstack
+calls=113698 286
+0 1171284100
+
+fl=~
+fn=<built-in method numpy.core._multiarray_umath.normalize_axis_index>
+0 800800
+
+fl=~
+fn=<built-in method numpy.empty>
+0 744800
+
+fl=~
+fn=<built-in method numpy.zeros>
+0 8342100
+
+fl=~
+fn=<method 'add' of 'set' objects>
+0 1600
+
+fl=~
+fn=<method 'any' of 'numpy.generic' objects>
+0 566400
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\_methods.py
+cfn=_any
+calls=312 53
+0 1028900
+
+fl=~
+fn=<method 'any' of 'numpy.ndarray' objects>
+0 989500
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\_methods.py
+cfn=_any
+calls=1872 53
+0 4944600
+
+fl=~
+fn=<method 'append' of 'list' objects>
+0 28542500
+
+fl=~
+fn=<method 'argsort' of 'numpy.ndarray' objects>
+0 3450400
+
+fl=~
+fn=<method 'astype' of 'numpy.ndarray' objects>
+0 2513100
+
+fl=~
+fn=<method 'close' of '_io.BufferedWriter' objects>
+0 209400
+
+fl=~
+fn=<method 'disable' of '_lsprof.Profiler' objects>
+0 500
+
+fl=~
+fn=<method 'find' of 'bytearray' objects>
+0 4100
+
+fl=~
+fn=<method 'find' of 'str' objects>
+0 89677200
+
+fl=~
+fn=<method 'get' of 'dict' objects>
+0 489400
+
+fl=~
+fn=<method 'get' of 'mappingproxy' objects>
+0 2500
+
+fl=~
+fn=<method 'index' of 'list' objects>
+0 1400
+
+fl=~
+fn=<method 'index' of 'tuple' objects>
+0 11460500
+
+fl=~
+fn=<method 'items' of 'dict' objects>
+0 472500
+
+fl=~
+fn=<method 'keys' of 'dict' objects>
+0 400
+
+fl=~
+fn=<method 'match' of 're.Pattern' objects>
+0 17161000
+
+fl=~
+fn=<method 'readline' of '_io.TextIOWrapper' objects>
+0 5320300
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\codecs.py
+cfn=getstate
+calls=159 281
+0 22800
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\encodings\cp1252.py
+cfn=decode
+calls=159 22
+0 1858500
+
+fl=~
+fn=<method 'reduce' of 'numpy.ufunc' objects>
+0 58245900
+
+fl=~
+fn=<method 'replace' of 'str' objects>
+0 11894000
+
+fl=~
+fn=<method 'reshape' of 'numpy.ndarray' objects>
+0 77085100
+
+fl=~
+fn=<method 'rfind' of 'str' objects>
+0 5038600
+
+fl=~
+fn=<method 'split' of 'str' objects>
+0 3103800
+
+fl=~
+fn=<method 'startswith' of 'str' objects>
+0 279100
+
+fl=~
+fn=<method 'sub' of 're.Pattern' objects>
+0 53453200
+
+fl=~
+fn=<method 'sum' of 'numpy.ndarray' objects>
+0 8806100
+cfl=C:\Users\Alber\AppData\Local\Programs\Python\Python38\lib\site-packages\numpy\core\_methods.py
+cfn=_sum
+calls=9620 45
+0 52398600
+
+fl=~
+fn=<method 'take' of 'numpy.ndarray' objects>
+0 1584500
+
+fl=~
+fn=<method 'update' of 'dict' objects>
+0 848600
+
+fl=~
+fn=<method 'upper' of 'str' objects>
+0 9400
+
+fl=~
+fn=<scipy.interpolate._bspl._colloc>
+0 11150100
+

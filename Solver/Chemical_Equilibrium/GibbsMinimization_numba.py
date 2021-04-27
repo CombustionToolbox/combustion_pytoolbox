@@ -5,9 +5,10 @@ COMPUTE CHEMICAL EQUILIBRIUM USING THE GENERALIZED GIBBS MINIMIZATION METHOD
          PhD Candidate - Group Fluid Mechanics
          Office 1.1.D17, Universidad Carlos III de Madrid
          
-Last update Mon Nov 16 9:40:00 2020
+Last update Thur Oct 1 13:00:00 2020
 ----------------------------------------------------------------------
 """
+from numba import jit, njit
 import scipy
 import numpy as np
 import math
@@ -15,6 +16,10 @@ import pandas as pd
 from numpy import log, exp
 from memory_profiler import profile
 from Solver.Functions.SetSpecies import SetSpecies, species_g0
+
+@njit 
+def fast_concatenate(arrays, axis=0): 
+    return np.concatenate(arrays, axis=axis) 
 
 def remove_elements(NatomE, A0, tol):
     """ Find zero sum elements """
@@ -61,30 +66,28 @@ def update_temp(temp_ind, temp_NS, N0, zip1, zip2, ls1, ls2, NP, SIZE):
 
 def update_matrix_A1(A0, temp_NS, temp_ind, temp_ind_E):
     """ Update stoichiometric submatrix A1 """
-    A11 = np.empty(temp_NE, temp_NE)
-    for k in range(temp_NE):
-        for i in range(temp_NE):
-            A11[k, i] = np.dot(A0[0:temp_NG, k] * A0[0:temp_NG, i], N0[0:temp_NG, 0])
     A11 = np.eye(temp_NS)
     A12 = -np.concatenate((A0[np.ix_(temp_ind, temp_ind_E)], np.ones(temp_NS).reshape(temp_NS, 1)), axis = 1)
     return np.concatenate((A11, A12), axis=1)
 
 def update_matrix_A2(A0_T, A22, N0, NP, temp_ind, temp_ind_E):
     """ Update stoichiometric submatrix A2 """
-    A21 = np.concatenate((N0[temp_ind, 0] * A0_T[np.ix_(temp_ind_E, temp_ind)], [N0[temp_ind, 0]]))
+    arr1 = N0[temp_ind, 0] * A0_T[np.ix_(temp_ind_E, temp_ind)]
+    arr2 = N0[temp_ind, 0]
+    A21 = np.concatenate((arr1, arr2))
     A22[-1, -1] = -NP
-    return np.concatenate((A21, A22), axis=1)
+    return fast_concatenate((A21, A22), axis=1)
 
 def update_matrix_A(A0_T, A1, A22, N0, NP, temp_ind, temp_ind_E):
     """ Update stoichiometric matrix A """
     A2 = update_matrix_A2(A0_T, A22, N0, NP, temp_ind, temp_ind_E)
-    return np.concatenate((A1, A2))
+    return fast_concatenate((A1, A2))
 
 def update_vector_b(A0, N0, NP, NatomE, temp_ind, temp_ind_E, temp_ind_nswt, G0RT):
     """ Update coefficient vector b """
     bi_0 = np.array([NatomE[E] - np.dot(N0[temp_ind, 0], A0[temp_ind, E]) for E in temp_ind_E])
     NP_0 = NP - sum(N0[temp_ind_nswt, 0])
-    return np.concatenate((G0RT[temp_ind], bi_0, np.array([NP_0])))
+    return fast_concatenate((G0RT[temp_ind], bi_0, np.array([NP_0])))
 
 def relax_factor(NP, zip1, zip2, DeltaNP, SIZE):
     """ Compute relaxation factor """
@@ -121,6 +124,7 @@ def print_moles(N0, LS, it):
     print(pd.DataFrame(N0, index=np.array(LS)))
 
 #@profile
+
 def equilibrium(self, N_CC, phi, pP, TP, vP):
     """ Generalized Gibbs minimization method """
     E, S, C, M, PD, TN, strThProp = [self.E, self.S, self.C, self.M,

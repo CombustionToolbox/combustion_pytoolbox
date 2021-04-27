@@ -8,7 +8,7 @@ COMPUTE CHEMICAL EQUILIBRIUM USING THE GENERALIZED GIBBS MINIMIZATION METHOD
 Last update Thur Oct 1 13:00:00 2020
 ----------------------------------------------------------------------
 """
-
+import scipy
 import numpy as np
 import math
 import pandas as pd 
@@ -116,7 +116,7 @@ def print_moles(N0, LS, it):
     print(f'\nit: {it}')
     print(pd.DataFrame(N0, index=np.array(LS)))
 
-@profile
+#@profile
 def equilibrium(self, N_CC, phi, pP, TP, vP):
     """ Generalized Gibbs minimization method """
     E, S, C, M, PD, TN, strThProp = [self.E, self.S, self.C, self.M,

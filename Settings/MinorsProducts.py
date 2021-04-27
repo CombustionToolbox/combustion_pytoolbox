@@ -13,7 +13,7 @@ Created on Mon Jun 22 12:15:00 2020
 
 
 def MinorsProducts(self, minors=None):
-    if minors== None or not minors:
+    if minors == None or not minors:
         self.M.minors_products = []
     elif type(minors) == list:
         self.M.minors_products = minors
