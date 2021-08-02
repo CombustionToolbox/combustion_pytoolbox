@@ -23,9 +23,6 @@ The code can compute the equilibrium composition by minimization of the Gibbs–
 
 Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
-## Versioning
-
-
 ## Authors
 
 * **[Alberto Cuadra-Lara](https://github.com/AlbertoCuadra)** - *Main Developer*
