@@ -54,5 +54,3 @@ See also the list of [contributors](https://github.com/AlbertoCuadra/combustion_
 
 ## License
 
-
-## Acknowledgments
