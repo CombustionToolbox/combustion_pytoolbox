@@ -72,10 +72,10 @@ def main():
     # PROBLEM TYPE AND CONDITIONS
     app.PD.TR.Value = 300.  # [K]
     app.PD.pR.Value = 1.   # [bar]
-    app.PD.phi.Value = np.arange(0.5, 1.5, 0.01)  # [-]
-    # app.PD.phi.Value = [1]  # [-]
+    app.PD.phi.Value = np.arange(0.5, 5, 0.01)  # [-]
+    # app.PD.phi.Value = [1.5]  # [-]
     
-    app.PD.TP.Value = 1000
+    app.PD.TP.Value = 2000
     # COMPUTATIONS
     app.C.l_phi = len(app.PD.phi.Value)
     start = time.time()
@@ -96,7 +96,9 @@ def main():
     end = time.time()
     print('Execution time:', end - start, 'seconds')
     # PLOT RESULTS
-    plotResults(app, display_species=app.S.LS, mintol=app.C.mintol_display)
+    # display_species = ['CO','CO2','H','HO2','H2','H2O','NO','NO2','N2','O','OH','O2','Cbgrb']
+    display_species = app.S.LS
+    plotResults(app, display_species=display_species, mintol=app.C.mintol_display)
     return app
     
 
