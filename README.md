@@ -45,7 +45,7 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 
 ## Authors
 
-* **[Alberto Cuadra-Lara](https://github.com/AlbertoCuadra) - *Developer*
+* **[Alberto Cuadra-Lara](https://github.com/AlbertoCuadra)** - *Developer*
 
 Grupo de Mecánica de Fluidos, Universidad Carlos III, Av. Universidad 30, 28911, Leganés, Spain
 
