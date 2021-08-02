@@ -10,7 +10,6 @@ Created on Wen Jun 24 20:04:00 2020
 """
 import numpy as np
 import pickle
-from scipy.interpolate import interp1d
 from NASA_database.FullName2name import FullName2name
 from NASA_database.SpeciesThermProp import SpeciesThermProp
 from time import time
@@ -97,8 +96,13 @@ def GenerateDatabase(self):  # self is a dictionary with Master Database
                     aux.cp = cp_vector
                     aux.cv = cv_vector
                     aux.g0 = g0_vector
+                    aux.a = self.strMaster[species].a
+                    aux.b = self.strMaster[species].b
+                    aux.tExponents = self.strMaster[species].tExponents
+                    aux.ctTInt = ctTInt
+                    aux.tRange = tRange
                 else:
-                    Tref = tRange[0]
+                    Tref = aux.tRange[0]
 
                     aux.name = species
                     aux.FullName = FullSpecies
@@ -108,15 +112,6 @@ def GenerateDatabase(self):  # self is a dictionary with Master Database
                     aux.ef = Ef0
                     aux.swtCondensed = swtCondensed
                     aux.T = Tref
-
-                # Interpolation curves
-
-                aux.cPcurve = interp1d(aux.T, aux.cp, kind='cubic', fill_value='extrapolate')
-                aux.cVcurve = interp1d(aux.T, aux.cv, kind='cubic', fill_value='extrapolate')
-                aux.DeTcurve = interp1d(aux.T, aux.DeT, kind='cubic', fill_value='extrapolate')
-                aux.DhTcurve = interp1d(aux.T, aux.DhT, kind='cubic', fill_value='extrapolate')
-                aux.s0curve = interp1d(aux.T, aux.s0, kind='cubic', fill_value='extrapolate')
-                aux.g0curve = interp1d(aux.T, aux.g0, kind='cubic', fill_value='extrapolate')
 
                 strThProp.update({aux.name: aux})
             else:
@@ -157,9 +152,7 @@ class StrThProp():
         self.cp = []
         self.cv = []
         self.g0 = []
-        self.cPcurve = []
-        self.cVcurve = []
-        self.DeTcurve = []
-        self.DhTcurve = []
-        self.s0curve = []
-        self.g0curve = []
+        self.a = []
+        self.b = []
+        self.tRange = []
+        self.tExponents = []
