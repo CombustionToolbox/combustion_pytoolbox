@@ -54,6 +54,7 @@ def equilibrium(self, N_CC, phi, pP, TP, vP):
     temp_ind_swt = S.ind_swt
     temp_ind = temp_ind_nswt + temp_ind_swt
     temp_NS = S.NS
+    temp_NG = len(temp_ind_nswt)
     while DeltaNP > 0.5 * 1e-5 and it < itMax:
         it += 1
         # Gibbs free energy
@@ -85,8 +86,8 @@ def equilibrium(self, N_CC, phi, pP, TP, vP):
         e = min(1, min(e))
            
         # Apply correction
-        N0[temp_ind_nswt, 0] = log(N0[temp_ind_nswt, 0]) + e * x[temp_ind_nswt]
-        N0[temp_ind_swt, 0] = N0[temp_ind_swt, 0] + e * x[temp_ind_swt]
+        N0[temp_ind_nswt, 0] = log(N0[temp_ind_nswt, 0]) + e * x[0:temp_NG]
+        N0[temp_ind_swt, 0] = N0[temp_ind_swt, 0] + e * x[temp_NG+1:temp_NS]
         NP = exp(log(NP) + e * x[-1])
         # Apply antilog
         N0[S.ind_nswt, 0] = exp(N0[S.ind_nswt, 0])
@@ -101,6 +102,7 @@ def equilibrium(self, N_CC, phi, pP, TP, vP):
                     temp_ind_nswt.remove(ind)
         if temp_ind_remove:
             temp_ind = list(set(temp_ind) - set(temp_ind_remove))
+            temp_NG = len(temp_ind_nswt)
             temp_NS = len(temp_ind)
             A11 = np.eye(temp_NS)
             A12 = -np.concatenate((A0[temp_ind, :], np.ones(temp_NS).reshape(temp_NS, 1)), axis = 1)
