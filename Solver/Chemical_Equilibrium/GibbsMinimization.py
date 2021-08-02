@@ -8,13 +8,12 @@ COMPUTE CHEMICAL EQUILIBRIUM USING THE GENERALIZED GIBBS MINIMIZATION METHOD
 Last update Thur Oct 1 13:00:00 2020
 ----------------------------------------------------------------------
 """
-import scipy
 import numpy as np
 import math
 import pandas as pd 
 from numpy import log, exp
 from memory_profiler import profile
-from Solver.Functions.SetSpecies import SetSpecies, species_g0
+from Solver.Functions.SetSpecies import SetSpecies, species_g0, get_tInterval
 
 def remove_elements(NatomE, A0, tol):
     """ Find zero sum elements """
@@ -59,11 +58,13 @@ def update_temp(temp_ind, temp_NS, N0, zip1, zip2, ls1, ls2, NP, SIZE):
         
     return (temp_ind, temp_ind_swt, temp_ind_nswt, temp_NS)
 
-def update_matrix_A1(A0, temp_NS, temp_ind, temp_ind_E):
+def update_matrix_A1(A0, A1, temp_NS, temp_NS0, temp_ind, temp_ind_E):
     """ Update stoichiometric submatrix A1 """
-    A11 = np.eye(temp_NS)
-    A12 = -np.concatenate((A0[np.ix_(temp_ind, temp_ind_E)], np.ones(temp_NS).reshape(temp_NS, 1)), axis = 1)
-    return np.concatenate((A11, A12), axis=1)
+    if temp_NS < temp_NS0:
+        A11 = np.eye(temp_NS)
+        A12 = -np.concatenate((A0[np.ix_(temp_ind, temp_ind_E)], np.ones(temp_NS).reshape(temp_NS, 1)), axis = 1)
+        return np.concatenate((A11, A12), axis=1), temp_NS0
+    return A1, temp_NS0
 
 def update_matrix_A2(A0_T, A22, N0, NP, temp_ind, temp_ind_E):
     """ Update stoichiometric submatrix A2 """
@@ -80,7 +81,7 @@ def update_vector_b(A0, N0, NP, NatomE, temp_ind, temp_ind_E, temp_ind_nswt, G0R
     """ Update coefficient vector b """
     bi_0 = np.array([NatomE[E] - np.dot(N0[temp_ind, 0], A0[temp_ind, E]) for E in temp_ind_E])
     NP_0 = NP - sum(N0[temp_ind_nswt, 0])
-    return np.concatenate((G0RT[temp_ind], bi_0, np.array([NP_0])))
+    return np.concatenate((-G0RT[temp_ind], bi_0, np.array([NP_0])))
 
 def relax_factor(NP, zip1, zip2, DeltaNP, SIZE):
     """ Compute relaxation factor """
@@ -100,8 +101,8 @@ def update_SIZE(N0, A0, temp_ind, temp_ind_E, tol):
         return log(1000)/BRATIO + log(1000) * 6.9077553
     return -log(tol) 
 
-def apply_antilog(N0, N0_log, NP_log, temp_NS, temp_ind):
-    N0[temp_ind, :] = np.concatenate((exp(N0_log).reshape(temp_NS, 1), N0[temp_ind, 1].reshape(temp_NS, 1)), axis=1)
+def apply_antilog(N0, NP_log, temp_ind):
+    N0[temp_ind, 0] = exp(N0[temp_ind, 0])
     NP = exp(NP_log)
     return (N0, NP)
 
@@ -117,14 +118,15 @@ def print_moles(N0, LS, it):
     print(pd.DataFrame(N0, index=np.array(LS)))
 
 #@profile
-def equilibrium(self, N_CC, phi, pP, TP, vP):
+def equilibrium(self, pP, TP, strR):
     """ Generalized Gibbs minimization method """
     E, S, C, M, PD, TN, strThProp = [self.E, self.S, self.C, self.M,
                                  self.PD, self.TN, self.strThProp]
     N0, A0 = (C.N0.Value, C.A0.Value)
-    R0TP = C.R0 * TP # [J/(mol)]
+    R0 = C.R0
+    R0TP = R0 * TP # [J/(mol)]
     # Initialization
-    NatomE = np.dot(N_CC[:, 0], A0)
+    NatomE = strR.NatomE
     NP_0 = 0.1
     NP = NP_0
     
@@ -142,20 +144,21 @@ def equilibrium(self, N_CC, phi, pP, TP, vP):
      temp_NE, temp_NS, temp_ind_remove) = temp_values(S, NatomE, self.C.tolN)
     # Update temp values
     temp_ind, temp_ind_swt, temp_ind_nswt, temp_NS = update_temp(temp_ind, temp_NS, N0, N0[ind_A0_E0, 0], ind_A0_E0, temp_ind_swt, temp_ind_nswt, NP=self.C.tolN, SIZE=SIZE)
+    temp_NS0 = temp_NS + 1;
     # Initialize species vector N0 
     N0[temp_ind, 0] = 0.1/temp_NS
     # Dimensionless Standard Gibbs free energy 
-    g0 = np.array([(species_g0(species, TP, strThProp)) * 1e3 for species in S.LS])
+    g0 = np.array([(species_g0(species, TP, strThProp, get_tInterval(species, TP, self.strThProp), R0)) * 1e3 for species in S.LS])
     G0RT = g0/R0TP
     # Construction of part of matrix A (complete)
-    A1 = update_matrix_A1(A0, temp_NS, temp_ind, temp_ind_E)
+    A1, temp_NS0 = update_matrix_A1(A0, [], temp_NS, temp_NS0, temp_ind, temp_ind_E)
     A22 = np.zeros((temp_NE + 1, temp_NE + 1))
     A0_T = A0.transpose()
             
     while STOP > C.tolN and it < itMax:
         it += 1
         # Gibbs free energy
-        G0RT[temp_ind_nswt] =  -(g0[temp_ind_nswt] / R0TP + log(N0[temp_ind_nswt, 0] / NP) + log(pP))
+        G0RT[temp_ind_nswt] =  g0[temp_ind_nswt] / R0TP + log(N0[temp_ind_nswt, 0] / NP) + log(pP)
         # Construction of matrix A
         A = update_matrix_A(A0_T, A1, A22, N0, NP, temp_ind, temp_ind_E)
         # Construction of vector b            
@@ -166,14 +169,14 @@ def equilibrium(self, N_CC, phi, pP, TP, vP):
         # update_SIZE(N0, A0, temp_ind, temp_ind_E, C.tolN)
         e = relax_factor(NP, N0[temp_ind, 0], x[0:temp_NS], x[-1], SIZE)   
         # Apply correction
-        N0_log = log(N0[temp_ind, 0]) + e * x[0:temp_NS]
+        N0[temp_ind, 0] = log(N0[temp_ind, 0]) + e * x[0:temp_NS]
         NP_log = log(NP) + e * x[-1]
         # Apply antilog
-        N0, NP = apply_antilog(N0, N0_log, NP_log, temp_NS, temp_ind)
+        N0, NP = apply_antilog(N0, NP_log, temp_ind)
         # Update temp values in order to remove species with moles < tolerance
         temp_ind, temp_ind_swt, temp_ind_nswt, temp_NS = update_temp(temp_ind, temp_NS, N0, N0[temp_ind, 0], temp_ind, temp_ind_swt, temp_ind_nswt, NP=NP, SIZE=SIZE)
         # Update matrix A
-        A1 = update_matrix_A1(A0, temp_NS, temp_ind, temp_ind_E)
+        A1, temp_NS0 = update_matrix_A1(A0, [], temp_NS, temp_NS0, temp_ind, temp_ind_E)
         # Print moles per iteration
         # print_moles(N0[:, 0], S.LS, it)
         # Compute STOP criteria
