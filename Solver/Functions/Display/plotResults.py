@@ -1,6 +1,8 @@
 import numpy as np
+import matplotlib
 import matplotlib.pyplot as plt
 from scipy.interpolate import (PchipInterpolator as pchip)
+from palettable.colorbrewer.qualitative import Set3_12
 
 def plotMoles(self, x_vec, display_species, mintol, xlabel, ax=None, plt_args=[], plt_kwargs={}, **kwargs):
     if not ax:
@@ -8,7 +10,7 @@ def plotMoles(self, x_vec, display_species, mintol, xlabel, ax=None, plt_args=[]
     # Data
     struct = self.PS.strP
     Nx = len(x_vec)
-    NS = len(display_species)
+    NS = len(struct[0].Xi)
     y_matrix = np.zeros((NS, Nx))
     Ndisplay = set()
     # Display tolerance requirements
@@ -19,7 +21,8 @@ def plotMoles(self, x_vec, display_species, mintol, xlabel, ax=None, plt_args=[]
             if struct[i].Xi[ind] > mintol:
                 Ndisplay.add(ind)
     # Plot configuration
-    plt.set_cmap('Spectral')
+    cmap = matplotlib.colors.ListedColormap(Set3_12.mpl_colors)
+    plt.set_cmap(cmap)
     ax.set_xlim(x_vec.min(), x_vec.max())
     ax.set_ylim(mintol, 1.0)
     ax.set_yscale('log')
