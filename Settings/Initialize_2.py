@@ -42,25 +42,6 @@ def Compute_Species(self):
     self.S.NS = len(self.S.LS)
     return self
 
-def list_phase_species(self, LS):
-    self.S.ind_nswt = []
-    self.S.ind_swt = []
-    for ind, species in enumerate(LS):
-        if not self.strThProp[species].swtCondensed:
-            self.S.ind_nswt.append(ind)
-        else:
-            self.S.ind_swt.append(ind)
-    # Number of gaseous species
-    self.S.NG = len(self.S.ind_nswt)
-    return self
-
-
-def rearrange_species(self):
-    self.LS = [self.LS[i] for i in self.ind_nswt + self.ind_swt]
-    if 'Cbgrb' in self.LS:
-        self.ind_Cgr = self.LS.index('Cbgrb')
-    return self
-
 
 def Index_fixed_Species(self):
     """ List of fixed gaseous species """
@@ -79,6 +60,26 @@ def Index_fixed_Species(self):
     
     self.ind_fixed = [self.ind_CO2, self.ind_CO, self.ind_H2O, self.ind_H2,
                       self.ind_O2, self.ind_N2, self.ind_He, self.ind_Ar]
+    return self
+
+
+def list_phase_species(self, LS):
+    self.S.ind_nswt = []
+    self.S.ind_swt = []
+    for ind, species in enumerate(LS):
+        if not self.strThProp[species].swtCondensed:
+            self.S.ind_nswt.append(ind)
+        else:
+            self.S.ind_swt.append(ind)
+    # Number of gaseous species
+    self.S.NG = len(self.S.ind_nswt)
+    return self
+
+
+def rearrange_species(self):
+    self.LS = [self.LS[i] for i in self.ind_nswt + self.ind_swt]
+    if 'Cbgrb' in self.LS:
+        self.ind_Cgr = self.LS.index('Cbgrb')
     return self
 
 
