@@ -69,6 +69,8 @@ def equilibrium(self, N_CC, phi, pP, TP, vP):
         b = np.concatenate((bi_0, np.array([NP_0])))
         # Solve of the linear system A*x = b
         x = np.linalg.solve(A, b)
+        # Compute log variation of moles
+        ############!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! FINISH IT!
         # Relaxation parameter
         e = []
         # sum_elements = sum(N0[:, 0].reshape(S.NS, 1) * A0)
