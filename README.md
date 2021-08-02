@@ -17,11 +17,7 @@ As a first step towards the development of a wider-scope thermochemical tool, in
 
 The code can compute the equilibrium composition by minimization of the Gibbs–Helmholtz free energy or using a using equilibrium constants (segregated method), and employs NASA’s 9-coefficient polynomial fits to evaluate the thermodynamic properties. Results computed with **Combustion-Toolbox** have been validated against, and are in good agreement with, NASA’s Chemical Equilibrium with Applications (CEA) program and CANTERA.
 
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
-### Installing
+## Installing
 
 ## Contributing
 
