@@ -6,16 +6,9 @@ Table of contents
 
 <!--ts-->
    * [Introduction](#Introduction)
-   * [Getting Started](#Getting-Started)
-   * [Prerequisites](#Prerequisites)
    * [Installing](#Installing)
-   * [Running the tests](#Running-the-tests)
-   * [Built With](#Built-With)
    * [Contributing](#Contributing)
-   * [Versioning](#Versioning)
    * [Authors](#Authors)
-   * [License](#License)
-   * [Acknowledgments](#Acknowledgments)
    
 <!--te-->
 
@@ -28,13 +21,7 @@ The code can compute the equilibrium composition by minimization of the Gibbs–
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-### Prerequisites
-
 ### Installing
-
-## Running the tests
-
-## Built With
 
 ## Contributing
 
@@ -51,6 +38,3 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 Grupo de Mecánica de Fluidos, Universidad Carlos III, Av. Universidad 30, 28911, Leganés, Spain
 
 See also the list of [contributors](https://github.com/AlbertoCuadra/combustion_toolbox/blob/master/CONTRIBUTORS.md) who participated in this project.
-
-## License
-
