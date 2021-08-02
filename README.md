@@ -1,17 +1,6 @@
 # Combustion PyToolbox
 A Python based thermochemical code
 
-Table of contents
-=================
-
-<!--ts-->
-   * [Introduction](#Introduction)
-   * [Installing](#Installing)
-   * [Contributing](#Contributing)
-   * [Authors](#Authors)
-   
-<!--te-->
-
 ## Introduction
 As a first step towards the development of a wider-scope thermochemical tool, in this work we present a thermochemical code with application to gaseous combustion problems recently implemented by the authors in MATLAB and Python. The Python version solves, for the moment, a chemical equilibrium problem (TP transformations; where T denotes temperature, P pressure), always assuming ideal gases. `The Python version does not have all the capabilities that the MATLAB version has, because it is much slower than this. When I or we (the community) fix this bottleneck, I will continue with the development of this version adding all the capabilities that the MATLAB version has. I will also add a GUI using Qt5 and Pyside2.`
 
