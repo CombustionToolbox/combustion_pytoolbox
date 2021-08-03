@@ -38,6 +38,7 @@ def main():
     app = ListSpecies(app, 'Soot formation')
     # app = ListSpecies(app, 'HC/02/N2 extended')
     # app = ListSpecies(app, 'Hydrogen')
+    # app = ListSpecies(app, 'ideal_air')
     # REACTION: COMPLETE OR INCOMPLETE
     app.PD.CompleteOrIncomplete = 'incomplete'  # incomplete (default)
     app.TN.factor_c = 1.0  # 1.0 (default)
