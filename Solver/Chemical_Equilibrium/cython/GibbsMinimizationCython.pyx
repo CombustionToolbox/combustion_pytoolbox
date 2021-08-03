@@ -159,12 +159,10 @@ cpdef equilibrium(self, double pP, double TP, strR):
     cdef E = self.E
     cdef S = self.S
     cdef C = self.C 
-    cdef M = self.M
     cdef PD = self.PD
     cdef TN = self.TN
     cdef strThProp = self.strThProp
-    # E, S, C, M, PD, TN, strThProp = [self.E, self.S, self.C, self.M,
-    #                              self.PD, self.TN, self.strThProp]
+    
     N0, A0 = (C.N0.Value, C.A0.Value)
     R0 = C.R0
     R0TP = R0 * TP # [J/(mol)]
