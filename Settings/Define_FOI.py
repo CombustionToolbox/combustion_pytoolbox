@@ -6,7 +6,7 @@ Created on Tue Jun 30 16:28:00 2020
 
 @author: Alberto Cuadra Lara
          PhD Candidate - Group Fluid Mechanics
-         Office 1.1.D17, Universidad Carlos III de Madrid
+         Office 1.1.D22, Universidad Carlos III de Madrid
 """
 import numpy as np
 from Solver.Functions.SetSpecies import SetSpecies
