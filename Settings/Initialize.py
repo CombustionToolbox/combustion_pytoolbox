@@ -6,7 +6,7 @@ Created on Mon Jun 22 12:15:00 2020
 
 @author: Alberto Cuadra Lara
          PhD Candidate - Group Fluid Mechanics
-         Office 1.1.D17, Universidad Carlos III de Madrid
+         Office 1.1.D22, Universidad Carlos III de Madrid
 """
 import numpy as np
 import re
@@ -59,14 +59,13 @@ class App:
     def __init__(self):
         self.E = self.Elements()
         self.S = self.Species()
-        self.M = self.MinorsProducts()
         self.C = self.Constants()
         self.Misc = self.Miscelaneous()
         self.PD = self.ProblemDescription()
         self.PS = self.ProblemSolution()
         self.TN = self.TunningProperties()
         # False: complete DataBase; True: reduced DB
-        self.strMaster = ParseThermoInp(True)
+        self.strMaster = ParseThermoInp(False)
         # struct with tabulated data of selected species
         self.strThProp = GenerateDatabase(self)
 
@@ -82,17 +81,6 @@ class App:
             self.NSpecies = 0
             self.NG = 0
             self.NS = 0
-            # List of fixed gaseous and condensed species
-            self.LS_fixed = ['CO2', 'CO', 'H2O', 
-                               'H2', 'O2', 'N2', 'He', 'Ar', 'Cbgrb']
-            self.LS_fixed = ['CO2', 'CO', 'H2O', 
-                               'H2', 'O2', 'N2', 'He', 'Ar']  
-            self.NSfixed = len(self.LS_fixed)
-    class MinorsProducts:
-        def __init__(self):
-            self.Description = "Data of minors products"
-            self.display_species = []
-            self.minors_products = []
 
     class Constants:
         def __init__(self):
