@@ -27,7 +27,7 @@ from Solver.Chemical_Equilibrium.GibbsMinimization import equilibrium
 # from Solver.Chemical_Equilibrium.GibbsMinimization_Reduced import equilibrium
 # from Solver.Chemical_Equilibrium.GibbsMinimization_Direct import equilibrium # For checks
 
-def SolveProblemTP_TV(self, strR, phi, pP, TP):
+def SolveProblemTP_TV(self, strR, pP, TP):
     # Compute number of moles 
     N, DeltaNP = equilibrium(self, pP, TP, strR)
     # Compute properties of all species
@@ -41,6 +41,5 @@ def SolveProblemTP_TV(self, strR, phi, pP, TP):
         strP = ComputeProperties(self, P, pP, TP)
         
     strP.error_moles = DeltaNP
-    strP.phi = phi
     
     return strP
