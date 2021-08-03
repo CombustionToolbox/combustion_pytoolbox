@@ -20,6 +20,11 @@ The `MATLAB version` `solves` six chemical equilibrium problems (`TP, HP, SP, TV
 
 Please read [CONTRIBUTING.md](https://github.com/AlbertoCuadra/ThermochemicalCode_Python/blob/master/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
+We welcome your feedback, but do not guarantee support. Please send feedback or inquiries to:
+Alberto Cuadra acuadra@ing.uc3m.es
+
+Thank you for testing Combustion PyToolbox!
+
 ## Developers
 
 * **[Alberto Cuadra-Lara](https://albertocuadra.netlify.app/)** - *Main Developer*
