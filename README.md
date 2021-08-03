@@ -13,12 +13,8 @@ The `MATLAB version` `solves` six chemical equilibrium problems (`TP, HP, SP, TV
 ## Installing
 
 ## Example
-  ![Example computations given by Combustion PyToolbox: Adiabatic temperature and composition at constant pressure for methane.](https://github.com/AlbertoCuadra/ThermochemicalCode_Python/blob/master/Validations/HP_CH4.svg)
-  
-
-```{r Figure1, fig.align = 'justify', out.width = "100%", fig.cap = "\\label{Figure1}Example computations given by Combustion PyToolbox: Adiabatic temperature and composition at constant pressure for methane."}
-knitr::include_graphics("./Validations/HP_CH4.svg")
-```
+  ![](https://github.com/AlbertoCuadra/ThermochemicalCode_Python/blob/master/Validations/HP_CH4.svg)
+  *Example computations given by Combustion PyToolbox: Adiabatic temperature and composition at constant pressure for methane.*
   
 ## Contributing
 
