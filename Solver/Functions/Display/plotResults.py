@@ -1,8 +1,9 @@
 import numpy as np
+import seaborn as sns
 import matplotlib
 import matplotlib.pyplot as plt
 from scipy.interpolate import (PchipInterpolator as pchip)
-from palettable.colorbrewer.qualitative import Set3_12
+from palettable.colorbrewer.qualitative import Paired_12
 from Solver.Functions.struct2vector import struct2vector
 
 def plotMoles(self, x_vec, display_species, mintol, ax=None, plt_args=[], plt_kwargs={}, **kwargs):
@@ -26,8 +27,23 @@ def plotMoles(self, x_vec, display_species, mintol, ax=None, plt_args=[], plt_kw
     title  = kwargs.pop('title')
     xlabel = kwargs.pop('xlabel')
     ylabel = kwargs.pop('ylabel')
-    cmap = matplotlib.colors.ListedColormap(Set3_12.mpl_colors)
-    plt.set_cmap(cmap)
+    
+    Ldisplay = len(Ndisplay)
+    maxLdisplay = 12
+    if Ldisplay > maxLdisplay:
+        NUM_COLORS = maxLdisplay
+    else:
+        NUM_COLORS = Ldisplay
+
+    LINE_STYLES = ['solid', 'dashed', 'dotted']
+    NUM_STYLES = len(LINE_STYLES)
+
+    cmap = matplotlib.colors.ListedColormap(Paired_12.mpl_colors)
+    colors = cmap(np.linspace(0, 1.0, NUM_COLORS))
+    # plt.set_cmap(cmap)
+    # sns.reset_orig()  # get default matplotlib styles back
+    # colors = sns.color_palette('husl', n_colors=NUM_COLORS)  # a list of RGB tuples
+    
     ax.set_xlim(x_vec.min(), x_vec.max())
     ax.set_ylim(mintol, 1.0)
     ax.set_yscale('log')
@@ -37,8 +53,18 @@ def plotMoles(self, x_vec, display_species, mintol, ax=None, plt_args=[], plt_kw
     labels = np.array(display_species)
     labels = [labels[ndisplay] for ndisplay in Ndisplay]
     # Plot
+    k = 0
+    z = 0
     for j in Ndisplay:
-        ax.plot(x_vec, y_matrix[j, :], *plt_args, **plt_kwargs, **kwargs)
+        lines = ax.plot(x_vec, y_matrix[j, :], *plt_args, **plt_kwargs, **kwargs)
+        if Ldisplay > maxLdisplay:
+            lines[0].set_color(colors[k])
+            lines[0].set_linestyle(LINE_STYLES[z%NUM_STYLES])
+            k = k + 1
+            if k == 12:
+                k = 0
+                z = z + 1
+
     # Legend    
     ax.legend(labels=labels, loc='upper left', bbox_to_anchor=(1.05, 1))
     return self
