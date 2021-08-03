@@ -6,7 +6,9 @@ As a first step towards the development of a wider-scope thermochemical tool, in
 
 The code can compute the equilibrium composition by minimization of the Gibbs–Helmholtz free energy or using a using equilibrium constants (segregated method), and employs NASA’s 9-coefficient polynomial fits to evaluate the thermodynamic properties. Results computed with **Combustion PyToolbox** have been validated against, and are in good agreement with, NASA’s Chemical Equilibrium with Applications (CEA) program and CANTERA.
 
-`This project is also part of my PhD. The MATLAB version will be released soon.`
+This project is also part of my PhD. `At the moment, the Python version is a small part of the MATLAB version. The latter will be released soon.`  
+
+The `MATLAB version` solves six chemical equilibrium problems (TP, HP, SP, TV, EV and SV transformations; where T denotes temperature, P pressure, H enthalpy, S entropy, E internal energy and V volume), incident and reflected planar shock waves, as well as ideal detonations according to Chapman-Jouguet theory and overdriven detonations, assuming always ideal gases in all cases. Along with the plain code, the new tool has been `equipped with a Graphical User Interface` (hereafter Combustion Toolbox) developed in MATLAB 2021 under AppDesigner.
 
 ## Installing
 
