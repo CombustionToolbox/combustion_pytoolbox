@@ -35,8 +35,8 @@ def main():
     # LOAD DATABASES AND GLOBAL PARAMETERS
     app = Initialize() # Instantiation
     # LIST OF SPECIES
-    # app = ListSpecies(app, 'Soot formation')
-    app = ListSpecies(app, 'HC/02/N2 extended')
+    app = ListSpecies(app, 'Soot formation')
+    # app = ListSpecies(app, 'HC/02/N2 extended')
     # app = ListSpecies(app, 'Hydrogen')
     # REACTION: COMPLETE OR INCOMPLETE
     app.PD.CompleteOrIncomplete = 'incomplete'  # incomplete (default)
@@ -47,7 +47,7 @@ def main():
     app.PD.ProblemType = 'HP' # [TP, HP; T:Defined Temperature, P:Constant Pressure, H: Constant Enthalpy]
     app.PD.TR.Value = 300.  # [K]
     app.PD.pR.Value = 1.   # [bar]
-    app.PD.phi.Value = np.arange(0.5, 2, 0.5)  # [-]
+    app.PD.phi.Value = np.arange(0.5, 5, 0.01)  # [-]
     # app.PD.phi.Value = [2]  # [-]
     app.PD.TP.Value = 2000. # [K]
     # COMPUTATIONS
