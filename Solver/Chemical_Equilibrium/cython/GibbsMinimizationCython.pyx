@@ -8,7 +8,7 @@ COMPUTE CHEMICAL EQUILIBRIUM USING THE GENERALIZED GIBBS MINIMIZATION METHOD
 Last update Thur Oct 1 13:00:00 2020
 ----------------------------------------------------------------------
 """
-import scipy
+
 import numpy as np
 cimport numpy as np
 import cython
@@ -16,7 +16,7 @@ import math
 import pandas as pd 
 from numpy import log, exp
 from memory_profiler import profile
-from Solver.Functions.SetSpecies import SetSpecies, species_g0
+from Solver.Functions.SetSpecies import species_g0, get_tInterval
 
 @cython.boundscheck(False) # turn off bounds-checking for entire function
 @cython.wraparound(False)  # turn off negative index wrapping for entire function
@@ -149,8 +149,8 @@ cdef print_moles(np.ndarray N0, LS, int it):
     print(f'\nit: {it}')
     print(pd.DataFrame(N0, index=np.array(LS)))
 
-@profile
-cpdef equilibrium(self, np.ndarray N_CC, double phi, double pP, double TP, double vP):
+# @profile
+cpdef equilibrium(self, double pP, double TP, strR):
     """ Generalized Gibbs minimization method """
     cdef np.ndarray N0, A0, NatomE, g0, G0RT, A1, A22, A0_T, A, b, x, N0_log
     cdef double R0TP, NP_0, NP, SIZE, e, STOP, NP_log
@@ -166,14 +166,14 @@ cpdef equilibrium(self, np.ndarray N_CC, double phi, double pP, double TP, doubl
     # E, S, C, M, PD, TN, strThProp = [self.E, self.S, self.C, self.M,
     #                              self.PD, self.TN, self.strThProp]
     N0, A0 = (C.N0.Value, C.A0.Value)
-    R0TP = C.R0 * TP # [J/(mol)]
+    R0 = C.R0
+    R0TP = R0 * TP # [J/(mol)]
     # Initialization
-    NatomE = np.dot(N_CC[:, 0], A0)
+    NatomE = strR.NatomE
     NP_0 = 0.1
     NP = NP_0
     
     it = 0
-    # itMax = 500
     itMax = 50 + round(S.NS/2)
     SIZE = -log(C.tolN)
     e = 0.
@@ -189,7 +189,7 @@ cpdef equilibrium(self, np.ndarray N_CC, double phi, double pP, double TP, doubl
     # Initialize species vector N0 
     N0[temp_ind, 0] = 0.1/temp_NS
     # Dimensionless Standard Gibbs free energy 
-    g0 = np.array([(species_g0(species, TP, strThProp)) * 1e3 for species in S.LS])
+    g0 = np.array([(species_g0(species, TP, strThProp, get_tInterval(species, TP, self.strThProp), R0)) * 1e3 for species in S.LS])
     G0RT = g0/R0TP
     # Construction of part of matrix A (complete)
     A1 = update_matrix_A1(A0, temp_NS, temp_ind, temp_ind_E)

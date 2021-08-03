@@ -18,30 +18,21 @@ Last update Wen Jul 15 11:55:00 2020
 ----------------------------------------------------------------------
 """
 
-from .CalculateProductsCC import CalculateProductsCC
-from .CalculateProductsIC import CalculateProductsIC
 from Solver.Functions.SetSpecies import SetSpecies
 from Solver.Functions.ComputeProperties import ComputeProperties
 # from Solver.Chemical_Equilibrium.GibbsMinimization_numba import equilibrium
-# from Solver.Chemical_Equilibrium.cython.GibbsMinimizationCython import equilibrium
-from Solver.Chemical_Equilibrium.GibbsMinimization import equilibrium
+from Solver.Chemical_Equilibrium.cython.GibbsMinimizationCython import equilibrium
+# from Solver.Chemical_Equilibrium.GibbsMinimization import equilibrium
 # from Solver.Chemical_Equilibrium.GibbsMinimization_Soot_2 import equilibrium
 # from Solver.Chemical_Equilibrium.GibbsMinimization_Reduced import equilibrium
 # from Solver.Chemical_Equilibrium.GibbsMinimization_Direct import equilibrium # For checks
 
 def SolveProblemTP_TV(self, strR, phi, pP, TP):
-    # N_CC, phi_c, FLAG_SOOT = CalculateProductsCC(self, strR.NatomE, phi, pP, TP)
-    # P = SetSpecies(self, self.S.LS, N_CC[0, :], TP)
-    if self.PD.CompleteOrIncomplete.upper() == 'INCOMPLETE':
-        # N_CC matrix with number of moles and swtCondesated of each species
-        # N_CC = P[:, [0, 9]]
-        # Compute number of moles 
-        # N_IC, DeltaNP = CalculateProductsIC(self, N_CC, phi, pP, TP, strR.v, phi_c, FLAG_SOOT)
-        N_IC, DeltaNP = equilibrium(self, pP, TP, strR)
-        # Compute properties of all species
-        P = SetSpecies(self, self.S.LS, N_IC[:, 0], TP)
-    else:
-        DeltaNP = 0.
+    # Compute number of moles 
+    N, DeltaNP = equilibrium(self, pP, TP, strR)
+    # Compute properties of all species
+    P = SetSpecies(self, self.S.LS, N[:, 0], TP)
+
     if self.PD.ProblemType[1] == 'P':
         strP = ComputeProperties(self, P, pP, TP)
     else:
@@ -51,6 +42,5 @@ def SolveProblemTP_TV(self, strR, phi, pP, TP):
         
     strP.error_moles = DeltaNP
     strP.phi = phi
-    #strP.phi, strP.phi_c = [phi, phi_c]
     
     return strP
