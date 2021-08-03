@@ -17,14 +17,14 @@ from scipy.optimize import fmin_slsqp
 from Solver.Functions.SetSpecies import SetSpecies, species_g0
 
 
-def equilibrium(self, N_CC, phi, pP, TP, vP):
+def equilibrium(self, pP, TP, strR):
     E, S, C, M, PD, TN, strThProp = [self.E, self.S, self.C, self.M,
                                  self.PD, self.TN, self.strThProp]
     N0, A0 = (C.N0.Value, C.A0.Value)
-    R0TP = C.R0 * TP # [J/(mol)]
+    R0 = C.R0
+    R0TP = R0 * TP # [J/(mol)]
     # Initialization
-    NatomE = sum(N_CC[:, 0].reshape(S.N_Compute_Species, 1) * A0)
-    NP_0 = sum(N_CC[:, 0] * (1.0 - N_CC[:,1])) # Sum of num of moles of gases-(1-swt), with swt == condensed phase
+    NatomE = strR.NatomE
     NP_0 = 0.1
     NP = NP_0
     # N0 = N_CC

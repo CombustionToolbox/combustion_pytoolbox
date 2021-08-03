@@ -13,23 +13,19 @@ import numpy as np
 import math
 import pandas as pd # FOR CHECK
 from numpy import log, exp
-from Solver.Functions.SetSpecies import SetSpecies, species_g0
+from Solver.Functions.SetSpecies import species_g0, get_tInterval
 
-def equilibrium(self, N_CC, phi, pP, TP, vP):
+def equilibrium(self, pP, TP, strR):
     E, S, C, M, PD, TN, strThProp = [self.E, self.S, self.C, self.M,
                                  self.PD, self.TN, self.strThProp]
     N0, A0 = (C.N0.Value, C.A0.Value)
-    R0TP = C.R0 * TP # [J/(mol)]
+    R0 = C.R0
+    R0TP = R0 * TP # [J/(mol)]
     # Initialization
-    NatomE = np.dot(N_CC[:, 0], A0)
+    NatomE = strR.NatomE
     NP_0 = sum(N0[S.ind_nswt, 0]) # Sum of number of moles of gases
     NP_0 = 0.1
     NP = NP_0
-    
-    x0 = NatomE[E.ind_C]
-    y0 = NatomE[E.ind_H]
-    z0 = NatomE[E.ind_O]
-    w0 = NatomE[E.ind_N]
     
     # N0 = N_CC
     N0[:, 0] = 0.1/(S.NS-len(S.ind_swt))
@@ -39,7 +35,7 @@ def equilibrium(self, N_CC, phi, pP, TP, vP):
     e = 0.
     DeltaNP = 1.
     # Dimensionless Standard Gibbs free energy 
-    g0 = np.array([(species_g0(species, TP, strThProp)) * 1e3 for species in S.LS])
+    g0 = np.array([(species_g0(species, TP, strThProp, get_tInterval(species, TP, self.strThProp), R0)) * 1e3 for species in S.LS])
     G0RT = -g0 / R0TP
     # Construction of part of matrix A
     A11 = np.eye(S.NS)

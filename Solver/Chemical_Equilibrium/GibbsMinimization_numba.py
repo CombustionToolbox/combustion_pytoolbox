@@ -15,11 +15,11 @@ import math
 import pandas as pd 
 from numpy import log, exp
 from memory_profiler import profile
-from Solver.Functions.SetSpecies import SetSpecies, species_g0
+from Solver.Functions.SetSpecies import species_g0, get_tInterval
 
 @njit 
 def fast_concatenate(arrays, axis=0): 
-    return np.concatenate(arrays, axis=axis) 
+    return np.concatenate(arrays, axis=axis)
 
 def remove_elements(NatomE, A0, tol):
     """ Find zero sum elements """
@@ -64,17 +64,17 @@ def update_temp(temp_ind, temp_NS, N0, zip1, zip2, ls1, ls2, NP, SIZE):
         
     return (temp_ind, temp_ind_swt, temp_ind_nswt, temp_NS)
 
-def update_matrix_A1(A0, temp_NS, temp_ind, temp_ind_E):
+def update_matrix_A1(A0, A1, temp_NS, temp_NS0, temp_ind, temp_ind_E):
     """ Update stoichiometric submatrix A1 """
-    A11 = np.eye(temp_NS)
-    A12 = -np.concatenate((A0[np.ix_(temp_ind, temp_ind_E)], np.ones(temp_NS).reshape(temp_NS, 1)), axis = 1)
-    return np.concatenate((A11, A12), axis=1)
+    if temp_NS < temp_NS0:
+        A11 = np.eye(temp_NS)
+        A12 = -fast_concatenate((A0[np.ix_(temp_ind, temp_ind_E)], np.ones(temp_NS).reshape(temp_NS, 1)), axis = 1)
+        return fast_concatenate((A11, A12), axis=1) , temp_NS0
+    return A1, temp_NS0
 
 def update_matrix_A2(A0_T, A22, N0, NP, temp_ind, temp_ind_E):
     """ Update stoichiometric submatrix A2 """
-    arr1 = N0[temp_ind, 0] * A0_T[np.ix_(temp_ind_E, temp_ind)]
-    arr2 = N0[temp_ind, 0]
-    A21 = np.concatenate((arr1, arr2))
+    A21 = np.concatenate((N0[temp_ind, 0] * A0_T[np.ix_(temp_ind_E, temp_ind)], [N0[temp_ind, 0]]))
     A22[-1, -1] = -NP
     return fast_concatenate((A21, A22), axis=1)
 
@@ -125,14 +125,15 @@ def print_moles(N0, LS, it):
 
 #@profile
 
-def equilibrium(self, N_CC, phi, pP, TP, vP):
+def equilibrium(self, pP, TP, strR):
     """ Generalized Gibbs minimization method """
     E, S, C, M, PD, TN, strThProp = [self.E, self.S, self.C, self.M,
                                  self.PD, self.TN, self.strThProp]
     N0, A0 = (C.N0.Value, C.A0.Value)
-    R0TP = C.R0 * TP # [J/(mol)]
+    R0 = C.R0
+    R0TP = R0 * TP # [J/(mol)]
     # Initialization
-    NatomE = np.dot(N_CC[:, 0], A0)
+    NatomE = strR.NatomE
     NP_0 = 0.1
     NP = NP_0
     
@@ -150,13 +151,14 @@ def equilibrium(self, N_CC, phi, pP, TP, vP):
      temp_NE, temp_NS, temp_ind_remove) = temp_values(S, NatomE, self.C.tolN)
     # Update temp values
     temp_ind, temp_ind_swt, temp_ind_nswt, temp_NS = update_temp(temp_ind, temp_NS, N0, N0[ind_A0_E0, 0], ind_A0_E0, temp_ind_swt, temp_ind_nswt, NP=self.C.tolN, SIZE=SIZE)
+    temp_NS0 = temp_NS + 1;
     # Initialize species vector N0 
     N0[temp_ind, 0] = 0.1/temp_NS
     # Dimensionless Standard Gibbs free energy 
-    g0 = np.array([(species_g0(species, TP, strThProp)) * 1e3 for species in S.LS])
+    g0 = np.array([(species_g0(species, TP, strThProp, get_tInterval(species, TP, self.strThProp), R0)) * 1e3 for species in S.LS])
     G0RT = g0/R0TP
     # Construction of part of matrix A (complete)
-    A1 = update_matrix_A1(A0, temp_NS, temp_ind, temp_ind_E)
+    A1, temp_NS0 = update_matrix_A1(A0, [], temp_NS, temp_NS0, temp_ind, temp_ind_E)
     A22 = np.zeros((temp_NE + 1, temp_NE + 1))
     A0_T = A0.transpose()
             
@@ -181,7 +183,7 @@ def equilibrium(self, N_CC, phi, pP, TP, vP):
         # Update temp values in order to remove species with moles < tolerance
         temp_ind, temp_ind_swt, temp_ind_nswt, temp_NS = update_temp(temp_ind, temp_NS, N0, N0[temp_ind, 0], temp_ind, temp_ind_swt, temp_ind_nswt, NP=NP, SIZE=SIZE)
         # Update matrix A
-        A1 = update_matrix_A1(A0, temp_NS, temp_ind, temp_ind_E)
+        A1 = update_matrix_A1(A0, [], temp_NS, temp_NS0, temp_ind, temp_ind_E)
         # Print moles per iteration
         # print_moles(N0[:, 0], S.LS, it)
         # Compute STOP criteria
