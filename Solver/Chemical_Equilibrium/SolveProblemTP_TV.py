@@ -12,7 +12,7 @@ OUTPUT:
    
 @author: Alberto Cuadra Lara
          PhD Candidate - Group Fluid Mechanics
-         Office 1.1.D17, Universidad Carlos III de Madrid
+         Office 1.1.D22, Universidad Carlos III de Madrid
          
 Last update Wen Jul 15 11:55:00 2020
 ----------------------------------------------------------------------
@@ -21,8 +21,8 @@ Last update Wen Jul 15 11:55:00 2020
 from Solver.Functions.SetSpecies import SetSpecies
 from Solver.Functions.ComputeProperties import ComputeProperties
 # from Solver.Chemical_Equilibrium.GibbsMinimization_numba import equilibrium
-from Solver.Chemical_Equilibrium.cython.GibbsMinimizationCython import equilibrium
-# from Solver.Chemical_Equilibrium.GibbsMinimization import equilibrium
+# from Solver.Chemical_Equilibrium.cython.GibbsMinimizationCython import equilibrium
+from Solver.Chemical_Equilibrium.GibbsMinimization import equilibrium
 # from Solver.Chemical_Equilibrium.GibbsMinimization_Soot_2 import equilibrium
 # from Solver.Chemical_Equilibrium.GibbsMinimization_Reduced import equilibrium
 # from Solver.Chemical_Equilibrium.GibbsMinimization_Direct import equilibrium # For checks
