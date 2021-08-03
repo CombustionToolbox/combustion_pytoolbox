@@ -30,14 +30,13 @@ from Settings.ListSpecies import ListSpecies
 from Settings.Define_FOI import *
 from Solver.Functions.Display.displayResults import displayResults
 from Solver.Functions.Display.plotResults import plotResults
-from Solver.Chemical_Equilibrium.SolveProblemTP_TV import SolveProblemTP_TV
-
+from Solver.Chemical_Equilibrium.SolveProblem import SolveProblem
 def main():
     # LOAD DATABASES AND GLOBAL PARAMETERS
     app = Initialize() # Instantiation
     # LIST OF SPECIES
-    app = ListSpecies(app, 'Soot formation')
-    # app = ListSpecies(app, 'HC/02/N2 EXTENDED')
+    # app = ListSpecies(app, 'Soot formation')
+    app = ListSpecies(app, 'HC/02/N2 extended')
     # app = ListSpecies(app, 'Hydrogen')
     # REACTION: COMPLETE OR INCOMPLETE
     app.PD.CompleteOrIncomplete = 'incomplete'  # incomplete (default)
@@ -45,11 +44,12 @@ def main():
     # INITIALIZATION CLASS APP
     app = Initialize_2(app)
     # PROBLEM TYPE AND CONDITIONS
+    app.PD.ProblemType = 'HP' # [TP, HP; T:Defined Temperature, P:Constant Pressure, H: Constant Enthalpy]
     app.PD.TR.Value = 300.  # [K]
     app.PD.pR.Value = 1.   # [bar]
-    app.PD.phi.Value = np.arange(0.5, 5, 0.01)  # [-]
-    # app.PD.phi.Value = [5]  # [-]
-    app.PD.TP.Value = 2000
+    app.PD.phi.Value = np.arange(0.5, 2, 0.5)  # [-]
+    # app.PD.phi.Value = [2]  # [-]
+    app.PD.TP.Value = 2000. # [K]
     # COMPUTATIONS
     app.C.l_phi = len(app.PD.phi.Value)
     start = time.time()
@@ -64,7 +64,7 @@ def main():
         # COMPUTE PROPERTIES OF THE INITIAL MIXTURE
         app = Define_FOI(app, i)
         # SOLVE PROBLEM
-        app.PS.strP.append(SolveProblemTP_TV(app, app.PS.strR[i], app.PD.phi.Value[i], app.PD.pR.Value, app.PD.TP.Value))
+        app = SolveProblem(app, i)
         # DISPLAY RESULTS
         displayResults(app, app.PS.strR[i], app.PS.strP[i])
     end = time.time()
