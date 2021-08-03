@@ -10,9 +10,9 @@ The code can compute the equilibrium composition by minimization of the Gibbs–
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](https://github.com/AlbertoCuadra/ThermochemicalCode_Python/blob/master/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
-## Authors
+## Developers
 
 * **[Alberto Cuadra-Lara](https://albertocuadra.netlify.app/)** - *Main Developer*
 * **Marcos Vera** - *Developer*  
