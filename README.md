@@ -9,7 +9,7 @@ The code can compute the equilibrium composition by minimization of the Gibbs–
 ## Installing
 
 ## Example
-  [Example computations given by Combustion PyToolbox: Adiabatic temperature and composition at constant pressure for methane.](https://github.com/AlbertoCuadra/ThermochemicalCode_Python/blob/master/Validations/HP_CH4.svg)
+  ![Example computations given by Combustion PyToolbox: Adiabatic temperature and composition at constant pressure for methane.](https://github.com/AlbertoCuadra/ThermochemicalCode_Python/blob/master/Validations/HP_CH4.svg)
   
 ## Contributing
 
