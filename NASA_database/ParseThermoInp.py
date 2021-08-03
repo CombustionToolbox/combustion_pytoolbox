@@ -15,11 +15,9 @@ from NASA_database.FullName2name import FullName2name
 
 
 def ParseThermoInp(reducedDB):
-    filepath = 'Databases/strMaster_reduced.pkl'
+    filepath = 'Databases/strMaster.pkl'
     if not existFile(filepath):
-        fid = open(
-            'D:/Google Drive/Phd/Combustion_Toolbox/ThermochemicalCode_Python/ThermochemicalCode_Python/NASA_database/thermo.inp', 'r')
-
+        fid = open('./NASA_database/thermo.inp', 'r')
         if reducedDB:
             print('Loading Reduced NASA database ...', end=" ")
         else:
@@ -44,6 +42,11 @@ def ParseThermoInp(reducedDB):
             struct = StrMaster_reduced(struct)
             # Save StrMaster reduced
             f = open("Databases/strMaster_reduced.pkl", "wb")
+            pickle.dump(struct, f)
+            f.close()
+        else:
+            # Save StrMaster
+            f = open("Databases/strMaster.pkl", "wb")
             pickle.dump(struct, f)
             f.close()
 
