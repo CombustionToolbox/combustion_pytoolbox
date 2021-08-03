@@ -3,7 +3,7 @@ COMPUTE CHEMICAL EQUILIBRIUM USING THE GENERALIZED GIBBS MINIMIZATION METHOD
    
 @author: Alberto Cuadra Lara
          PhD Candidate - Group Fluid Mechanics
-         Office 1.1.D17, Universidad Carlos III de Madrid
+         Office 1.1.D22, Universidad Carlos III de Madrid
          
 Last update Thur Oct 1 13:00:00 2020
 ----------------------------------------------------------------------
@@ -118,8 +118,8 @@ def print_moles(N0, LS, it):
 #@profile
 def equilibrium(self, pP, TP, strR):
     """ Generalized Gibbs minimization method """
-    E, S, C, M, PD, TN, strThProp = [self.E, self.S, self.C, self.M,
-                                 self.PD, self.TN, self.strThProp]
+    E, S, C, PD, TN, strThProp = [self.E, self.S, self.C, self.PD,
+                                  self.TN, self.strThProp]
     N0, A0 = (C.N0.Value, C.A0.Value)
     R0 = C.R0
     R0TP = R0 * TP # [J/(mol)]
