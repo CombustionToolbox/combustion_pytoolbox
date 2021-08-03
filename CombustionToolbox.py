@@ -16,7 +16,7 @@ Type of problems:
 
 @author: Alberto Cuadra Lara
          PhD Candidate - Group Fluid Mechanics
-         Office 1.1.D17, Universidad Carlos III de Madrid
+         Office 1.1.D22, Universidad Carlos III de Madrid
          
 Last update Thu Oct 1 13:10:00 2020
 ----------------------------------------------------------------------
@@ -26,7 +26,7 @@ import time
 import numpy as np
 from Settings.Initialize import Initialize
 from Settings.Initialize_2 import Initialize_2
-from Settings.MinorsProducts import MinorsProducts
+from Settings.ListSpecies import ListSpecies
 from Settings.Define_FOI import *
 from Solver.Functions.Display.displayResults import displayResults
 from Solver.Functions.Display.plotResults import plotResults
@@ -34,47 +34,21 @@ from Solver.Chemical_Equilibrium.SolveProblemTP_TV import SolveProblemTP_TV
 
 def main():
     # LOAD DATABASES AND GLOBAL PARAMETERS
-    app = Initialize()
+    app = Initialize() # Instantiation
+    # LIST OF SPECIES
+    app = ListSpecies(app, 'Soot formation')
+    # app = ListSpecies(app, 'HC/02/N2 EXTENDED')
+    # app = ListSpecies(app, 'Hydrogen')
     # REACTION: COMPLETE OR INCOMPLETE
-    #   Specify the type of the reaction: complete or incomplete (dissociation)
     app.PD.CompleteOrIncomplete = 'incomplete'  # incomplete (default)
     app.TN.factor_c = 1.0  # 1.0 (default)
-    # MINORS PRODUCTS
-    #   Specify the minority products to be considered in the product mixture (P) in
-    #   addition to the major species (CO2, CO, H2O, H2, O2, N2, C(gr)).
-    #   Moreover, He and Ar are always included in the database.
-    #
-    #   Specify in Setting/MinorsProducts.py
-    #   Predefined:
-    #       No minors products: ''
-    #       * Hydrocarbons:               'HC/O2/N2 EXTENDED'
-    #       * Soot formation:             'SOOT FORMATION'
-    #       * Soot formation without CH4: 'SOOT FORMATION W/O CH4'
-    #       * A bunch of minors products
-    #         in case your are not sure
-    #         which are possible minors
-    #         products:                   'NASA ALL'
-    #       * Air:                        'AIR'
-    #       * Hydrogen:                   'HYDROGEN'
-    #
-    #   User definition:
-    #       e.g., 'CH4, CO, O'
-
-    # app = MinorsProducts(app, 'Soot formation')
-    app = MinorsProducts(app, 'HC/02/N2 EXTENDED')
-    # app = MinorsProducts(app, 'Hydrogen')
-    # app = MinorsProducts(app, 'NASA ALL')
-    # app = MinorsProducts(app, 'Cbgrb')
-    # PROBLEM CONDITIONS
-
-    # INITIALIZATION
+    # INITIALIZATION CLASS APP
     app = Initialize_2(app)
     # PROBLEM TYPE AND CONDITIONS
     app.PD.TR.Value = 300.  # [K]
     app.PD.pR.Value = 1.   # [bar]
     app.PD.phi.Value = np.arange(0.5, 5, 0.01)  # [-]
-    # app.PD.phi.Value = [1.5]  # [-]
-    
+    # app.PD.phi.Value = [5]  # [-]
     app.PD.TP.Value = 2000
     # COMPUTATIONS
     app.C.l_phi = len(app.PD.phi.Value)
@@ -92,7 +66,7 @@ def main():
         # SOLVE PROBLEM
         app.PS.strP.append(SolveProblemTP_TV(app, app.PS.strR[i], app.PD.phi.Value[i], app.PD.pR.Value, app.PD.TP.Value))
         # DISPLAY RESULTS
-        # displayResults(app, app.PS.strR[i], app.PS.strP[i])
+        displayResults(app, app.PS.strR[i], app.PS.strP[i])
     end = time.time()
     print('Execution time:', end - start, 'seconds')
     # PLOT RESULTS

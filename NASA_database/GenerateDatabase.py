@@ -46,7 +46,7 @@ def GenerateDatabase(self):  # self is a dictionary with Master Database
                    'C6H12_1_hexene', 'C6H14_n_hexane', 'C7H8O_cresol_mx', 'C7H16_n_heptane',
                    'C8H10_ethylbenz', 'C8H18_n_octane', 'C10H8_naphthale', 'C12H10_biphenyl',
                    'HCO', 'HNC', 'HNO2', 'H2', 'H2O', 'N', 'NH2', 'NO', 'N2', 'N2H2', 'N2O3', 'N3',
-                   'OH', 'CH3OHbLb', 'C6H5NH2bLb', 'He', 'Ar', 'Cbgrb']
+                   'OH', 'CH3OHbLb', 'C6H5NH2bLb', 'He', 'Ar', 'Cbgrb', 'F2', 'F']
 
         strThProp = {}
         for ind, FullSpecies in enumerate(Species):
