@@ -8,7 +8,7 @@ The code computes the equilibrium composition by minimization of the Gibbs–Hel
 
 This project is also part of my PhD. `The MATLAB version will be released soon.`  
 
-The `MATLAB version` `solves` six chemical equilibrium problems (`TP, HP, SP, TV, EV and SV transformations`; where T denotes temperature, P pressure, H enthalpy, S entropy, E internal energy and V volume), `incident and reflected planar shock waves`, as well as `ideal detonations` according to Chapman-Jouguet theory and overdriven detonations, assuming always ideal gases in all cases. Along with the plain code, the new tool has been `equipped with a Graphical User Interface` (hereafter Combustion Toolbox) developed in MATLAB 2018-21 under AppDesigner.
+The `MATLAB version` `solves` six chemical equilibrium problems (`TP, HP, SP, TV, EV and SV transformations`; where T denotes temperature, P pressure, H enthalpy, S entropy, E internal energy and V volume), `incident and reflected planar shock waves`, as well as `ideal detonations` according to Chapman-Jouguet theory and overdriven detonations, assuming always ideal gases in all cases. Along with the plain code, the new tool has been `equipped with a Graphical User Interface` developed in MATLAB 2021 under AppDesigner.
 
 ## Installing
 
