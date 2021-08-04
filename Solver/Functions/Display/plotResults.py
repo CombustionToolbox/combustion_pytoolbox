@@ -2,14 +2,14 @@ import numpy as np
 import seaborn as sns
 import matplotlib
 import matplotlib.pyplot as plt
-from scipy.interpolate import (PchipInterpolator as pchip)
 from palettable.colorbrewer.qualitative import Paired_12
 from Solver.Functions.struct2vector import struct2vector
 
 def plotMoles(self, x_vec, display_species, mintol, ax=None, plt_args=[], plt_kwargs={}, **kwargs):
-    plt.ion()
+    plt.ioff()
     if not ax:
-        ax = plt.subplot(211)
+        self.Misc.CounterPlots += 1 
+        ax = plt.subplot()
     # Data
     struct = self.PS.strP
     Nx = len(x_vec)
@@ -24,6 +24,7 @@ def plotMoles(self, x_vec, display_species, mintol, ax=None, plt_args=[], plt_kw
             if struct[i].Xi[ind] > mintol:
                 Ndisplay.add(ind)
     # Plot configuration
+    plt.subplots_adjust(bottom=0.1, right=0.8, top=0.9, hspace=0.5)
     title  = kwargs.pop('title')
     xlabel = kwargs.pop('xlabel')
     ylabel = kwargs.pop('ylabel')
@@ -67,12 +68,15 @@ def plotMoles(self, x_vec, display_species, mintol, ax=None, plt_args=[], plt_kw
 
     # Legend    
     ax.legend(labels=labels, loc='upper left', bbox_to_anchor=(1.05, 1))
+
     return self
 
 def plotFigure(self, x_vec, y_vec, ax=None, plt_args=[], plt_kwargs={}, **kwargs):
     plt.ioff()
     if not ax:
-        ax = plt.subplot(212)
+        self.Misc.CounterPlots += 1 
+        plt.figure(self.Misc.CounterPlots)
+        ax = plt.gca()
     # Plot configuration
     title  = kwargs.pop('title')
     xlabel = kwargs.pop('xlabel')
@@ -84,7 +88,7 @@ def plotFigure(self, x_vec, y_vec, ax=None, plt_args=[], plt_kwargs={}, **kwargs
     ax.yaxis.set_label_text(ylabel)
     # Plot
     ax.plot(x_vec, y_vec, *plt_args, **plt_kwargs, **kwargs)
-
+    
     return self
 
 def plotResults(self, display_species=None, mintol=1e-16):
@@ -100,6 +104,4 @@ def plotResults(self, display_species=None, mintol=1e-16):
             plot_conf = {'title': 'Adiabatic temperature', 'xlabel':r'$\phi$', 'ylabel': r'$T [K]$'}
             plotFigure(self, phi, struct2vector(self.PS.strP, 'T'), plt_args = plot_args, plt_kwargs = plot_params, **plot_conf)
     
-    plt.subplots_adjust(bottom=0.1, right=0.8, top=0.9, hspace=0.5)
     plt.show()
-    
