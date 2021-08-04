@@ -5,11 +5,11 @@ Type of problems:
     * TP ------> Equilibrium composition at defined T and p
     * HP ------> Adiabatic T and composition at constant p
     * SP ------> Isentropic compression/expansion to a specified p
-    * TV ------> Equilibrium composition at defined T and constanxt v
+    * TV ------> Equilibrium composition at defined T and constant v
     * EV ------> Adiabatic T and composition at constant v
     * SV ------> Isentropic compression/expansion to a specified v
     * SHOCK_I -> Planar incident shock wave
-    * SHOCK_R -> Planar reflectet shock wave
+    * SHOCK_R -> Planar reflected shock wave
     * DET -----> Chapman-Jouget Detonation (CJ upper state)
     * DET_OVERDRIVEN -----> Overdriven Detonation    
     
@@ -21,42 +21,40 @@ Type of problems:
 Last update Thu Oct 1 13:10:00 2020
 ----------------------------------------------------------------------
 """
-import os
+
 import time
 import numpy as np
 from Settings.Initialize import Initialize
-from Settings.Initialize_2 import Initialize_2
 from Settings.ListSpecies import ListSpecies
-from Settings.Define_FOI import *
+from Settings.Define_FOI import Define_F, Define_O, Define_I, Define_FOI
 from Solver.Functions.Display.displayResults import displayResults
 from Solver.Functions.Display.plotResults import plotResults
 from Solver.Chemical_Equilibrium.SolveProblem import SolveProblem
+from Solver.Functions.SetTransformation import set_transformation
 def main():
     # LOAD DATABASES AND GLOBAL PARAMETERS
-    app = Initialize() # Instantiation
+    app = Initialize()
     # LIST OF SPECIES
     app = ListSpecies(app, 'Soot formation')
     # app = ListSpecies(app, 'HC/02/N2 extended')
     # app = ListSpecies(app, 'Hydrogen')
     # app = ListSpecies(app, 'ideal_air')
-    # REACTION: COMPLETE OR INCOMPLETE
-    app.PD.CompleteOrIncomplete = 'incomplete'  # incomplete (default)
-    app.TN.factor_c = 1.0  # 1.0 (default)
-    # INITIALIZATION CLASS APP
-    app = Initialize_2(app)
     # PROBLEM TYPE AND CONDITIONS
-    app.PD.ProblemType = 'HP' # [TP, HP; T:Defined Temperature, P:Constant Pressure, H: Constant Enthalpy]
-    app.PD.TR.Value = 300.  # [K]
-    app.PD.pR.Value = 1.   # [bar]
-    app.PD.phi.Value = np.arange(0.5, 5, 0.01)  # [-]
-    # app.PD.phi.Value = [2]  # [-]
-    app.PD.TP.Value = 2000. # [K]
+    app.PD.ProblemType = 'HP' 
+    set_transformation(app, 'TR', 300)         # [K]
+    set_transformation(app, 'pR', 1.)          # [bar]
+
+    set_transformation(app, 'TP', 2000)        # [K]
+    set_transformation(app, 'pP', 10.)          # [bar]
+    app.PD.phi.Value = np.arange(0.5, 1, 0.1)  # [-]
+
+    
     # COMPUTATIONS
     app.C.l_phi = len(app.PD.phi.Value)
     start = time.time()
     for i in range(app.C.l_phi):
         # DEFINE FUEL
-        app = Define_F(app, {'C2H2_acetylene':1})
+        app = Define_F(app, {'CH4':1})
         # DEFINE OXIDIZER
         app = Define_O(app, {'O2':app.PD.phi.t / app.PD.phi.Value[i]})
         # DEFINE DILUENT/INERT

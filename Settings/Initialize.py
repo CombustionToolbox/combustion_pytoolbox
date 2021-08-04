@@ -8,8 +8,7 @@ Created on Mon Jun 22 12:15:00 2020
          PhD Candidate - Group Fluid Mechanics
          Office 1.1.D22, Universidad Carlos III de Madrid
 """
-import numpy as np
-import re
+
 from NASA_database.set_elements import *
 from NASA_database.ParseThermoInp import ParseThermoInp
 from NASA_database.GenerateDatabase import GenerateDatabase
@@ -25,14 +24,14 @@ def Initialize():
     # Guess initial calculation
     app.TN.guess = [2000., 2000., 0., 1.5, 2.]
     app.TN.ERRFT = 1e-5  # Tolerance SHOCK and Detonations numerical method
-    app.TN.ERRFU = 1e-5  # Tolerance SHOCK and Detonations unmerical method
+    app.TN.ERRFU = 1e-5  # Tolerance SHOCK and Detonations numerical method
 
     return app
 
 
 def ContainedElements(self):
     uniques = set()
-    for i, species in enumerate(self.S.NameSpecies):
+    for species in self.S.NameSpecies:
         if any(species in element for element in self.E.Elements):  # Case sensitive
             uniques.add(species)
 
@@ -112,10 +111,10 @@ class App:
 
     class Miscelaneous:
         def __init__(self):
-            self.Description = "Miscelaneous properties"
+            self.Description = "Miscellaneous properties"
             self.Config = self.Config()
             self.FLAG_FIRST = True
-
+            self.CounterPlots = 0
         class Config:
             def __init__(self):
                 self.linewidth = 1.8
@@ -134,6 +133,7 @@ class App:
             self.TR = self.TR()
             self.TP = self.TP()
             self.pR = self.pR()
+            self.pP = self.pP()
             self.proportion_N2_O2 = None
         class Phi:
             def __init__(self):
@@ -162,6 +162,10 @@ class App:
         class pR:
             def __init__(self):
                 self.Description = 'Pressure of reactants'
+                self.Value = None
+        class pP:
+            def __init__(self):
+                self.Description = 'Pressure of products'
                 self.Value = None
 
     class ProblemSolution:
