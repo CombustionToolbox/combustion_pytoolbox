@@ -10,21 +10,21 @@ Created on Mon Jun 22 12:15:00 2020
          PhD Candidate - Group Fluid Mechanics
          Office 1.1.D22, Universidad Carlos III de Madrid
 """
+from Settings.Initialize_2 import Initialize_2
 
-
-def ListSpecies(self, minors='HC/02/N2 EXTENDED'):
-    if type(minors) == list:
-        self.S.LS = minors
-    elif minors.upper() == 'HC/02/N2 EXTENDED':
+def ListSpecies(self, LS='HC/02/N2 EXTENDED'):
+    if type(LS) == list:
+        self.S.LS = LS
+    elif LS.upper() == 'HC/02/N2 EXTENDED':
         self.S.LS = ['CO2', 'CO', 'H2O', 'H2', 'O2', 'N2', 'He', 'Ar',
                      'OH', 'H', 'O', 'HO2', 'NO', 'HCO', 'CH4', 'CH3',
                      'NO2', 'NH3', 'NH2', 'N', 'HCN', 'CN', 'N2O', 'C2', 'CH']
-    elif minors.upper() == 'HC/02/N2 RICH':
+    elif LS.upper() == 'HC/02/N2 RICH':
         self.S.LS = ['CO2', 'CO', 'H2O', 'H2', 'O2', 'N2', 'He', 'Ar',
                      'N2', 'H2O', 'CO', 'HCN', 'H2O', 'CO2', 'H', 'OH',
                      'O', 'CN', 'NH3', 'CH4', 'C2H4', 'CH3', 'NO', 'HCO',
                      'NH2', 'NH', 'N', 'CH']
-    elif minors.upper() == 'SOOT FORMATION':
+    elif LS.upper() == 'SOOT FORMATION':
         self.S.LS = ['CO2', 'CO', 'H2O', 'H2', 'O2', 'N2', 'He', 'Ar',
                      'H', 'O', 'OH', 'HO2', 'H2O2', 'CH', 'CH2', 'CH3',
                      'CH4', 'HCO', 'CH2OH', 'CH3O', 'CH3OH', 'C2H', 'C2H4',
@@ -34,7 +34,7 @@ def ListSpecies(self, minors='HC/02/N2 EXTENDED'):
                      'HNC', 'HNCO', 'NH2OH', 'COOH', 'CH2CO_ketene', 'OCCN',
                      'C2N2', 'C2O', 'HCHO_formaldehy', 'C3H4_allene', 'HCOOH',
                      'CH3CHO_ethanal', 'CH3CN', 'C3H6_propylene', 'Cbgrb']
-    elif minors.upper() == 'NASA ALL':
+    elif LS.upper() == 'NASA ALL':
         self.S.LS = ['CH3', 'CH4', 'CN', 'CO2', 'C2H', 'CH2CO_ketene',
                                   'C2H3_vinyl', 'C2H4', 'CH3COOH', 'C2H6', 'CH3OCH3', 'CNC', 'C2O',
                                   'C3H3_2_propynl', 'C3H6O_propanal',
@@ -63,17 +63,18 @@ def ListSpecies(self, minors='HC/02/N2 EXTENDED'):
                                   'C7H8O_cresol_mx', 'C7H16_n_heptane', 'C8H10_ethylbenz', 'C8H18_n_octane',
                                   'C10H8_naphthale', 'C12H10_biphenyl', 'HCO', 'HNC', 'HNO2', 'H2', 'H2O',
                                   'N', 'NH2', 'NO', 'N2', 'N2H2', 'N2O3', 'N3', 'OH', 'CH3OHbLb', 'C6H5NH2bLb', 'He', 'Ar', 'C']
-    elif minors.upper() == 'AIR':
+    elif LS.upper() == 'AIR':
         self.S.LS = ['O2', 'N2', 'O', 'O3', 'N', 'NO', 'NO2', 'NO3', 'N2O3', 'N2O4', 'N3', 'C', 'CO', 'CO2',
                      'Ar', 'CH4', 'CH3', 'CH', 'H2O', 'H2', 'H', 'He']
-    elif minors.upper() == 'IDEAL_AIR':
+    elif LS.upper() == 'IDEAL_AIR':
         self.S.LS = ['O2', 'N2', 'O', 'O3', 'N', 'NO', 'NO2', 'NO3', 'N2O', 'N2O3', 'N2O4', 'N3']
-    elif minors.upper() == 'HYDROGEN':
+    elif LS.upper() == 'HYDROGEN':
         self.S.LS = ['H', 'HNO', 'HNO3', 'H2O', 'NH', 'NH2OH', 'NO3', 'N2H2', 'N2O3', 'N3', 'OH', 'HNO2',
                      'H2', 'N', 'NH3', 'NO2', 'N2O', 'N2H4', 'N2O5', 'O', 'O3', 'He', 'Ar', 'CO2', 'CO',
                      'O2', 'N2', 'HO2', 'NH2', 'H2O2', 'N3H', 'NH2NO2']
     else:
-        self.S.LS = minors
+        self.S.LS = LS
 
     self.S.NS = len(self.S.LS)
-    return self
+    
+    return Initialize_2(self)
