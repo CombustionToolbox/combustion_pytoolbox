@@ -4,7 +4,6 @@ CALCULATE EQUILIBRIUM AT DEFINED T AND P (TP)
 CALCULATE EQUILIBRIUM AT DEFINED T AND CONSTANT V (TV)
 INPUT:
     strR  = Prop. of reactives (phi,species,...)
-    phi   = velocity upstream       [-]
     pP    = pressure of products    [bar]
     TP    = temperature of products [K]
 OUTPUT:
