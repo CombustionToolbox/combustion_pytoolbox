@@ -1,5 +1,5 @@
 """
-COMBUSTION TOOLBOX
+COMBUSTION PYTOOLBOX
 
 Type of problems:
     * TP ------> Equilibrium composition at defined T and p
@@ -56,7 +56,7 @@ def main():
     start = time.time()
     for i in range(app.C.l_phi):
         # DEFINE FUEL
-        app = Define_F(app, {'CH4':1})
+        app = Define_F(app, {'C2H2_acetylene':1})
         # DEFINE OXIDIZER
         app = Define_O(app, {'O2':app.PD.phi.t / app.PD.phi.Value[i]})
         # DEFINE DILUENT/INERT
