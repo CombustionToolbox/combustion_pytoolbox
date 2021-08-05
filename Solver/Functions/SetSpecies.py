@@ -9,9 +9,6 @@ Created on Tue Jun 30 16:28:00 2020
          Office 1.1.D22, Universidad Carlos III de Madrid
 """
 import numpy as np
-from NASA_database.set_reference_form_of_elements_with_T_intervals import set_reference_form_of_elements_with_T_intervals
-from NASA_database.isRefElm import isRefElm
-from NASA_database.detect_location_of_phase_specifier import detect_location_of_phase_specifier
 
 def SetSpecies(self, Species, N, T):
     M = self.C.M0.Value.copy()
