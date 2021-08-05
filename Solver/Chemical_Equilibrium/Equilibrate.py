@@ -33,8 +33,8 @@ def equilibrate(self, strR, pP, strP=None):
         attr_name = get_attr_name(self)
         # compute initial guess
         guess = get_guess(self, strR, pP, attr_name, strP)
-        # root finding to find the value x that satisfies f(x) = strP.xx(x) - strR.xx = 0
-        x, ERR = steff(self, strR, pP, attr_name, guess)
+        # root finding: find the value x that satisfies f(x) = strP.xx(x) - strR.xx = 0
+        x, ERR = root_finding(self, strR, pP, attr_name, guess)
         # compute properties
         strP = equilibrate_T(self, strR, pP, x)
         strP.error_problem = ERR
@@ -138,7 +138,7 @@ def steff_guess(self, strR, pP, attr_name):
     return x
 
             
-def steff(self, strR, pP, attr_name, x, tol0=1e-10, itMax=30):
+def steff(self, strR, pP, attr_name, x, tol0=1e-3, itMax=30):
     """
         Steffenson method for finding roots
     """
@@ -147,7 +147,7 @@ def steff(self, strR, pP, attr_name, x, tol0=1e-10, itMax=30):
     
     it = 0; g = 1.0; ERR = 1.0
     
-    while (abs(ERR) > 1e-3 or abs(g) > 1e-3) and it < itMax:
+    while (abs(ERR) > tol0 or abs(g) > tol0) and it < itMax:
         it = it + 1
         g = get_gpoint(self, strR, pP, attr_name, x)
         fx = abs(g - x)
@@ -163,7 +163,7 @@ def steff(self, strR, pP, attr_name, x, tol0=1e-10, itMax=30):
     print_error(it, itMax, x, ERR)
     return (x, ERR)
 
-def newton(self, strR, pP, attr_name, x0, tol0=1e-2, itMax=30):
+def newton(self, strR, pP, attr_name, x0, tol0=1e-3, itMax=30):
     """
         Newton-Raphson method for finding roots
     """
@@ -181,6 +181,10 @@ def newton(self, strR, pP, attr_name, x0, tol0=1e-2, itMax=30):
     
     print_error(it, itMax, x, ERR)
     return (x, ERR)
+
+
+def root_finding(self, strR, pP, attr_name, x0, tol0=1e-3, itMax=30, method=steff):
+    return method(self, strR, pP, attr_name, x0, tol0=1e-3, itMax=30)
 
 
 def print_error(it, itMax, TP, ERR):
