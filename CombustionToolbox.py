@@ -21,7 +21,6 @@ Type of problems:
 Last update Thu Oct 1 13:10:00 2020
 ----------------------------------------------------------------------
 """
-
 import time
 import numpy as np
 from Settings.Initialize import Initialize
@@ -31,6 +30,7 @@ from Solver.Functions.Display.displayResults import displayResults
 from Solver.Functions.Display.plotResults import plotResults
 from Solver.Chemical_Equilibrium.SolveProblem import SolveProblem
 from Solver.Functions.Transformation import set_transformation
+
 def main():
     # LOAD DATABASES AND GLOBAL PARAMETERS
     app = Initialize()
@@ -40,14 +40,14 @@ def main():
     # app = ListSpecies(app, 'Hydrogen')
     # app = ListSpecies(app, 'ideal_air')
     # PROBLEM TYPE AND CONDITIONS
-    app.PD.ProblemType = 'TP' 
+    app.PD.ProblemType = 'HP' 
     
     set_transformation(app, 'TR', 300)  # [K]
     set_transformation(app, 'pR', 1.)   # [bar]
     set_transformation(app, 'TP', 2000) # [K]
     set_transformation(app, 'pP', 1.)   # [bar]
     
-    app.PD.phi.Value = np.arange(0.5, 3.5, 0.01)  # [-]
+    app.PD.phi.Value = np.arange(0.5, 5, 0.01)  # [-]
     # COMPUTATIONS
     app.C.l_phi = len(app.PD.phi.Value)
     start = time.time()
@@ -73,7 +73,6 @@ def main():
     plotResults(app, display_species=display_species, mintol=app.C.mintol_display)
     return app
     
-
 
 if __name__ == '__main__':
     import cProfile, pstats
