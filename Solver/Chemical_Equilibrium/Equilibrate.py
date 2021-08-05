@@ -17,6 +17,7 @@ Last update Tue Aug 04 18:00:00 2021
 
 import numpy as np
 from Solver.Chemical_Equilibrium.SolveProblemTP_TV import SolveProblemTP_TV
+from Solver.Functions.Transformation import get_transformation
 
 def equilibrate(self, strR, pP, strP=None):
     try:
@@ -35,7 +36,9 @@ def equilibrate(self, strR, pP, strP=None):
     return strP
 
 def get_attr_name(self):
-    if self.PD.ProblemType.upper() == 'HP':
+    if any(self.PD.ProblemType.upper() == pt for pt in ['TP', 'TV']):
+        attr_name = 'T'
+    elif self.PD.ProblemType.upper() == 'HP':
         attr_name = 'h'
     elif self.PD.ProblemType.upper() == 'EV':
         attr_name = 'e'
@@ -46,7 +49,9 @@ def get_attr_name(self):
 
 
 def get_guess(self, strR, pP, attr_name, strP):
-    if strP:
+    if any(self.PD.ProblemType.upper() == pt for pt in ['TP', 'TV']):
+        return get_transformation(self, 'TP')
+    elif strP:
         return strP.T
     return steff_guess(self, strR, pP, attr_name)
 
@@ -111,6 +116,9 @@ def steff(self, strR, pP, attr_name, x, tol0=1e-10, itMax=30):
     """
         Steffenson method for finding roots
     """
+    if any(self.PD.ProblemType.upper() == pt for pt in ['TP', 'TV']):
+        return (get_transformation(self, 'TP'), 0)
+    
     it = 0; g = 1.0; ERR = 1.0
     
     while (abs(ERR) > 1e-3 or abs(g) > 1e-3) and it < itMax:
