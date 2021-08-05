@@ -14,13 +14,10 @@ from Solver.Chemical_Equilibrium.SolveProblemTP_TV import SolveProblemTP_TV
 
 
 def SolveProblem(self, i):
-    if any(self.PD.ProblemType.upper() == pt for pt in ['TP', 'TV']):
-        self.PS.strP.append(SolveProblemTP_TV(self, self.PS.strR[i], self.PD.pP.Value, self.PD.TP.Value))
+    if not i:
+        self.PS.strP.append(equilibrate(self, self.PS.strR[i], self.PD.pP.Value))
     else:
-        if not i:
-            self.PS.strP.append(equilibrate(self, self.PS.strR[i], self.PD.pP.Value))
-        else:
-            self.PS.strP.append(equilibrate(self, self.PS.strR[i], self.PD.pP.Value, self.PS.strP[i - 1]))    
-    
+        self.PS.strP.append(equilibrate(self, self.PS.strR[i], self.PD.pP.Value, self.PS.strP[i - 1]))    
+
     return self
     
