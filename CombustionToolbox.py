@@ -30,17 +30,17 @@ from Settings.Define_FOI import Define_F, Define_O, Define_I, Define_FOI
 from Solver.Functions.Display.displayResults import displayResults
 from Solver.Functions.Display.plotResults import plotResults
 from Solver.Chemical_Equilibrium.SolveProblem import SolveProblem
-from Solver.Functions.SetTransformation import set_transformation
+from Solver.Functions.Transformation import set_transformation
 def main():
     # LOAD DATABASES AND GLOBAL PARAMETERS
     app = Initialize()
     # LIST OF SPECIES
-    # app = ListSpecies(app, 'Soot formation')
-    app = ListSpecies(app, 'HC/02/N2 extended')
+    app = ListSpecies(app, 'Soot formation')
+    # app = ListSpecies(app, 'HC/02/N2 extended')
     # app = ListSpecies(app, 'Hydrogen')
     # app = ListSpecies(app, 'ideal_air')
     # PROBLEM TYPE AND CONDITIONS
-    app.PD.ProblemType = 'EV' 
+    app.PD.ProblemType = 'TP' 
     
     set_transformation(app, 'TR', 300)  # [K]
     set_transformation(app, 'pR', 1.)   # [bar]
