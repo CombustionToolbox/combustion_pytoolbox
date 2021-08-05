@@ -195,3 +195,6 @@ class App:
         def __init__(self):
             self.Description = "Tunning properties"
             self.factor_c = 1.0
+            self.ERRFT = 1e-6
+            self.ERRFV = 1e-6
+            self.ERRFU = 1e-4
