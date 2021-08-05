@@ -9,9 +9,6 @@ Last update Thur Oct 1 13:00:00 2020
 ----------------------------------------------------------------------
 """
 from Solver.Chemical_Equilibrium.Equilibrate import equilibrate
-from Solver.Chemical_Equilibrium.SolveProblemTP_TV import SolveProblemTP_TV
-
-
 
 def SolveProblem(self, i):
     if not i:
