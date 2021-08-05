@@ -134,6 +134,9 @@ class App:
             self.TP = self.TP()
             self.pR = self.pR()
             self.pP = self.pP()
+            self.vP_vR = self.vP_vR()
+            self.u1 = self.u1()
+            self.overdriven = self.overdriven()
             self.proportion_N2_O2 = None
         class Phi:
             def __init__(self):
@@ -167,7 +170,19 @@ class App:
             def __init__(self):
                 self.Description = 'Pressure of products'
                 self.Value = None
-
+        class vP_vR:
+            def __init__(self):
+                self.Description = 'Volume relation Products/Reactants'
+                self.Value = None
+        class u1:
+            def __init__(self):
+                self.Description = 'Incident shock velocity'
+                self.Value = None        
+        class overdriven:
+            def __init__(self):
+                self.Description = 'Overdriven shock velocity'
+                self.Value = None        
+    
     class ProblemSolution:
         def __init__(self):
             self.Description = "Problem solution"

@@ -35,20 +35,19 @@ def main():
     # LOAD DATABASES AND GLOBAL PARAMETERS
     app = Initialize()
     # LIST OF SPECIES
-    app = ListSpecies(app, 'Soot formation')
-    # app = ListSpecies(app, 'HC/02/N2 extended')
+    # app = ListSpecies(app, 'Soot formation')
+    app = ListSpecies(app, 'HC/02/N2 extended')
     # app = ListSpecies(app, 'Hydrogen')
     # app = ListSpecies(app, 'ideal_air')
     # PROBLEM TYPE AND CONDITIONS
-    app.PD.ProblemType = 'HP' 
-    set_transformation(app, 'TR', 300)         # [K]
-    set_transformation(app, 'pR', 1.)          # [bar]
-
-    set_transformation(app, 'TP', 2000)        # [K]
-    set_transformation(app, 'pP', 10.)          # [bar]
-    app.PD.phi.Value = np.arange(0.5, 1, 0.1)  # [-]
-
+    app.PD.ProblemType = 'EV' 
     
+    set_transformation(app, 'TR', 300)  # [K]
+    set_transformation(app, 'pR', 1.)   # [bar]
+    set_transformation(app, 'TP', 2000) # [K]
+    set_transformation(app, 'pP', 1.)   # [bar]
+    
+    app.PD.phi.Value = np.arange(0.5, 3.5, 0.01)  # [-]
     # COMPUTATIONS
     app.C.l_phi = len(app.PD.phi.Value)
     start = time.time()
