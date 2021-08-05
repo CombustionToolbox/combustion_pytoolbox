@@ -6,7 +6,11 @@ As a first step towards the development of a wider-scope thermochemical tool, in
 
 The code computes the equilibrium composition by minimization of the Gibbs–Helmholtz free energy by using Lagrange multipliers, and employs NASA’s 9-coefficient polynomial fits to evaluate the thermodynamic properties. Results computed with **Combustion PyToolbox** have been validated against, and are in good agreement with, NASA’s Chemical Equilibrium with Applications (CEA) program and CANTERA.
 
-This project is also part of my PhD. `The MATLAB version will be released soon.`  
+This project is also part of my PhD.
+
+{{% /alert %}}
+The MATLAB version will be released soon.  
+{{% /alert %}}
 
 The `MATLAB version` `also solves` `incident and reflected planar shock waves`, as well as `ideal detonations` according to Chapman-Jouguet theory and overdriven detonations, assuming always ideal gases in all cases. Along with the plain code, the new tool has been `equipped with a Graphical User Interface` developed in MATLAB 2021 under AppDesigner.
 
