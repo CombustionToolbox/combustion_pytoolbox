@@ -16,8 +16,16 @@ Last update Tue Aug 04 18:00:00 2021
 """
 
 import numpy as np
-from Solver.Chemical_Equilibrium.SolveProblemTP_TV import SolveProblemTP_TV
 from Solver.Functions.Transformation import get_transformation
+from Solver.Functions.SetSpecies import SetSpecies
+from Solver.Functions.ComputeProperties import ComputeProperties
+from Solver.Chemical_Equilibrium.GibbsMinimization import equilibrium
+
+# from Solver.Chemical_Equilibrium.GibbsMinimization_numba import equilibrium
+# from Solver.Chemical_Equilibrium.cython.GibbsMinimizationCython import equilibrium
+# from Solver.Chemical_Equilibrium.GibbsMinimization_Soot_2 import equilibrium
+# from Solver.Chemical_Equilibrium.GibbsMinimization_Reduced import equilibrium
+# from Solver.Chemical_Equilibrium.GibbsMinimization_Direct import equilibrium # For checks
 
 def equilibrate(self, strR, pP, strP=None):
     try:
@@ -28,12 +36,30 @@ def equilibrate(self, strR, pP, strP=None):
         # root finding to find the value x that satisfies f(x) = strP.xx(x) - strR.xx = 0
         x, ERR = steff(self, strR, pP, attr_name, guess)
         # compute properties
-        strP = SolveProblemTP_TV(self, strR, pP, x)
+        strP = equilibrate_T(self, strR, pP, x)
         strP.error_problem = ERR
     except:
         print("An exception occurred: error computing fixed point")
         
     return strP
+
+def equilibrate_T(self, strR, pP, TP):
+    # Compute number of moles 
+    N, DeltaNP = equilibrium(self, pP, TP, strR)
+    # Compute properties of all species
+    P = SetSpecies(self, self.S.LS, N[:, 0], TP)
+
+    if self.PD.ProblemType[1] == 'P':
+        strP = ComputeProperties(self, P, pP, TP)
+    else:
+        NP = sum(P[:, 0] * (1 - P[:, 9]))
+        pP = (NP * TP * self.C.R0 / (strR.v/1e3)) / 1e5
+        strP = ComputeProperties(self, P, pP, TP)
+        
+    strP.error_moles = DeltaNP
+    
+    return strP
+
 
 def get_attr_name(self):
     if any(self.PD.ProblemType.upper() == pt for pt in ['TP', 'TV']):
@@ -64,7 +90,7 @@ def get_point_aitken(x, g_vector):
 
 
 def get_gpoint(self, strR, pP, attr_name, x):
-    strP = SolveProblemTP_TV(self, strR, pP, x)
+    strP = equilibrate_T(self, strR, pP, x)
     return (getattr(strP, attr_name) - getattr(strR, attr_name))
 
 
@@ -82,7 +108,7 @@ def get_partial_derivative(self, struct):
 
 
 def get_ratio_newton(self, strR, pP, attr_name, x):
-    strP = SolveProblemTP_TV(self, strR, pP, x)
+    strP = equilibrate_T(self, strR, pP, x)
     f = (getattr(strP, attr_name) - getattr(strR, attr_name))
     fprime = get_partial_derivative(self, strP)
     return (f, fprime)
