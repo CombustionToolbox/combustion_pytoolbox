@@ -4,17 +4,17 @@ A Python based thermochemical code
 ## Introduction
 As a first step towards the development of a wider-scope thermochemical tool, in this work we present a thermochemical code with application to gaseous combustion problems recently implemented by the authors in MATLAB and Python. The Python version solves, for the moment, six chemical equilibrium problems (`TP, HP, SP, TV, EV and SV transformations`; where T denotes temperature, P pressure, H enthalpy, S entropy, E internal energy and V volume), always assuming ideal gases in all cases.
 
-'''
+```
 ⚠️At the moment, the Python version does not have all the capabilities that the MATLAB version has. I will continue with the development of this version adding all the capabilities that the MATLAB version has. I will also add a GUI using Qt and Pyside2.
-'''
+```
 
 The code computes the equilibrium composition by minimization of the Gibbs–Helmholtz free energy by using Lagrange multipliers, and employs NASA’s 9-coefficient polynomial fits to evaluate the thermodynamic properties. Results computed with **Combustion PyToolbox** have been validated against, and are in good agreement with, NASA’s Chemical Equilibrium with Applications (CEA) program and CANTERA.
 
 This project is also part of my PhD.
 
-'''
+```
 ⚡ The MATLAB version will be released soon.  
-'''
+```
 
 The `MATLAB version` `also solves` `incident and reflected planar shock waves`, as well as `ideal detonations` according to Chapman-Jouguet theory and overdriven detonations, assuming always ideal gases in all cases. Along with the plain code, the new tool has been `equipped with a Graphical User Interface` developed in MATLAB 2021 under AppDesigner.
 
