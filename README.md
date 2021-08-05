@@ -38,6 +38,6 @@ Thank you for testing Combustion PyToolbox!
 * **[Alberto Cuadra-Lara](https://albertocuadra.netlify.app/)** - *Main Developer*
 * **Marcos Vera** - *Developer*  
 
-Grupo de Mecánica de Fluidos, Universidad Carlos III, Av. Universidad 30, 28911, Leganés, Spain
+Grupo de Mecánica de Fluidos, Universidad Carlos III de Madrid, Av. Universidad 30, 28911, Leganés, Spain
 
 See also the list of [contributors](https://github.com/AlbertoCuadra/combustion_toolbox/blob/master/CONTRIBUTORS.md) who participated in this project.
