@@ -58,6 +58,9 @@ def Define_F(self, Species=None):
         self.PD.Fuel.z = self.PS.strR_Fuel.NatomE[self.E.ind_O]
         self.PD.Fuel.w = self.PS.strR_Fuel.NatomE[self.E.ind_N]
         self.PD.phi.t = self.PD.Fuel.x + self.PD.Fuel.y / 4 - self.PD.Fuel.z / 2
+    else:
+        self.PD.R_Fuel = 0
+            
     return self
 
 
@@ -66,6 +69,9 @@ def Define_O(self, Species=None):
     self.S.LS, self.C.M0.Value = add_species(self, self.PD.S_Oxidizer)
     if Species:  # not empty, i.e., there is/are oxidizer/s in the mixture
         self.PD.R_Oxidizer = SetSpecies(self, self.PD.S_Oxidizer, self.PD.N_Oxidizer, self.PD.TR.Value)
+    else:
+        self.PD.R_Oxidizer = 0     
+    
     return self
 
 
