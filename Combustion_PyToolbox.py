@@ -1,5 +1,5 @@
 """
-COMBUSTION PYTOOLBOX
+COMBUSTION PYTOOLBOX v0.0.2
 
 Type of problems:
     * TP ------> Equilibrium composition at defined T and p
@@ -16,13 +16,12 @@ Type of problems:
 
 @author: Alberto Cuadra Lara
          PhD Candidate - Group Fluid Mechanics
-         Office 1.1.D22, Universidad Carlos III de Madrid
+         Universidad Carlos III de Madrid
          
-Last update Thu Oct 1 13:10:00 2020
+Last update Fri Aug 6 00:28:00 2021
 ----------------------------------------------------------------------
 """
 import time
-import numpy as np
 from Settings.Initialize import Initialize
 from Settings.ListSpecies import ListSpecies
 from Settings.Define_FOI import Define_F, Define_O, Define_I, Define_FOI
@@ -35,25 +34,28 @@ def main():
     # LOAD DATABASES AND GLOBAL PARAMETERS
     app = Initialize()
     # LIST OF SPECIES
-    app = ListSpecies(app, 'Soot formation')
+    # app = ListSpecies(app, 'Soot formation')
     # app = ListSpecies(app, 'HC/02/N2 extended')
     # app = ListSpecies(app, 'Hydrogen')
-    # app = ListSpecies(app, 'ideal_air')
+    app = ListSpecies(app, 'ideal_air')
     # PROBLEM TYPE AND CONDITIONS
-    app.PD.ProblemType = 'HP' 
+    app.PD.ProblemType = 'SHOCK_I' 
     
     set_transformation(app, 'TR', 300)  # [K]
     set_transformation(app, 'pR', 1.)   # [bar]
     set_transformation(app, 'TP', 2000) # [K]
     set_transformation(app, 'pP', 1.)   # [bar]
+    set_transformation(app, 'u1', 1000)  # [m/s]
     
-    app.PD.phi.Value = np.arange(0.5, 5, 0.01)  # [-]
+    # app.PD.phi.Value = np.arange(0.5, 1, 0.01)  # [-]
+    app.PD.phi.Value = [1.]  # [-]
     # COMPUTATIONS
     app.C.l_phi = len(app.PD.phi.Value)
     start = time.time()
     for i in range(app.C.l_phi):
         # DEFINE FUEL
-        app = Define_F(app, {'CH4':1})
+        # app = Define_F(app, {'CH4':1})
+        app = Define_F(app)
         # DEFINE OXIDIZER
         app = Define_O(app, {'O2':app.PD.phi.t / app.PD.phi.Value[i]})
         # DEFINE DILUENT/INERT
