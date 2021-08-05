@@ -35,8 +35,8 @@ def temp_values(S, NatomE, tol):
     return (temp_ind, temp_ind_nswt, temp_ind_swt, temp_ind_E, temp_NE, temp_NS, temp_ind_remove)
 
 def remove_item(N0, zip1, zip2, ls1, ls2, NP, SIZE):
-    """ Remove species from the computed indeces list of gaseous and condensed species 
-        and append the indeces of species that we have to remove """
+    """ Remove species from the computed indexes list of gaseous and condensed species 
+        and append the indexes of species that we have to remove """
     ls0 = []
     for n, ind in zip(zip1, zip2):
         if log(n/NP) < -SIZE:
@@ -118,8 +118,7 @@ def print_moles(N0, LS, it):
 #@profile
 def equilibrium(self, pP, TP, strR):
     """ Generalized Gibbs minimization method """
-    E, S, C, PD, TN, strThProp = [self.E, self.S, self.C, self.PD,
-                                  self.TN, self.strThProp]
+    S, C, strThProp = [self.S, self.C, self.strThProp]
     N0, A0 = (C.N0.Value, C.A0.Value)
     R0 = C.R0
     R0TP = R0 * TP # [J/(mol)]
@@ -134,7 +133,7 @@ def equilibrium(self, pP, TP, strR):
     SIZE = -log(C.tolN)
     e = 0.
     STOP = 1.
-    # Find indeces of the species/elements that we have to remove from the stoichiometric matrix A0
+    # Find indexes of the species/elements that we have to remove from the stoichiometric matrix A0
     # for the sum of elements whose value is <= tolN 
     ind_A0_E0 = remove_elements(NatomE, A0, self.C.tolN)
     # List of indices with nonzero values
