@@ -81,7 +81,7 @@ def get_guess(self, strR, pP, attr_name, strP):
         return strP.T
     return steff_guess(self, strR, pP, attr_name)
 
-def get_point(self, x_vector, g_vector):
+def get_point(x_vector, g_vector):
     return x_vector[1] - (x_vector[1] - x_vector[0]) / (g_vector[1] - g_vector[0]) * g_vector[1]
 
 
@@ -133,7 +133,7 @@ def steff_guess(self, strR, pP, attr_name):
     elif not np.isnan(g_l) and np.isnan(g_r):
         x = x_l + 100.
     else:
-        x = get_point(self, [x_l, x_r], [g_l, g_r])
+        x = get_point([x_l, x_r], [g_l, g_r])
         
     return x
 
