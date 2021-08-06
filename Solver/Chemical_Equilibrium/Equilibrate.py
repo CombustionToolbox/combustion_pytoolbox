@@ -184,7 +184,7 @@ def newton(self, strR, pP, attr_name, x0, tol0=1e-3, itMax=30):
 
 
 def root_finding(self, strR, pP, attr_name, x0, tol0=1e-3, itMax=30, method=steff):
-    return method(self, strR, pP, attr_name, x0, tol0=1e-3, itMax=30)
+    return method(self, strR, pP, attr_name, x0, tol0, itMax)
 
 
 def print_error(it, itMax, TP, ERR):
