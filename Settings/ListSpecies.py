@@ -10,7 +10,6 @@ Created on Mon Jun 22 12:15:00 2020
          PhD Candidate - Group Fluid Mechanics
          Office 1.1.D22, Universidad Carlos III de Madrid
 """
-from Settings.Initialize_2 import Initialize_2
 
 def ListSpecies(self, LS='HC/02/N2 EXTENDED'):
     if type(LS) == list:
@@ -77,4 +76,4 @@ def ListSpecies(self, LS='HC/02/N2 EXTENDED'):
 
     self.S.NS = len(self.S.LS)
     
-    return Initialize_2(self)
+    return self

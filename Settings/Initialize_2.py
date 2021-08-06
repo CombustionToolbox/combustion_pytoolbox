@@ -18,8 +18,6 @@ def Initialize_2(self):
     self.S = rearrange_species(self.S)
     # Stoichiometric Matrix
     self = Stoich_Matrix(self)
-    # Ask problem type
-    self.PD.ProblemType = Ask_problem()
     return self
 
 
@@ -57,8 +55,3 @@ def Stoich_Matrix(self):
     self.C.N0.Value = self.C.M0.Value[:, [0, 9]]
     
     return self
-
-
-def Ask_problem():
-    ProblemType = 'TP'
-    return ProblemType

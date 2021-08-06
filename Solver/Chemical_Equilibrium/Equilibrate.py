@@ -39,7 +39,7 @@ def equilibrate(self, strR, pP, strP=None):
         strP = equilibrate_T(self, strR, pP, x)
         strP.error_problem = ERR
     except:
-        print("An exception occurred: error computing fixed point")
+        print("An exception occurred: error Equilibrate.py")
         
     return strP
 

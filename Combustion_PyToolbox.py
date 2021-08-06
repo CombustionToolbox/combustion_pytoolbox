@@ -1,5 +1,5 @@
 """
-COMBUSTION PYTOOLBOX v0.0.2
+COMBUSTION PYTOOLBOX @v0.0.2
 
 Type of problems:
     * TP ------> Equilibrium composition at defined T and p
@@ -23,7 +23,6 @@ Last update Fri Aug 6 00:28:00 2021
 """
 import time
 from Settings.Initialize import Initialize
-from Settings.ListSpecies import ListSpecies
 from Settings.Define_FOI import Define_F, Define_O, Define_I, Define_FOI
 from Solver.Functions.Display.displayResults import displayResults
 from Solver.Functions.Display.plotResults import plotResults
@@ -31,15 +30,13 @@ from Solver.Chemical_Equilibrium.SolveProblem import SolveProblem
 from Solver.Functions.Transformation import set_transformation
 
 def main():
-    # LOAD DATABASES AND GLOBAL PARAMETERS
-    app = Initialize()
-    # LIST OF SPECIES
-    # app = ListSpecies(app, 'Soot formation')
-    # app = ListSpecies(app, 'HC/02/N2 extended')
-    # app = ListSpecies(app, 'Hydrogen')
-    app = ListSpecies(app, 'ideal_air')
+    # Initialize
+    # app = Initialize('Soot formation')
+    app = Initialize('HC/02/N2 extended')
+    # app = Initialize('Hydrogen')
+    # app = Initialize('ideal_air')
     # PROBLEM TYPE AND CONDITIONS
-    app.PD.ProblemType = 'SHOCK_I' 
+    app.PD.ProblemType = 'TP' 
     
     set_transformation(app, 'TR', 300)  # [K]
     set_transformation(app, 'pR', 1.)   # [bar]
@@ -54,8 +51,7 @@ def main():
     start = time.time()
     for i in range(app.C.l_phi):
         # DEFINE FUEL
-        # app = Define_F(app, {'CH4':1})
-        app = Define_F(app)
+        app = Define_F(app, {'CH4':1})
         # DEFINE OXIDIZER
         app = Define_O(app, {'O2':app.PD.phi.t / app.PD.phi.Value[i]})
         # DEFINE DILUENT/INERT

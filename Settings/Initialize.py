@@ -2,30 +2,30 @@
 """
 LOAD/CALCULATE TABULATED DATA AND CONSTANTS
 
-Created on Mon Jun 22 12:15:00 2020
+Created on 06 Aug 06 09:51:00 2021
 
 @author: Alberto Cuadra Lara
          PhD Candidate - Group Fluid Mechanics
-         Office 1.1.D22, Universidad Carlos III de Madrid
+         Universidad Carlos III de Madrid
 """
 
 from NASA_database.set_elements import *
 from NASA_database.ParseThermoInp import ParseThermoInp
 from NASA_database.GenerateDatabase import GenerateDatabase
+from Settings.ListSpecies import ListSpecies
+from Settings.Initialize_2 import Initialize_2
 
-
-def Initialize():
+def Initialize(LS='HC/02/N2 EXTENDED'):
     app = App()
     app.S.NameSpecies = tuple(app.strThProp.keys())
     app.S.NSpecies = len(app.S.NameSpecies)
     # Contained elements
     app.E = ContainedElements(app)
     app.E = Index_Evaluable_Elements(app.E)
-    # Guess initial calculation
-    app.TN.guess = [2000., 2000., 0., 1.5, 2.]
-    app.TN.ERRFT = 1e-5  # Tolerance SHOCK and Detonations numerical method
-    app.TN.ERRFU = 1e-5  # Tolerance SHOCK and Detonations numerical method
-
+    # List species
+    app = ListSpecies(app, LS)
+    # Construct Stoichiometric Matrix
+    app = Initialize_2(app)
     return app
 
 
@@ -92,7 +92,6 @@ class App:
             self.mintol_display = 1e-10
             self.mintol = 1e-5
             self.tolN = 1e-10 # Tolerance of the segregated numerical method
-            self.tolPhiSoot = 1e-6  # Tolerance of the soot formation equivalence ratio numerical method
 
         class A0:
             def __init__(self):
@@ -198,3 +197,5 @@ class App:
             self.ERRFT = 1e-6
             self.ERRFV = 1e-6
             self.ERRFU = 1e-4
+            self.guess = [2000., 2000., 0., 1.5, 2.]
+    
