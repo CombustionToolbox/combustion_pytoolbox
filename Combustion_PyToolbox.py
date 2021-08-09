@@ -31,12 +31,13 @@ from Solver.Functions.Transformation import set_transformation
 
 def main():
     # Initialize
-    # app = Initialize('Soot formation')
-    app = Initialize('HC/02/N2 extended')
+    app = Initialize('Soot formation')
+    # app = Initialize('HC/02/N2 extended')
+    # app = Initialize('HC/02/N2 rich')
     # app = Initialize('Hydrogen')
     # app = Initialize('ideal_air')
     # PROBLEM TYPE AND CONDITIONS
-    app.PD.ProblemType = 'TP' 
+    app.PD.ProblemType = 'HP' 
     
     set_transformation(app, 'TR', 300)  # [K]
     set_transformation(app, 'pR', 1.)   # [bar]
@@ -45,7 +46,7 @@ def main():
     set_transformation(app, 'u1', 1000)  # [m/s]
     
     # app.PD.phi.Value = np.arange(0.5, 1, 0.01)  # [-]
-    app.PD.phi.Value = [1.]  # [-]
+    app.PD.phi.Value = [2.5]  # [-]
     # COMPUTATIONS
     app.C.l_phi = len(app.PD.phi.Value)
     start = time.time()

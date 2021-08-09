@@ -25,6 +25,11 @@ def ListSpecies(self, LS='HC/02/N2 EXTENDED'):
                      'NH2', 'NH', 'N', 'CH']
     elif LS.upper() == 'SOOT FORMATION':
         self.S.LS = ['CO2', 'CO', 'H2O', 'H2', 'O2', 'N2', 'He', 'Ar',
+                     'N2', 'H2O', 'CO', 'HCN', 'H2O', 'CO2', 'H', 'OH',
+                     'O', 'CN', 'NH3', 'CH4', 'C2H4', 'CH3', 'NO', 'HCO',
+                     'NH2', 'NH', 'N', 'CH', 'Cbgrb']
+    elif LS.upper() == 'SOOT FORMATION EXTENDED':
+        self.S.LS = ['CO2', 'CO', 'H2O', 'H2', 'O2', 'N2', 'He', 'Ar',
                      'H', 'O', 'OH', 'HO2', 'H2O2', 'CH', 'CH2', 'CH3',
                      'CH4', 'HCO', 'CH2OH', 'CH3O', 'CH3OH', 'C2H', 'C2H4',
                      'C2H5', 'C2H6', 'HCCO', 'N', 'NH', 'NH2', 'NH3',

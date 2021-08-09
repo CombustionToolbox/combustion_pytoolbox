@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name = "Combustion PyToolbox",
-    version = "0.0.1",
+    version = "0.0.2",
     author = "Alberto Cuadra-Lara",
     author_email = "acuadra@ing.uc3m.es",
     description = "A Python Thermochemical Tool",
