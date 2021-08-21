@@ -1,5 +1,5 @@
 # Combustion PyToolbox
-![visitors](https://visitor-badge.glitch.me/badge?page_id=https://github.com/AlbertoCuadra/Combustion-PyToolbox/)   ![repo size](https://img.shields.io/github/repo-size/AlbertoCuadra/Combustion-PyToolbox) ![last modified](https://img.shields.io/github/last-commit/AlbertoCuadra/Combustion-PyToolbox)
+![repo size](https://img.shields.io/github/repo-size/AlbertoCuadra/Combustion-PyToolbox) ![last modified](https://img.shields.io/github/last-commit/AlbertoCuadra/Combustion-PyToolbox)
 
 A Python based thermochemical code
 
