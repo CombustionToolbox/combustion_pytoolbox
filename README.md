@@ -3,7 +3,7 @@
 
 A Python based thermochemical code
 
-🔜 `There is also a (more complete) ` [MATLAB version](https://github.com/AlbertoCuadra/combustion_toolbox)
+:top: There is also a (more complete) [MATLAB version](https://github.com/AlbertoCuadra/combustion_toolbox)
 
 ## Introduction
 As a first step towards the development of a wider-scope thermochemical tool, in this work we present a thermochemical code with application to gaseous combustion problems recently implemented by the authors in MATLAB and Python. The Python version solves, for the moment, six chemical equilibrium problems (`TP, HP, SP, TV, EV and SV transformations`; where T denotes temperature, P pressure, H enthalpy, S entropy, E internal energy and V volume), always assuming ideal gases in all cases.
