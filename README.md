@@ -35,7 +35,7 @@ Thank you for testing Combustion PyToolbox!
 
 ## Developers
 
-* **[Alberto Cuadra-Lara](https://albertocuadra.netlify.app/)** - *Main Developer*
+* **[Alberto Cuadra-Lara](https://acuadralara.com/)** - *Main Developer*
 * **César Huete** - *Developer*  
 * **Marcos Vera** - *Developer*  
 
