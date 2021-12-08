@@ -20,10 +20,6 @@ The code computes the equilibrium composition by minimization of the Gibbs–Hel
 The `MATLAB version` `also solves` `incident and reflected planar shock waves`, as well as `ideal detonations` according to Chapman-Jouguet theory and overdriven detonations, assuming always ideal gases in all cases. Along with the plain code, the new tool has been `equipped with a Graphical User Interface` developed in MATLAB 2021 under AppDesigner.
 
 This project is also part of the PhD of [Alberto Cuadra-Lara](https://acuadralara.com/).
-
-## Example
-  ![](https://github.com/AlbertoCuadra/ThermochemicalCode_Python/blob/master/Validations/HP_CH4.svg)
-  **Figure 1:** *An example of calculations given by Combustion PyToolbox: Adiabatic temperature and composition at constant pressure for methane with air.*
   
 ## Contributing
 
