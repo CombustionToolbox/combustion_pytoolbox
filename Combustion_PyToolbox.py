@@ -22,12 +22,12 @@ Last update Fri Aug 6 00:28:00 2021
 ----------------------------------------------------------------------
 """
 import time
-from Settings.Initialize import Initialize
-from Settings.Define_FOI import Define_F, Define_O, Define_I, Define_FOI
-from Solver.Functions.Display.displayResults import displayResults
-from Solver.Functions.Display.plotResults import plotResults
-from Solver.Chemical_Equilibrium.SolveProblem import SolveProblem
-from Solver.Functions.Transformation import set_transformation
+from settings.Initialize import Initialize
+from settings.Define_FOI import Define_F, Define_O, Define_I, Define_FOI
+from utils.display.displayResults import displayResults
+from utils.display.plotResults import plotResults
+from modules.ct_equil.SolveProblem import SolveProblem
+from utils.Transformation import set_transformation
 
 def main():
     # Initialize
