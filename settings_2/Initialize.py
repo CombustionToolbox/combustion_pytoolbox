@@ -12,8 +12,8 @@ Created on 06 Aug 06 09:51:00 2021
 from NASA_database.set_elements import *
 from NASA_database.ParseThermoInp import ParseThermoInp
 from NASA_database.GenerateDatabase import GenerateDatabase
-from Settings.ListSpecies import ListSpecies
-from Settings.Initialize_2 import Initialize_2
+from settings_2.ListSpecies import ListSpecies
+from settings_2.Initialize_2 import Initialize_2
 
 def Initialize(LS='HC/02/N2 EXTENDED'):
     app = App()
