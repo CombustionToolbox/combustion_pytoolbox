@@ -8,8 +8,8 @@ Created on Wen Jun 30 12:49:00 2020
          PhD Candidate - Group Fluid Mechanics
          Office 1.1.D17, Universidad Carlos III de Madrid
 """
-from utils.Mix import Mix
+from utils.Mixture import Mixture
 
-def ComputeProperties(self, SpeciesMatrix, p, T):
-    mix = Mix(self, SpeciesMatrix, p, T)
+def ComputeProperties(self, SpeciesMatrix, pressure: float, temperature: float):
+    mix = Mixture(self, SpeciesMatrix, pressure, temperature)
     return mix

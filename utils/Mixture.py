@@ -1,7 +1,7 @@
 import numpy as np
 np.seterr(divide='ignore', invalid='ignore')
 
-class Mix:
+class Mixture:
     def __init__(self, app, SpeciesMatrix, pressure: float, temperature: float):
         R0 = app.C.R0
         A0 = app.C.A0.Value
