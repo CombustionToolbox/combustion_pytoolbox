@@ -11,7 +11,7 @@ setuptools.setup(
     description = "A Python Thermochemical Tool",
     long_description = long_description,
     long_description_content_type = "text/markdown",
-    url = "https://github.com/AlbertoCuadra/ThermochemicalCode_Python",
+    url = "https://github.com/AlbertoCuadra/combustion_pytoolbox",
     packages=setuptools.find_packages(),
     install_requires  = ['numpy', 'scipy', 'pandas', 'palettable', 'seaborn'], # List all your dependencies inside the list
     license = 'GPL-3.0 License'
