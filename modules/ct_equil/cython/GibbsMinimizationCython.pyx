@@ -161,7 +161,7 @@ cpdef equilibrium(self, double pP, double TP, strR):
     cdef C = self.C 
     cdef PD = self.PD
     cdef TN = self.TN
-    cdef strThProp = self.strThProp
+    cdef DB = self.DB
     
     N0, A0 = (C.N0.Value, C.A0.Value)
     R0 = C.R0
@@ -187,7 +187,7 @@ cpdef equilibrium(self, double pP, double TP, strR):
     # Initialize species vector N0 
     N0[temp_ind, 0] = 0.1/temp_NS
     # Dimensionless Standard Gibbs free energy 
-    g0 = np.array([(species_g0(species, TP, strThProp, get_tInterval(species, TP, self.strThProp), R0)) * 1e3 for species in S.LS])
+    g0 = np.array([(species_g0(species, TP, DB, get_tInterval(species, TP, self.DB), R0)) * 1e3 for species in S.LS])
     G0RT = g0/R0TP
     # Construction of part of matrix A (complete)
     A1 = update_matrix_A1(A0, temp_NS, temp_ind, temp_ind_E)
