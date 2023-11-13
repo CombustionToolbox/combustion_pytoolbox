@@ -10,7 +10,7 @@ Type of problems:
     * SV ------> Isentropic compression/expansion to a specified v
     * SHOCK_I -> Planar incident shock wave
     * SHOCK_R -> Planar reflected shock wave
-    * DET -----> Chapman-Jouget Detonation (CJ upper state)
+    * DET -----> Chapman-Jouguet Detonation (CJ upper state)
     * DET_OVERDRIVEN -----> Overdriven Detonation    
     
 
