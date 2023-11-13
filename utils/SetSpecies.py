@@ -46,49 +46,49 @@ def SetSpecies(self, Species, N, T):
             (n, n * np.array([hfi, DhTi, efi, DeTi, cPi, cVi, s0i]), pVi, swtCondensed, mi, mmi), axis=None)
     return M
 
-def get_tInterval(species, T, strThProp):
+def get_tInterval(species, T, DB):
     # Select the appropriate temperature interval
-    for i in range(0, strThProp[species].ctTInt):
-        if (T >= strThProp[species].tRange[i][0]) and (T <= strThProp[species].tRange[i][1]):
+    for i in range(0, DB[species].ctTInt):
+        if (T >= DB[species].tRange[i][0]) and (T <= DB[species].tRange[i][1]):
             tInterval = i
     return tInterval
 
-def species_cP(species, T, strThProp, tInterval, R0):
-    return R0 * sum(strThProp[species].a[tInterval] * T**np.array(strThProp[species].tExponents[tInterval]))  # [J/mol K]
+def species_cP(species, T, DB, tInterval, R0):
+    return R0 * sum(DB[species].a[tInterval] * T**np.array(DB[species].tExponents[tInterval]))  # [J/mol K]
 
 
-def species_cV(species, T, strThProp, tInterval, R0):
-    cP = species_cP(species, T, strThProp, tInterval, R0)
+def species_cV(species, T, DB, tInterval, R0):
+    cP = species_cP(species, T, DB, tInterval, R0)
     return cP - R0 # [J/mol K]
 
 
-def species_DeT(species, T, strThProp, tInterval, R0):
+def species_DeT(species, T, DB, tInterval, R0):
     Tref = 298.15  # [K]
-    H0 = species_DhT(species, T, strThProp, tInterval, R0) * 1000
-    E0 = strThProp[species].ef + (H0 - strThProp[species].hf) - (1 - strThProp[species].swtCondensed) * R0 * (T - Tref)
-    return (E0 - strThProp[species].ef) / 1000.  # [kJ/mol]
+    H0 = species_DhT(species, T, DB, tInterval, R0) * 1000
+    E0 = DB[species].ef + (H0 - DB[species].hf) - (1 - DB[species].swtCondensed) * R0 * (T - Tref)
+    return (E0 - DB[species].ef) / 1000.  # [kJ/mol]
 
 
-def species_DhT(species, T, strThProp, tInterval, R0):
+def species_DhT(species, T, DB, tInterval, R0):
     aux = np.array([-1, np.log(T), 1, 1/2, 1/3, 1/4, 1/5, 0])
     H0 = R0 * T * \
-            (sum(strThProp[species].a[tInterval] * T**np.array(strThProp[species].tExponents[tInterval])
-                 * aux) + strThProp[species].b[tInterval][0] / T)
-    return (H0 - strThProp[species].hf) / 1000.  # [kJ/mol]
+            (sum(DB[species].a[tInterval] * T**np.array(DB[species].tExponents[tInterval])
+                 * aux) + DB[species].b[tInterval][0] / T)
+    return (H0 - DB[species].hf) / 1000.  # [kJ/mol]
 
 
-def species_g0(species, T, strThProp, tInterval, R0):
-    DhT = species_DhT(species, T, strThProp, tInterval, R0) # [kJ/mol]
-    H0 = DhT + strThProp[species].hf / 1000 # [kJ/mol]
-    S0 = species_s0(species, T, strThProp, tInterval, R0) # [kJ/mol]
+def species_g0(species, T, DB, tInterval, R0):
+    DhT = species_DhT(species, T, DB, tInterval, R0) # [kJ/mol]
+    H0 = DhT + DB[species].hf / 1000 # [kJ/mol]
+    S0 = species_s0(species, T, DB, tInterval, R0) # [kJ/mol]
     return H0 - T * S0  # [kJ/mol]
 
 
-def species_s0(species, T, strThProp, tInterval, R0):
+def species_s0(species, T, DB, tInterval, R0):
     aux = np.array([-1/2, -1, np.log(T), 1, 1/2, 1/3, 1/4, 0])
     S0 = R0 * \
-            (sum(strThProp[species].a[tInterval] * T**np.array(strThProp[species].tExponents[tInterval])
-                 * aux) + strThProp[species].b[tInterval][1])
+            (sum(DB[species].a[tInterval] * T**np.array(DB[species].tExponents[tInterval])
+                 * aux) + DB[species].b[tInterval][1])
     return S0 / 1000.  # [kJ/mol K]
 
 
