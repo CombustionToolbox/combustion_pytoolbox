@@ -117,7 +117,7 @@ def GenerateDatabase(self):  # self is a dictionary with Master Database
             else:
                 print(f'Species {FullSpecies} does not exist as a field in strMaster structure')
         # Save StrThprop
-        f = open("Databases/strThprop.pkl", "wb")
+        f = open("Databases/DB.pkl", "wb")
         pickle.dump(DB, f)
         f.close()
 
